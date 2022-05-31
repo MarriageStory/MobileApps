@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:wedding_planner/screens/homePage/detailPage.dart';
+import 'package:wedding_planner/screens/homePage/homaPage.dart';
 import 'package:wedding_planner/screens/signin/signin_screen.dart';
 import 'package:wedding_planner/screens/signup/signup_screen.dart';
 import 'package:wedding_planner/screens/splash/splash_screen.dart';
+import 'package:wedding_planner/screens/teams/teams_screen.dart';
 import 'package:wedding_planner/screens/welcome/welcome_screen.dart';
 
 void main() {
@@ -23,6 +26,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Color(0xFFF6F6F6),
       ),
       home: SplashScreen(),
+      // home: TeamScreen(),
     );
   }
 }

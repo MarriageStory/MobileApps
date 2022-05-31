@@ -13,19 +13,16 @@ class Background extends StatelessWidget {
     return Container(
       height: size.height,
       width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.bottomLeft,
+          end: Alignment.topRight,
+          colors: [Color(0xFFEF6FA7), Color(0xFFFC9DA1)],
+        ),
+      ),
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Image.asset(
-              "assets/images/background.png",
-              fit: BoxFit.fill,
-            ),
-          ),
           child,
         ],
       ),

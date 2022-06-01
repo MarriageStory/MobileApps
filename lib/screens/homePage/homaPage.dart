@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:wedding_planner/screens/homePage/widgets/box_card.dart';
 
 class homePage extends StatelessWidget {
@@ -24,7 +25,7 @@ class homePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hello,",
+                        "Hallo",
                         style: TextStyle(fontSize: 14),
                       ),
                       Text(
@@ -235,6 +236,7 @@ class homePage extends StatelessWidget {
           ),
         )),
       ),
+      bottomNavigationBar: navbar(),
     );
   }
 }

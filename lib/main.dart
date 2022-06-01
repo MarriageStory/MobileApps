@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planner/screens/homePage/detailPage.dart';
+
+import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:wedding_planner/screens/homePage/homaPage.dart';
+import 'package:wedding_planner/screens/payment/payment_detail.dart';
+import 'package:wedding_planner/screens/payment/payment_screen.dart';
+
 import 'package:wedding_planner/screens/signin/signin_screen.dart';
 import 'package:wedding_planner/screens/signup/signup_screen.dart';
 import 'package:wedding_planner/screens/splash/splash_screen.dart';

@@ -21,6 +21,7 @@ class Body extends StatelessWidget {
             Center(
               child: Image.asset(
                 "assets/icons/logo-white.png",
+                height: size.height * 0.22,
               ),
             ),
             Positioned(

@@ -14,6 +14,7 @@ class Body extends StatelessWidget {
           children: <Widget>[
             Image.asset(
               "assets/icons/logo.png",
+              height: size.height * 0.25,
             ),
           ],
         ),

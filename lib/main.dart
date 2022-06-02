@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Wedding Planner Hayy',
+      title: 'Wedding Planner',
       theme: ThemeData(
         fontFamily: 'Poppins',
         primaryColor: Color(0xFFFA5D76),

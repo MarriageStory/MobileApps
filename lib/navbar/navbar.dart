@@ -1,87 +1,84 @@
-import 'package:flutter/material.dart';
-import 'package:custom_navigator/custom_navigator.dart';
+// ignore_for_file: implementation_imports, unnecessary_import
 
-class navbar extends StatefulWidget {
-  const navbar({Key? key}) : super(key: key);
+import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
+
+class BottomNavbar extends StatefulWidget {
+  const BottomNavbar({Key? key}) : super(key: key);
 
   @override
-  State<navbar> createState() => _navbarState();
+  State<BottomNavbar> createState() => _BottomNavbarState();
 }
 
-class _navbarState extends State<navbar> {
-  Page _page = Page('Page 0');
-  int _currentIndex = 0;
+class _BottomNavbarState extends State<BottomNavbar> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    //Ini list tampilan, nek routing nng kene 
+    Text(
+      'This is Homepage',
+      style: optionStyle,
+    ),
+    Text(
+      'This is Schedule Page',
+      style: optionStyle,
+    ),
+    Text(
+      'Next is Payment Page',
+      style: optionStyle,
+    ),
+    Text(
+      'This is Teams Page',
+      style: optionStyle,
+    ),
+    Text(
+      'Last is Menu Page',
+      style: optionStyle,
+    ),
+  ];
 
-  // Custom navigator takes a global key if you want to access the
-  // navigator from outside it's widget tree subtree
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        items: _items,
-        onTap: (index) {
-          // here we used the navigator key to pop the stack to get back to our
-          // main page
-          navigatorKey.currentState?.maybePop();
-          setState(() => _page = Page('Page $index'));
-          _currentIndex = index;
-        },
-        currentIndex: _currentIndex,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.line_style),
+            label: 'Schedule',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.monetization_on_outlined),
+            label: 'Payment',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people_alt),
+            label: 'Teams',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu),
+            label: 'Menu',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.pink[200],
+        unselectedItemColor: Colors.grey[400],
+        onTap: _onItemTapped,
       ),
-      body: CustomNavigator(
-        navigatorKey: navigatorKey,
-        home: _page,
-        //Specify your page route [PageRoutes.materialPageRoute] or [PageRoutes.cupertinoPageRoute]
-        pageRoute: PageRoutes.materialPageRoute,
-      ),
-    );
-  }
-
-  final _items = [
-    BottomNavigationBarItem(
-        icon: Icon(Icons.home), label: Text("Home").toString()),
-    BottomNavigationBarItem(
-        icon: Icon(Icons.event), label: Text('Event').toString()),
-    BottomNavigationBarItem(
-        icon: Icon(Icons.save_alt), label: Text('downloads').toString()),
-  ];
-}
-
-class Page extends StatelessWidget {
-  final String title;
-
-  const Page(this.title) : assert(title != null);
-
-  @override
-  Widget build(BuildContext context) {
-    final text = Text(title);
-
-    return Container(
-      child: Center(
-          child: FlatButton(
-              onPressed: () => _openDetailsPage(context), child: text)),
-    );
-  }
-
-  //Use the navigator like you usually do with .of(context) method
-  _openDetailsPage(BuildContext context) => Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => DetailsPage(title)));
-
-//  _openDetailsPage(BuildContext context) => mainNavigatorKey.currentState.push(MaterialPageRoute(builder: (context) => DetailsPage(title)));
-
-}
-
-class DetailsPage extends StatelessWidget {
-  final String title;
-
-  const DetailsPage(this.title) : assert(title != null);
-
-  @override
-  Widget build(BuildContext context) {
-    final text = Text('Details of $title');
-    return Container(
-      child: Center(child: text),
     );
   }
 }

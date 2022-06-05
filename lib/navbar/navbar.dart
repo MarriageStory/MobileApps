@@ -1,89 +1,67 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'package:flutter/material.dart';
-import 'package:custom_navigator/custom_navigator.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-class navbar extends StatefulWidget {
-  const navbar({Key? key}) : super(key: key);
+class BottomNavbar extends StatefulWidget {
+  const BottomNavbar({Key? key}) : super(key: key);
 
   @override
-  State<navbar> createState() => _navbarState();
+  State<BottomNavbar> createState() => _BottomNavbarState();
 }
 
-class _navbarState extends State<navbar> {
-  Page _page = Page('Page 0');
-  int _currentIndex = 0;
+class _BottomNavbarState extends State<BottomNavbar> {
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'This is Homepage',
+      style: optionStyle,
+    ),
+    Text(
+      'This is Bussiness Page',
+      style: optionStyle,
+    ),
+    Text(
+      'Last is Education Page',
+      style: optionStyle,
+    ),
+  ];
 
-  // Custom navigator takes a global key if you want to access the
-  // navigator from outside it's widget tree subtree
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('BottomNavigationBar Sample'),
+      ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        items: _items,
-        onTap: (index) {
-          // here we used the navigator key to pop the stack to get back to our
-          // main page
-          navigatorKey.currentState?.maybePop();
-          setState(() => _page = Page('Page $index'));
-          _currentIndex = index;
-        },
-        currentIndex: _currentIndex,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Business',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'School',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
-      body: CustomNavigator(
-        navigatorKey: navigatorKey,
-        home: _page,
-        //Specify your page route [PageRoutes.materialPageRoute] or [PageRoutes.cupertinoPageRoute]
-        pageRoute: PageRoutes.materialPageRoute,
-      ),
-    );
-  }
-
-  final _items = [
-    BottomNavigationBarItem(
-        icon: Icon(Icons.home), label: Text("Home").toString()),
-    BottomNavigationBarItem(
-        icon: Icon(Icons.event), label: Text('Event').toString()),
-    BottomNavigationBarItem(
-        icon: Icon(Icons.save_alt), label: Text('downloads').toString()),
-  ];
-}
-
-class Page extends StatelessWidget {
-  final String title;
-
-  const Page(this.title) : assert(title != null);
-
-  @override
-  Widget build(BuildContext context) {
-    final text = Text(title);
-
-    return Container(
-      child: Center(
-          child: FlatButton(
-              onPressed: () => _openDetailsPage(context), child: text)),
-    );
-  }
-
-  //Use the navigator like you usually do with .of(context) method
-  _openDetailsPage(BuildContext context) => Navigator.of(context)
-      .push(MaterialPageRoute(builder: (context) => DetailsPage(title)));
-
-//  _openDetailsPage(BuildContext context) => mainNavigatorKey.currentState.push(MaterialPageRoute(builder: (context) => DetailsPage(title)));
-
-}
-
-class DetailsPage extends StatelessWidget {
-  final String title;
-
-  const DetailsPage(this.title) : assert(title != null);
-
-  @override
-  Widget build(BuildContext context) {
-    final text = Text('Details of $title');
-    return Container(
-      child: Center(child: text),
     );
   }
 }

@@ -16,7 +16,7 @@ class _BottomNavbarState extends State<BottomNavbar> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    //Ini list tampilan, nek routing nng kene 
+    //Ini list tampilan, nek routing nng kene
     Text(
       'This is Homepage',
       style: optionStyle,
@@ -78,6 +78,12 @@ class _BottomNavbarState extends State<BottomNavbar> {
         selectedItemColor: Colors.pink[200],
         unselectedItemColor: Colors.grey[400],
         onTap: _onItemTapped,
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
+        selectedLabelStyle: const TextStyle(
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

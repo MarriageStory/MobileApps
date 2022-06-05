@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:wedding_planner/navbar/navbar.dart';
-import 'package:wedding_planner/screens/homePage/homaPage.dart';
+import 'package:wedding_planner/screens/homePage/homePage.dart';
 import 'package:wedding_planner/screens/payment/payment_detail.dart';
 import 'package:wedding_planner/screens/payment/payment_screen.dart';
 

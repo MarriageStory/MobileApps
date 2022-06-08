@@ -1,14 +1,27 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planner/components/already_have_an_account_check.dart';
 import 'package:wedding_planner/components/rounded_button.dart';
 import 'package:wedding_planner/components/rounded_input_field.dart';
 import 'package:wedding_planner/components/rounded_password_field.dart';
 import 'package:wedding_planner/components/text_field_container.dart';
+import 'package:wedding_planner/model/loginAuth.dart';
 import 'package:wedding_planner/screens/signin/components/background.dart';
 import 'package:wedding_planner/screens/signup/signup_screen.dart';
+import 'package:wedding_planner/service/loginService.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
+
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -51,13 +64,37 @@ class Body extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    RoundedInputField(
-                      icon: Icons.person,
-                      hintText: "Username",
-                      onChanged: (value) {},
+                    // RoundedInputField(
+                    //   icon: Icons.person,
+                    //   hintText: "Username",
+                    //   onChanged: (value) {},
+                    // ),
+                    TextFieldContainer(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            icon: Icon(
+                              Icons.person,
+                              color: Color(0xFFFA5D76),
+                            ),
+                            labelText: 'Email'),
+                        controller: _emailController,
+                      ),
                     ),
-                    RoundedPasswordField(
-                      onChanged: (value) {},
+                    // RoundedPasswordField(
+                    //   onChanged: (value) {},
+                    // ),
+                    TextFieldContainer(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            icon: Icon(
+                              Icons.paste,
+                              color: Color(0xFFFA5D76),
+                            ),
+                            labelText: 'Password'),
+                        controller: _passwordController,
+                      ),
                     ),
                     GestureDetector(
                       child: Align(
@@ -79,7 +116,28 @@ class Body extends StatelessWidget {
                       ),
                       child: RoundedButton(
                         text: "Sign In",
-                        press: () {},
+                        press: () {
+                          var data = <String, dynamic>{
+                            'email': _emailController.text,
+                            'password': _passwordController.text,
+                          };
+
+                          try {
+                            loginService().logins(data).then((response) {
+                              if (response.token != "") {
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context,
+                                  "",
+                                  (route) => false,
+                                );
+                              } else {
+                                print("Gagal login");
+                              }
+                            });
+                          } catch (e) {
+                            print(e);
+                          }
+                        },
                         color: Color(0xFFFA5D76),
                         borderColor: Color(0xFFFA5D76),
                         textColor: Color(0xFFFFFFFF),

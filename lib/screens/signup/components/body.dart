@@ -3,11 +3,22 @@ import 'package:wedding_planner/components/already_have_an_account_check.dart';
 import 'package:wedding_planner/components/rounded_button.dart';
 import 'package:wedding_planner/components/rounded_input_field.dart';
 import 'package:wedding_planner/components/rounded_password_field.dart';
+import 'package:wedding_planner/components/text_field_container.dart';
+import 'package:wedding_planner/model/regisAuth.dart';
 import 'package:wedding_planner/screens/signin/signin_screen.dart';
 import 'package:wedding_planner/screens/signup/components/background.dart';
+import 'package:wedding_planner/service/regisService.dart';
 
-class Body extends StatelessWidget {
-  const Body({Key? key}) : super(key: key);
+class Body extends StatefulWidget {
+  Body({Key? key}) : super(key: key);
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  TextEditingController _userNameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,18 +61,44 @@ class Body extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    RoundedInputField(
-                      icon: Icons.person,
-                      hintText: "Username",
-                      onChanged: (value) {},
+                    TextFieldContainer(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            icon: Icon(
+                              Icons.person,
+                              color: Color(0xFFFA5D76),
+                            ),
+                            labelText: 'Username'),
+                        controller: _userNameController,
+                      ),
                     ),
-                    RoundedPasswordField(
-                      onChanged: (value) {},
+                    // RoundedPasswordField(
+                    //   onChanged: (value) {},
+                    // ),
+                    TextFieldContainer(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            icon: Icon(
+                              Icons.paste,
+                              color: Color(0xFFFA5D76),
+                            ),
+                            labelText: 'Password'),
+                        controller: _passwordController,
+                      ),
                     ),
-                    RoundedInputField(
-                      icon: Icons.mail,
-                      hintText: "Email",
-                      onChanged: (value) {},
+                    TextFieldContainer(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            icon: Icon(
+                              Icons.email,
+                              color: Color(0xFFFA5D76),
+                            ),
+                            labelText: 'Email'),
+                        controller: _emailController,
+                      ),
                     ),
                     Container(
                       margin: EdgeInsets.symmetric(
@@ -69,10 +106,20 @@ class Body extends StatelessWidget {
                       ),
                       child: RoundedButton(
                         text: "Sign Up",
-                        press: () {},
                         color: Color(0xFFFA5D76),
                         borderColor: Color(0xFFFA5D76),
                         textColor: Color(0xFFFFFFFF),
+                        press: () async {
+                          Map<String, dynamic> body = {
+                            'name': _userNameController.text,
+                            'email': _emailController.text,
+                            'password': _passwordController.text,
+                          };
+                          await regisService().register(body);
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(
+                                  "You have successfully create account")));
+                        },
                       ),
                     ),
                   ],

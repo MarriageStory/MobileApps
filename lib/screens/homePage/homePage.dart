@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:wedding_planner/screens/homePage/widgets/box_card.dart';
 
 class homePage extends StatelessWidget {
+  static const route = '/home-page';
   const homePage({Key? key}) : super(key: key);
 
   @override
@@ -236,6 +238,7 @@ class homePage extends StatelessWidget {
           ),
         )),
       ),
+      bottomNavigationBar: BottomNavbar(),
     );
   }
 }

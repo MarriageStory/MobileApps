@@ -35,8 +35,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        // '/': (context) => SplashScreen(),
-        '/': (context) => TaskScreen(),
+        '/': (context) => SplashScreen(),
         '/home-page': (context) => homePage(),
         '/task-page': (context) => TaskScreen(),
         '/detail-task': (context) => DetailTask(),

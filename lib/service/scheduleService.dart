@@ -1,21 +1,21 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:wedding_planner/model/sceduleModel.dart';
+import 'package:wedding_planner/model/scheduleModel.dart';
 
-class SceduleService {
+class ScheduleService {
   // static const String _baseUrl = 'http://10.0.2.2:8000/api/';
-  // static const String _baseUrl = 'http://192.168.1.10:8000/api/';
-  static const String _baseUrl = 'http://192.168.1.59:8000/api/';
+  // static const String _baseUrl = 'http://192.168.1.5:8000/api/';
+  static const String _baseUrl = 'http://192.168.1.5:8000/api/';
 
   var tokenData = {
     'Content-Type': 'application/x-www-form-urlencoded',
     'Accept': "application/json"
   };
 
-  Future<Scedule> getAllSchedule() async {
+  Future<Schedule> getAllSchedule() async {
     final response = await http.get(Uri.parse(_baseUrl + "scedule"));
     if (response.statusCode == 200) {
-      return Scedule.fromJson(json.decode(response.body));
+      return Schedule.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load data');
     }

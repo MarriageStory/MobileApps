@@ -1,24 +1,24 @@
 // To parse this JSON data, do
 //
-//     final scedule = sceduleFromJson(jsonString);
+//     final schedule = scheduleFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-Scedule sceduleFromJson(String str) => Scedule.fromJson(json.decode(str));
+Schedule scheduleFromJson(String str) => Schedule.fromJson(json.decode(str));
 
-String sceduleToJson(Scedule data) => json.encode(data.toJson());
+String scheduleToJson(Schedule data) => json.encode(data.toJson());
 
-class Scedule {
-  Scedule({
+class Schedule {
+  Schedule({
     required this.data,
   });
 
-  List<Scedules> data;
+  List<Schedules> data;
 
-  factory Scedule.fromJson(Map<String, dynamic> json) => Scedule(
-        data:
-            List<Scedules>.from(json["data"].map((x) => Scedules.fromJson(x))),
+  factory Schedule.fromJson(Map<String, dynamic> json) => Schedule(
+        data: List<Schedules>.from(
+            json["data"].map((x) => Schedules.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -26,14 +26,15 @@ class Scedule {
       };
 }
 
-class Scedules {
-  Scedules({
+class Schedules {
+  Schedules({
     required this.id,
     required this.namaKegiatan,
     required this.detailKegiatan,
     required this.tanggal,
     required this.jam,
     required this.tempat,
+    required this.namaClient,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -44,16 +45,18 @@ class Scedules {
   DateTime tanggal;
   String jam;
   String tempat;
+  String namaClient;
   DateTime createdAt;
   DateTime updatedAt;
 
-  factory Scedules.fromJson(Map<String, dynamic> json) => Scedules(
+  factory Schedules.fromJson(Map<String, dynamic> json) => Schedules(
         id: json["id"],
         namaKegiatan: json["nama_kegiatan"],
         detailKegiatan: json["detail_kegiatan"],
         tanggal: DateTime.parse(json["tanggal"]),
         jam: json["jam"],
         tempat: json["tempat"],
+        namaClient: json["nama_client"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
@@ -66,6 +69,7 @@ class Scedules {
             "${tanggal.year.toString().padLeft(4, '0')}-${tanggal.month.toString().padLeft(2, '0')}-${tanggal.day.toString().padLeft(2, '0')}",
         "jam": jam,
         "tempat": tempat,
+        "nama_client": namaClient,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };

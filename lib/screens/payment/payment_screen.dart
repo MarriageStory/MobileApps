@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'components/cards_payment.dart';
+import 'package:wedding_planner/screens/payment/payment_detail.dart';
 import 'package:wedding_planner/components/formatAngka.dart';
 import 'package:wedding_planner/model/paymentModel.dart';
 import 'package:wedding_planner/service/paymentService.dart';
@@ -198,8 +199,9 @@ class _PaymentPageState extends State<PaymentPage> {
                                   var payment = snapshot.data!.data[index];
                                   return InkWell(
                                     onTap: () {
-                                      // Navigator.pushNamed(context, detailPayment.url,
-                                      //     arguments: payment);
+                                      Navigator.pushNamed(
+                                          context, detailPayment.url,
+                                          arguments: payment);
                                     },
                                     child: listItem(payment),
                                   );
@@ -238,7 +240,7 @@ class _PaymentPageState extends State<PaymentPage> {
     return Column(
       children: [
         CardsPayment(
-          name: view.namaVendor,
+          name: view.namaClient,
           date: tanggal,
           pay: formatAngka.convertToIdr(int.parse(view.tunaiKeseluruhan), 2),
           color:

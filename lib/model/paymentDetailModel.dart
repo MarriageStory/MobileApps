@@ -1,14 +1,14 @@
 // To parse this JSON data, do
 //
-//     final vacation = vacationFromJson(jsonString);
+//     final PaymentDetail = PaymentDetailFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-PaymentDetail vacationFromJson(String str) =>
+PaymentDetail PaymentDetailFromJson(String str) =>
     PaymentDetail.fromJson(json.decode(str));
 
-String vacationToJson(PaymentDetail data) => json.encode(data.toJson());
+String PaymentDetailToJson(PaymentDetail data) => json.encode(data.toJson());
 
 class PaymentDetail {
   PaymentDetail({
@@ -30,8 +30,10 @@ class PaymentDetail {
 class PaymentDetails {
   PaymentDetails({
     required this.id,
+    required this.paymentFor,
     required this.bayar,
     required this.tanggal,
+    required this.detail,
     required this.idPayment,
     required this.jam,
     required this.createdAt,
@@ -39,8 +41,10 @@ class PaymentDetails {
   });
 
   int id;
+  String paymentFor;
   String bayar;
   DateTime tanggal;
+  String detail;
   int idPayment;
   String jam;
   DateTime createdAt;
@@ -48,8 +52,10 @@ class PaymentDetails {
 
   factory PaymentDetails.fromJson(Map<String, dynamic> json) => PaymentDetails(
         id: json["id"],
+        paymentFor: json["payment_for"],
         bayar: json["bayar"],
         tanggal: DateTime.parse(json["tanggal"]),
+        detail: json["detail"],
         idPayment: json["id_payment"],
         jam: json["jam"],
         createdAt: DateTime.parse(json["created_at"]),
@@ -58,9 +64,11 @@ class PaymentDetails {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "payment_for": paymentFor,
         "bayar": bayar,
         "tanggal":
             "${tanggal.year.toString().padLeft(4, '0')}-${tanggal.month.toString().padLeft(2, '0')}-${tanggal.day.toString().padLeft(2, '0')}",
+        "detail": detail,
         "id_payment": idPayment,
         "jam": jam,
         "created_at": createdAt.toIso8601String(),

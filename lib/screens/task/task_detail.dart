@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:wedding_planner/screens/homePage/homePage.dart';
+import 'package:wedding_planner/model/scheduleModel.dart';
 
-class pageDetail extends StatefulWidget {
-  const pageDetail({Key? key}) : super(key: key);
+class DetailTask extends StatelessWidget {
+  static final url = "/detail-task";
+  const DetailTask({Key? key}) : super(key: key);
 
-  @override
-  State<pageDetail> createState() => _pageDetailState();
-}
-
-class _pageDetailState extends State<pageDetail> {
   @override
   Widget build(BuildContext context) {
+    final Schedules schedule =
+        ModalRoute.of(context)!.settings.arguments as Schedules;
+
     return Scaffold(
       body: Column(children: <Widget>[
         const Padding(padding: EdgeInsets.all(18.0)),
@@ -67,7 +67,7 @@ class _pageDetailState extends State<pageDetail> {
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 20),
                 child: Text(
-                  "jadbajdbjabds",
+                  schedule.namaClient,
                   style: TextStyle(color: Colors.black),
                   textAlign: TextAlign.center,
                 ),
@@ -86,14 +86,14 @@ class _pageDetailState extends State<pageDetail> {
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 20),
                 child: Text(
-                  "20:00",
+                  schedule.jam,
                   style: TextStyle(fontSize: 35),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 2),
                 child: Text(
-                  "Thursday, 23 April 2022",
+                  schedule.tanggal.toString(),
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),
               ),
@@ -107,7 +107,7 @@ class _pageDetailState extends State<pageDetail> {
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 2),
                 child: Text(
-                  "Melakukan meeting MUA",
+                  schedule.namaKegiatan,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),
               ),
@@ -121,7 +121,7 @@ class _pageDetailState extends State<pageDetail> {
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 2),
                 child: Text(
-                  "Kantor Alvia, Jalan Raya sambung - Kecamatan Diwek Kab Jombang - Jawa Timur",
+                  schedule.tempat,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),
               ),
@@ -135,7 +135,7 @@ class _pageDetailState extends State<pageDetail> {
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 2),
                 child: Text(
-                  "Kedua mempelai diharapkan hadir untuk bertemu dengan pihak WO",
+                  schedule.detailKegiatan,
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),
               ),

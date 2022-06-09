@@ -1,13 +1,13 @@
 // To parse this JSON data, do
 //
-//     final payment = paymentFromJson(jsonString);
+//     final Payment = PaymentFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-Payment paymentFromJson(String str) => Payment.fromJson(json.decode(str));
+Payment PaymentFromJson(String str) => Payment.fromJson(json.decode(str));
 
-String paymentToJson(Payment data) => json.encode(data.toJson());
+String PaymentToJson(Payment data) => json.encode(data.toJson());
 
 class Payment {
   Payment({
@@ -29,30 +29,30 @@ class Payment {
 class payments {
   payments({
     required this.id,
-    required this.namaVendor,
+    required this.namaClient,
     required this.tunaiKeseluruhan,
     required this.tanggal,
-    required this.tunai,
+    required this.terbayar,
     required this.keterangan,
     required this.createdAt,
     required this.updatedAt,
   });
 
   int id;
-  String namaVendor;
+  String namaClient;
   String tunaiKeseluruhan;
   DateTime tanggal;
-  String tunai;
+  String terbayar;
   String keterangan;
   DateTime createdAt;
   DateTime updatedAt;
 
   factory payments.fromJson(Map<String, dynamic> json) => payments(
         id: json["id"],
-        namaVendor: json["nama_vendor"],
+        namaClient: json["nama_client"],
         tunaiKeseluruhan: json["tunai_keseluruhan"],
         tanggal: DateTime.parse(json["tanggal"]),
-        tunai: json["tunai"],
+        terbayar: json["terbayar"],
         keterangan: json["keterangan"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
@@ -60,11 +60,11 @@ class payments {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "nama_vendor": namaVendor,
+        "nama_client": namaClient,
         "tunai_keseluruhan": tunaiKeseluruhan,
         "tanggal":
             "${tanggal.year.toString().padLeft(4, '0')}-${tanggal.month.toString().padLeft(2, '0')}-${tanggal.day.toString().padLeft(2, '0')}",
-        "tunai": tunai,
+        "terbayar": terbayar,
         "keterangan": keterangan,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),

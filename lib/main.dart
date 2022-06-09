@@ -33,15 +33,15 @@ class MyApp extends StatelessWidget {
         primaryColor: Color(0xFFFA5D76),
         scaffoldBackgroundColor: Color(0xFFF6F6F6),
       ),
-      initialRoute: '/',
+      iniontext) => detailPayment(),
+        '/payment-page': (context) => PaymentPage(),
+      },tialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
         '/home-page': (context) => homePage(),
         '/task-page': (context) => TaskScreen(),
         '/detail-task': (context) => DetailTask(),
-        '/detail-payment': (context) => detailPayment(),
-        '/payment-page': (context) => PaymentPage(),
-      },
+        '/detail-payment': (c
     );
   }
 }

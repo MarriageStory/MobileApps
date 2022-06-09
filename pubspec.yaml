@@ -28,12 +28,15 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   cupertino_icons: ^1.0.2
-  custom_navigation_bar: ^0.8.2
-  custom_navigator: ^0.3.0
+  # custom_navigation_bar: ^0.8.2
+  # custom_navigator: ^0.3.0
   flutter:
     sdk: flutter
   flutter_svg: ^1.0.3
   google_fonts: ^3.0.1
+  shared_preferences: ^2.0.15
+  intl: ^0.17.0
+  date_time_picker: ^2.1.0
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

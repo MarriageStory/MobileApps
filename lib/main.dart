@@ -29,11 +29,16 @@ class MyApp extends StatelessWidget {
         primaryColor: Color(0xFFFA5D76),
         scaffoldBackgroundColor: Color(0xFFF6F6F6),
       ),
-      home: SplashScreen(),
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),
+        '/welcome-screen': (context) => WelcomeScreen(),
+        '/home-page': (context) => homePage(),
+        '/payment': (context) => PaymentPage(),
+        '/teams': (context) => TeamScreen(),
+        '/base-screen': (context) => BaseScreen(),
       },
+      // home: BaseScreen(),
     );
   }
 }

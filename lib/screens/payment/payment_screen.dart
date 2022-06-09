@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'components/cards_payment.dart';
 
 class PaymentPage extends StatefulWidget {
+  static const routeName = '/payment';
   const PaymentPage({Key? key}) : super(key: key);
 
   @override
@@ -200,6 +201,7 @@ class _PaymentPageState extends State<PaymentPage> {
           ],
         ),
       ),
+      bottomNavigationBar: BottomAppBar(),
     );
   }
 }

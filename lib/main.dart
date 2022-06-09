@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:wedding_planner/navbar/navbar.dart';
-import 'package:wedding_planner/screens/homePage/homaPage.dart';
+import 'package:wedding_planner/screens/homePage/homePage.dart';
 import 'package:wedding_planner/screens/payment/payment_detail.dart';
 import 'package:wedding_planner/screens/payment/payment_screen.dart';
+
 import 'package:wedding_planner/screens/signin/signin_screen.dart';
 import 'package:wedding_planner/screens/signup/signup_screen.dart';
 import 'package:wedding_planner/screens/splash/splash_screen.dart';
+import 'package:wedding_planner/screens/teams/teams_screen.dart';
 import 'package:wedding_planner/screens/welcome/welcome_screen.dart';
 
 void main() {
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Wedding Planner Hayy',
+      title: 'Wedding Planner',
       theme: ThemeData(
         fontFamily: 'Poppins',
         primaryColor: Color(0xFFFA5D76),

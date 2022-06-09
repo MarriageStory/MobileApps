@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planner/screens/homePage/homaPage.dart';
+import 'package:wedding_planner/screens/homePage/homePage.dart';
 
 class pageDetail extends StatefulWidget {
   const pageDetail({Key? key}) : super(key: key);

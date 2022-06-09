@@ -12,7 +12,10 @@ class homePage extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
             child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 15,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -25,12 +28,16 @@ class homePage extends StatelessWidget {
                     children: [
                       Text(
                         "Hello,",
-                        style: TextStyle(fontSize: 14),
+                        style: TextStyle(
+                          fontSize: 14,
+                        ),
                       ),
                       Text(
                         "Ainul Muhlasin",
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
                       )
                     ],
                   ),
@@ -45,9 +52,11 @@ class homePage extends StatelessWidget {
                 padding: EdgeInsets.all(16),
                 height: 115,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/bg.png"),
-                      fit: BoxFit.cover),
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    colors: [Color(0xFFEF6FA7), Color(0xFFFC9DA1)],
+                  ),
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Column(
@@ -115,7 +124,10 @@ class homePage extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.only(top: 5),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 25,
+                ),
                 width: double.infinity,
                 height: 130,
                 decoration: BoxDecoration(
@@ -225,7 +237,7 @@ class homePage extends StatelessWidget {
                   Flexible(
                     flex: 1,
                     child: BoxCard(
-                      nameTask: "Payment\nCompleted",
+                      nameTask: "Payment Completed",
                       totalTask: 1,
                     ),
                   ),

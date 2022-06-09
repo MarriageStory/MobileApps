@@ -21,9 +21,10 @@ class Body extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               Positioned(
-                top: size.height * 0.12,
+                top: size.height * 0.15,
                 left: size.width * 0.1,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Welcome Back ,",
@@ -48,6 +49,7 @@ class Body extends StatelessWidget {
               ),
               Container(
                 margin: EdgeInsets.symmetric(horizontal: 37),
+                // margin: EdgeInsets.symmetric(horizontal: size.width * 0.1),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -74,9 +76,8 @@ class Body extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(
-                        horizontal: size.width * 0.1,
-                      ),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: size.width * 0.1),
                       child: RoundedButton(
                         text: "Sign In",
                         press: () {},

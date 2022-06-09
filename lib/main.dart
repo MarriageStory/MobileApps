@@ -16,7 +16,7 @@ import 'package:wedding_planner/screens/task/task_detail.dart';
 import 'package:wedding_planner/screens/homePage/homePage.dart';
 import 'package:wedding_planner/screens/payment/payment_detail.dart';
 import 'package:wedding_planner/screens/payment/payment_screen.dart';
-//teams
+//teamss
 import 'package:wedding_planner/screens/teams/teams_screen.dart';
 
 void main() {

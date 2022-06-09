@@ -9,7 +9,9 @@ import 'package:wedding_planner/model/paymentModel.dart';
 import 'package:wedding_planner/service/paymentService.dart';
 
 class PaymentPage extends StatefulWidget {
-  static final url = "/payment-page";
+
+  static const routeName = '/payment';
+
   const PaymentPage({Key? key}) : super(key: key);
 
   @override
@@ -228,6 +230,7 @@ class _PaymentPageState extends State<PaymentPage> {
           ),
         ]),
       ),
+      bottomNavigationBar: BottomAppBar(),
     );
   }
 

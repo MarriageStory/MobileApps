@@ -127,7 +127,7 @@ class _BodyState extends State<Body> {
                               if (response.token != "") {
                                 Navigator.pushNamedAndRemoveUntil(
                                   context,
-                                  "/home-page",
+                                  "/base-screen",
                                   (route) => false,
                                 );
                               } else {

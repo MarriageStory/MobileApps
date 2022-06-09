@@ -39,13 +39,16 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => TaskForm(),
+
+        '/': (context) => SplashScreen(),
+        '/welcome-screen': (context) => WelcomeScreen(),
         '/home-page': (context) => homePage(),
-        '/task-page': (context) => TaskScreen(),
-        '/detail-task': (context) => DetailTask(),
-        '/detail-payment': (context) => detailPayment(),
-        '/payment-page': (context) => PaymentPage(),
+        '/payment': (context) => PaymentPage(),
+        '/teams': (context) => TeamScreen(),
+        '/base-screen': (context) => BaseScreen(),
+
       },
+      // home: BaseScreen(),
     );
   }
 }

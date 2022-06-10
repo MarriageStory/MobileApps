@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 //navbar
 import 'package:wedding_planner/navbar/navbar.dart';
+import 'package:wedding_planner/screens/other/other_screen.dart';
 //sign up & sign in
 import 'package:wedding_planner/screens/signin/signin_screen.dart';
 import 'package:wedding_planner/screens/signup/signup_screen.dart';
@@ -43,8 +44,10 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashScreen(),
         '/welcome-screen': (context) => WelcomeScreen(),
         '/home-page': (context) => homePage(),
+        '/task-page':(context) => TaskScreen(),
         '/payment': (context) => PaymentPage(),
         '/teams': (context) => TeamScreen(),
+        '/others': (context) => OtherScreen(),
         '/base-screen': (context) => BaseScreen(),
 
       },

@@ -5,7 +5,9 @@ import 'package:wedding_planner/model/scheduleModel.dart';
 class ScheduleService {
   // static const String _baseUrl = 'http://10.0.2.2:8000/api/';
   // static const String _baseUrl = 'http://192.168.1.5:8000/api/';
-  static const String _baseUrl = 'http://192.168.1.5:8000/api/';
+  // static const String _baseUrl = 'http://192.168.1.5:8000/api/';
+  static const String _baseUrl =
+      'https://immense-cliffs-78720.herokuapp.com/api/';
 
   var tokenData = {
     'Content-Type': 'application/x-www-form-urlencoded',

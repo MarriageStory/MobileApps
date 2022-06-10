@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wedding_planner/screens/other/components/body.dart';
 
 class OtherScreen extends StatelessWidget {
+  static const routeName = '/others';
   const OtherScreen({Key? key}) : super(key: key);
 
   @override

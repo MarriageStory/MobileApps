@@ -80,7 +80,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 children: [
                   Container(
                     width: 160,
-                    height: 140,
+                    height: 150,
                     padding: EdgeInsets.all(30.0),
                     decoration: BoxDecoration(
                       color: Colors.pink[200],
@@ -118,7 +118,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 children: [
                   Container(
                     width: 160,
-                    height: 140,
+                    height: 150,
                     padding: EdgeInsets.all(30.0),
                     decoration: BoxDecoration(
                       color: Colors.white70,
@@ -136,7 +136,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 58.0,
+                          height: 40.0,
                         ),
                         Text(
                           id.toString(),

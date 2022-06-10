@@ -81,11 +81,11 @@ class _BodyState extends State<Body> {
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: Icon(
-                              Icons.paste,
+                              Icons.email,
                               color: Color(0xFFFA5D76),
                             ),
-                            labelText: 'Password'),
-                        controller: _passwordController,
+                            labelText: 'Email'),
+                        controller: _emailController,
                       ),
                     ),
                     TextFieldContainer(
@@ -93,11 +93,11 @@ class _BodyState extends State<Body> {
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: Icon(
-                              Icons.email,
+                              Icons.lock,
                               color: Color(0xFFFA5D76),
                             ),
-                            labelText: 'Email'),
-                        controller: _emailController,
+                            labelText: 'Password'),
+                        controller: _passwordController,
                       ),
                     ),
                     Container(

@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
         '/teams': (context) => TeamScreen(),
         '/others': (context) => OtherScreen(),
         '/base-screen': (context) => BaseScreen(),
+        '/detail-task':(context) => DetailTask(),
 
       },
       // home: BaseScreen(),

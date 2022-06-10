@@ -13,8 +13,8 @@ class Body extends StatelessWidget {
           alignment: Alignment.centerLeft,
           children: [
             Positioned(
-                top: 55,
-                left: 20,
+                top: 74,
+                left: 34,
                 child: Row(
                   children: [
                     CircleAvatar(

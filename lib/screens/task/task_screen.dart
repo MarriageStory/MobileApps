@@ -46,12 +46,14 @@ class _TaskScreenState extends State<TaskScreen> {
     final pageHeight = height - bottomNavigation;
 
     return Scaffold(
-        backgroundColor: Color(0xFFE5E5E5),
-        body: SafeArea(
-            child: SingleChildScrollView(
+      backgroundColor: Color(0xFFF6F6F6),
+      body: SafeArea(
+        child: SingleChildScrollView(
           child: Stack(
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     height: 150,
@@ -59,10 +61,10 @@ class _TaskScreenState extends State<TaskScreen> {
                     alignment: AlignmentDirectional.topCenter,
                     padding: EdgeInsets.symmetric(vertical: 20),
                     decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage("assets/images/bg-taskScreen.png"),
-                            fit: BoxFit.fill)),
+                      image: DecorationImage(
+                        image: AssetImage("assets/images/bg-taskScreen.png"),
+                      ),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -161,7 +163,7 @@ class _TaskScreenState extends State<TaskScreen> {
                               allTask++;
                               return InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context, DetailTask.url,
+                                    Navigator.pushNamed(context, '/detail-task',
                                         arguments: schedule);
                                   },
                                   child: listItem(schedule));
@@ -228,7 +230,9 @@ class _TaskScreenState extends State<TaskScreen> {
               )
             ],
           ),
-        )));
+        ),
+      ),
+    );
   }
 
   Widget listItem(Schedules view) {

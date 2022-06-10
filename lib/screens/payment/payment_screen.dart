@@ -41,7 +41,7 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Color(0xFFF6F6F6),
       body: SafeArea(
         child: ListView(children: <Widget>[
           const SizedBox(

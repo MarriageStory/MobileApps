@@ -4,9 +4,9 @@ import 'package:wedding_planner/model/loginAuth.dart';
 import 'package:http/http.dart' as http;
 
 class loginService {
-  // static final String _baseUrl =
-  //     'https://immense-cliffs-78720.herokuapp.com/api/';
-  static const String _baseUrl = 'http://192.168.1.5:8000/api/';
+  static final String _baseUrl =
+      'https://immense-cliffs-78720.herokuapp.com/api/';
+  // static const String _baseUrl = 'http://192.168.1.5:8000/api/';
   
   Future<Login> logins(Map<String, dynamic> data) async {
     final prefs = await SharedPreferences.getInstance();

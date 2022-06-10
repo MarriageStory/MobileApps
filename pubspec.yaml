@@ -90,5 +90,8 @@ flutter:
     - family: Moon Dance
       fonts:
         - asset: assets/fonts/MoonDance-Regular.ttf
+    - family : MyFlutterApp
+      fonts:
+        - asset: assets/fonts/MyFlutterApp.ttf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

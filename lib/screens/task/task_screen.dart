@@ -10,7 +10,7 @@ import 'package:wedding_planner/service/scheduleService.dart';
 import 'package:intl/intl.dart';
 
 class TaskScreen extends StatefulWidget {
-  static final url = "/task-page";
+  static const route = "/task-page";
   const TaskScreen({Key? key}) : super(key: key);
 
   @override

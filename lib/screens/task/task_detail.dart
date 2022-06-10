@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:wedding_planner/screens/homePage/homePage.dart';
 import 'package:wedding_planner/model/scheduleModel.dart';
+import 'package:wedding_planner/screens/task/task_screen.dart';
 
 class DetailTask extends StatelessWidget {
-  static final url = "/detail-task";
+  static const url = "/detail-task";
   const DetailTask({Key? key}) : super(key: key);
 
   @override
@@ -24,7 +26,7 @@ class DetailTask extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const homePage()),
+                      MaterialPageRoute(builder: (context) => TaskScreen()),
                     );
                   },
                   child: Icon(Icons.arrow_back)),
@@ -66,11 +68,13 @@ class DetailTask extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 10),
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 20),
-                child: Text(
-                  schedule.namaClient,
-                  style: TextStyle(color: Colors.black),
-                  textAlign: TextAlign.center,
-                ),
+                child: schedule.namaClient != null
+                    ? Text(
+                        schedule.namaClient!,
+                        style: TextStyle(color: Colors.black),
+                        textAlign: TextAlign.center,
+                      )
+                    : SizedBox(),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   gradient: LinearGradient(

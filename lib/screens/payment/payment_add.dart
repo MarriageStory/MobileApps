@@ -100,7 +100,7 @@ class _AddPaymentState extends State<AddPayment> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.pink),
                         ),
-                        hintText: 'Enter the date',
+                        hintText: 'DD/MM/YYYY',
                         hintStyle: const TextStyle(
                           color: Color(0xFF2F2F2F),
                           fontWeight: FontWeight.w300,
@@ -134,7 +134,7 @@ class _AddPaymentState extends State<AddPayment> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(color: Colors.pink),
                         ),
-                        hintText: 'Enter the amount',
+                        hintText: '000xxxxx',
                         hintStyle: const TextStyle(
                           color: Color(0xFF2F2F2F),
                           fontWeight: FontWeight.w300,

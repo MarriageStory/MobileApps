@@ -239,6 +239,13 @@ class homePage extends StatelessWidget {
             ),
           )),
         ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: (){
+          },
+          label: const Text("Help",style: TextStyle(color: Color(0xFFFF5596) ),),
+          icon: const Icon(Icons.help_outline, color: Color(0xFFFF5596),),
+          backgroundColor: Colors.white,
+          ),
     );
   }
 }

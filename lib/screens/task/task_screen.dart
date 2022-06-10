@@ -46,12 +46,14 @@ class _TaskScreenState extends State<TaskScreen> {
     final pageHeight = height - bottomNavigation;
 
     return Scaffold(
-        backgroundColor: Color(0xFFE5E5E5),
+        backgroundColor: Color(0xFFF6F6F6),
         body: SafeArea(
             child: SingleChildScrollView(
           child: Stack(
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     height: 150,
@@ -60,9 +62,8 @@ class _TaskScreenState extends State<TaskScreen> {
                     padding: EdgeInsets.symmetric(vertical: 20),
                     decoration: BoxDecoration(
                         image: DecorationImage(
-                            image:
-                                AssetImage("assets/images/bg-taskScreen.png"),
-                            fit: BoxFit.fill)),
+                      image: AssetImage("assets/images/bg-taskScreen.png"),
+                    )),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

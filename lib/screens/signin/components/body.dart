@@ -89,7 +89,7 @@ class _BodyState extends State<Body> {
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: Icon(
-                              Icons.paste,
+                              Icons.lock,
                               color: Color(0xFFFA5D76),
                             ),
                             labelText: 'Password'),

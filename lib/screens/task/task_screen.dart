@@ -10,7 +10,7 @@ import 'package:wedding_planner/service/scheduleService.dart';
 import 'package:intl/intl.dart';
 
 class TaskScreen extends StatefulWidget {
-  static const route = "/task-page";
+  static final url = "/task-page";
   const TaskScreen({Key? key}) : super(key: key);
 
   @override
@@ -21,6 +21,7 @@ class _TaskScreenState extends State<TaskScreen> {
   late Future<Schedule> _schedule;
   int id = 0;
   int allTask = 0;
+  int totalData = 0;
 
   @override
   void initState() {
@@ -46,14 +47,12 @@ class _TaskScreenState extends State<TaskScreen> {
     final pageHeight = height - bottomNavigation;
 
     return Scaffold(
-      backgroundColor: Color(0xFFF6F6F6),
-      body: SafeArea(
-        child: SingleChildScrollView(
+        backgroundColor: Color(0xFFE5E5E5),
+        body: SafeArea(
+            child: SingleChildScrollView(
           child: Stack(
             children: [
               Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     height: 150,
@@ -61,10 +60,10 @@ class _TaskScreenState extends State<TaskScreen> {
                     alignment: AlignmentDirectional.topCenter,
                     padding: EdgeInsets.symmetric(vertical: 20),
                     decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/bg-taskScreen.png"),
-                      ),
-                    ),
+                        image: DecorationImage(
+                            image:
+                                AssetImage("assets/images/bg-taskScreen.png"),
+                            fit: BoxFit.fill)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -110,39 +109,7 @@ class _TaskScreenState extends State<TaskScreen> {
                       ],
                     ),
                   ),
-                  FutureBuilder(
-                    future: _schedule,
-                    builder: (context, AsyncSnapshot<Schedule> snapshot) {
-                      var state = snapshot.connectionState;
-                      if (state != ConnectionState.done) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        if (snapshot.hasData) {
-                          return ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (context, index) {
-                              var schedule = snapshot.data!.data[index];
-                              allTask++;
-                              return SizedBox();
-                            },
-                            itemCount: snapshot.data!.data.length,
-                          );
-                        } else if (snapshot.hasError) {
-                          return Center(
-                            child: Text(
-                              snapshot.error.toString(),
-                            ),
-                          );
-                        } else {
-                          return Text('');
-                        }
-                      }
-                    },
-                  ),
+
                   //pembatas
                   FutureBuilder(
                     future: _schedule,
@@ -160,10 +127,9 @@ class _TaskScreenState extends State<TaskScreen> {
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
                               var schedule = snapshot.data!.data[index];
-                              allTask++;
                               return InkWell(
                                   onTap: () {
-                                    Navigator.pushNamed(context, '/detail-task',
+                                    Navigator.pushNamed(context, DetailTask.url,
                                         arguments: schedule);
                                   },
                                   child: listItem(schedule));
@@ -184,55 +150,69 @@ class _TaskScreenState extends State<TaskScreen> {
                   ),
                 ],
               ),
-              Positioned(
-                top: 100,
-                left: 0,
-                right: 0,
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 24),
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20)),
-                  child: IntrinsicHeight(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20.0),
-                          child: Column(
+              FutureBuilder(
+                future: _schedule,
+                builder: (context, AsyncSnapshot<Schedule> snapshot) {
+                  var state = snapshot.connectionState;
+                  if (snapshot.hasData) {
+                    allTask = snapshot.data!.data.length;
+
+                    return Positioned(
+                      top: 100,
+                      left: 0,
+                      right: 0,
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 24),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: IntrinsicHeight(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text(allTask.toString()),
-                              Text("All Tasks"),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20.0),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      "coming soon",
+                                    ),
+                                    Text("All Tasks"),
+                                  ],
+                                ),
+                              ),
+                              const VerticalDivider(
+                                width: 20,
+                                thickness: 1,
+                                indent: 0,
+                                endIndent: 0,
+                                color: Colors.grey,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20.0),
+                                child: Column(
+                                  children: [
+                                    Text(allTask.toString()),
+                                    Text("Completed Tasks"),
+                                  ],
+                                ),
+                              ),
                             ],
                           ),
                         ),
-                        const VerticalDivider(
-                          width: 20,
-                          thickness: 1,
-                          indent: 0,
-                          endIndent: 0,
-                          color: Colors.grey,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20.0),
-                          child: Column(
-                            children: [
-                              Text("12"),
-                              Text("Completed Tasks"),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              )
+                      ),
+                    );
+                  } else {
+                    return Text('');
+                  }
+                },
+              ),
             ],
           ),
-        ),
-      ),
-    );
+        )));
   }
 
   Widget listItem(Schedules view) {

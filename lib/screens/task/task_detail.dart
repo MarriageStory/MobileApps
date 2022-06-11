@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:wedding_planner/screens/homePage/homePage.dart';
+import 'package:wedding_planner/screens/task/task_edit_form.dart';
 import 'package:wedding_planner/model/scheduleModel.dart';
 import 'package:wedding_planner/screens/task/task_screen.dart';
+import 'package:wedding_planner/navbar/navbar.dart';
 
 class DetailTask extends StatelessWidget {
-  static const url = "/detail-task";
+  static final url = "/detail-task";
   const DetailTask({Key? key}) : super(key: key);
 
   @override
@@ -26,7 +27,8 @@ class DetailTask extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => TaskScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => BaseScreen(index: 1)),
                     );
                   },
                   child: Icon(Icons.arrow_back)),
@@ -38,12 +40,10 @@ class DetailTask extends StatelessWidget {
               SizedBox(width: 70),
               IconButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const homePage()),
-                    );
+                    Navigator.pushNamed(context, TaskEditForm.url,
+                        arguments: schedule);
                   },
-                  icon: Icon(Icons.list))
+                  icon: Icon(Icons.edit))
             ],
           ),
         ),
@@ -68,13 +68,11 @@ class DetailTask extends StatelessWidget {
                 padding: EdgeInsets.symmetric(vertical: 10),
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 20),
-                child: schedule.namaClient != null
-                    ? Text(
-                        schedule.namaClient!,
-                        style: TextStyle(color: Colors.black),
-                        textAlign: TextAlign.center,
-                      )
-                    : SizedBox(),
+                child: Text(
+                  schedule.namaClient,
+                  style: TextStyle(color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                   gradient: LinearGradient(

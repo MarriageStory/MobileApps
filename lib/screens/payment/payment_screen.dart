@@ -7,6 +7,7 @@ import 'package:wedding_planner/screens/payment/payment_detail.dart';
 import 'package:wedding_planner/components/formatAngka.dart';
 import 'package:wedding_planner/model/paymentModel.dart';
 import 'package:wedding_planner/service/paymentService.dart';
+import 'package:wedding_planner/screens/payment/payment_add.dart';
 
 class PaymentPage extends StatefulWidget {
   static const routeName = '/payment';
@@ -55,7 +56,7 @@ class _PaymentPageState extends State<PaymentPage> {
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
+              children: [
                 SizedBox(
                   width: 5.0,
                 ),
@@ -66,7 +67,17 @@ class _PaymentPageState extends State<PaymentPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Icon(Icons.menu),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AddPayment()),
+                      );
+                    },
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.black,
+                    )),
               ],
             ),
           ),
@@ -80,102 +91,187 @@ class _PaymentPageState extends State<PaymentPage> {
             builder: (context, AsyncSnapshot<Payment> snapshot) {
               var state = snapshot.connectionState;
               if (snapshot.hasData) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    var payment = snapshot.data!.data[index];
-                    allPayment++;
-                    totalData++;
-                    if (payment.keterangan == "done") {
-                      Paymentdone++;
-                    }
-                    if (totalData < snapshot.data!.data.length) {
-                      return SizedBox();
-                    } else {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                if (snapshot.data!.data.length > 0) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      var payment = snapshot.data!.data[index];
+                      allPayment++;
+                      totalData++;
+                      if (payment.keterangan == "done") {
+                        Paymentdone++;
+                      }
+                      if (totalData < snapshot.data!.data.length) {
+                        return SizedBox();
+                      } else {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  width: 160,
+                                  height: 140,
+                                  padding: EdgeInsets.all(30.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.pink[200],
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Payment Done',
+                                        // ignore: prefer_const_constructors
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 40.0,
+                                      ),
+                                      Text(
+                                        Paymentdone.toString(),
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Container(
+                                  width: 160,
+                                  height: 140,
+                                  padding: EdgeInsets.all(30.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white70,
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'All Payment',
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 58.0,
+                                      ),
+                                      Text(
+                                        allPayment.toString(),
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        );
+                      }
+                    },
+                    itemCount: snapshot.data!.data.length,
+                  );
+                } else {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
                         children: [
-                          Column(
-                            children: [
-                              Container(
-                                width: 160,
-                                height: 140,
-                                padding: EdgeInsets.all(30.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.pink[200],
-                                  borderRadius: BorderRadius.circular(15),
+                          Container(
+                            width: 160,
+                            height: 140,
+                            padding: EdgeInsets.all(30.0),
+                            decoration: BoxDecoration(
+                              color: Colors.pink[200],
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Payment Done',
+                                  // ignore: prefer_const_constructors
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Payment Done',
-                                      // ignore: prefer_const_constructors
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 40.0,
-                                    ),
-                                    Text(
-                                      Paymentdone.toString(),
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
+                                SizedBox(
+                                  height: 40.0,
                                 ),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Container(
-                                width: 160,
-                                height: 140,
-                                padding: EdgeInsets.all(30.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white70,
-                                  borderRadius: BorderRadius.circular(15),
+                                Text(
+                                  Paymentdone.toString(),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'All Payment',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey[700],
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 58.0,
-                                    ),
-                                    Text(
-                                      allPayment.toString(),
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ],
-                      );
-                    }
-                  },
-                  itemCount: snapshot.data!.data.length,
-                );
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            width: 160,
+                            height: 140,
+                            padding: EdgeInsets.all(30.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white70,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'All Payment',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[700],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 58.0,
+                                ),
+                                Text(
+                                  allPayment.toString(),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }
               } else {
                 return Text('');
               }

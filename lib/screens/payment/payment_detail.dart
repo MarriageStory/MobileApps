@@ -10,6 +10,10 @@ import 'package:intl/intl.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wedding_planner/screens/payment/payment_screen.dart';
+import 'package:wedding_planner/screens/payment/payment_edit.dart';
+import 'package:wedding_planner/screens/payment/payment_add_detail.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:wedding_planner/service/paymentService.dart';
 
 class detailPayment extends StatefulWidget {
   static final url = "/detail-payment";
@@ -80,13 +84,10 @@ class _detailPaymentState extends State<detailPayment> {
                       SizedBox(width: 50),
                       IconButton(
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const PaymentPage(),
-                                ));
+                            Navigator.pushNamed(context, EditPayment.url,
+                                arguments: payment);
                           },
-                          icon: Icon(Icons.list))
+                          icon: Icon(Icons.edit))
                     ],
                   ),
                 ),
@@ -287,22 +288,13 @@ class _detailPaymentState extends State<detailPayment> {
                     Container(
                       child: Text("Transactions"),
                     ),
-                    SizedBox(width: 200),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
+                    SizedBox(width: 165),
                         TextButton(
                             onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const PaymentPage()),
-                              );
+                          Navigator.pushNamed(context, AddDetailPayment.url,
+                              arguments: payment);
                             },
-                            child: Icon(Icons.plumbing)),
-                      ],
-                    ),
+                        child: Icon(Icons.add)),
                   ],
                 ),
                 FutureBuilder(
@@ -341,6 +333,50 @@ class _detailPaymentState extends State<detailPayment> {
                       }
                     }
                   },
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 10, right: 20),
+                  child: Column(
+                    children: <Widget>[
+                      InkWell(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            width: MediaQuery.of(context).size.width,
+                            margin: const EdgeInsets.only(
+                                right: 16, left: 16, top: 20),
+                            child: Text(
+                              "Delete",
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              gradient: LinearGradient(
+                                begin: Alignment.topRight,
+                                end: Alignment.bottomLeft,
+                                colors: [
+                                  Color(0xFFFE6A7E).withOpacity(0.65),
+                                  Color(0xFFFE6A7E),
+                                ],
+                              ),
+                            ),
+                          ),
+                          onTap: () async {
+                            await PaymentService()
+                                .deletePayment(payment.id)
+                                .then((value) {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return BaseScreen(index: 2);
+                              }));
+                            });
+                          }),
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -8,6 +8,7 @@ import 'package:wedding_planner/screens/task/task_screen.dart';
 import 'package:wedding_planner/screens/payment/payment_screen.dart';
 import 'package:wedding_planner/screens/teams/teams_screen.dart';
 import 'package:wedding_planner/screens/other/other_screen.dart';
+import 'package:wedding_planner/model/my_flutter_app_icons.dart';
 
 class BaseScreen extends StatefulWidget {
   int index;
@@ -32,53 +33,43 @@ class _BaseScreenState extends State<BaseScreen> {
     OtherScreen(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF6F6F6),
+      backgroundColor: Color(0xFFFFFFFF),
       body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-            // activeIcon: homePage(),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.line_style),
-            label: 'Schedule',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.monetization_on_outlined),
-            label: 'Payment',
-            // activeIcon: PaymentPage(),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people_alt),
-            label: 'Teams',
-            // activeIcon: TeamScreen(),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu),
-            label: 'Menu',
-          ),
+      bottomNavigationBar: Row(
+        children: <Widget>[
+          buildNavItem(MyFlutterApp.home, 0, ),
+          buildNavItem(MyFlutterApp.task, 1, ),
+          buildNavItem(MyFlutterApp.payment, 2, ),
+          buildNavItem(MyFlutterApp.user, 3, ),
+          buildNavItem(MyFlutterApp.menu, 4, ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.pink[200],
-        unselectedItemColor: Colors.grey[400],
-        onTap: _onItemTapped,
-        showSelectedLabels: true,
-        showUnselectedLabels: false,
-        selectedLabelStyle: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-        ),
+      ),
+
+    );
+  }
+  Widget buildNavItem(IconData icon, int index) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedIndex = index;
+        });
+      },
+      child: Container(
+        height: 60,
+        width: MediaQuery.of(context).size.width / 5,
+        decoration: index == _selectedIndex ? BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              width: 3.5, 
+              color: Color(0xFFFF5596),
+              )
+          ),
+          ): const BoxDecoration(),
+        child: Icon(icon, color: index == _selectedIndex ? Color(0xFFFF5596) :Colors.grey[400],size: 18,),
       ),
     );
   }

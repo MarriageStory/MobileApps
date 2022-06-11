@@ -1,7 +1,4 @@
-import 'dart:ui';
 import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wedding_planner/screens/task/task_form.dart';
 import 'package:wedding_planner/screens/task/task_detail.dart';
@@ -10,7 +7,7 @@ import 'package:wedding_planner/service/scheduleService.dart';
 import 'package:intl/intl.dart';
 
 class TaskScreen extends StatefulWidget {
-  static final url = "/task-page";
+  static const routeName = "/task-page";
   const TaskScreen({Key? key}) : super(key: key);
 
   @override
@@ -38,181 +35,242 @@ class _TaskScreenState extends State<TaskScreen> {
     setState(() {});
   }
 
-  void _incrementCounter() {}
-
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
+    Size size = MediaQuery.of(context).size;
     final bottomNavigation = MediaQuery.of(context).viewInsets.bottom;
-    final pageHeight = height - bottomNavigation;
 
     return Scaffold(
-        backgroundColor: Color(0xFFE5E5E5),
-        body: SafeArea(
-            child: SingleChildScrollView(
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  Container(
-                    height: 150,
-                    width: double.infinity,
-                    alignment: AlignmentDirectional.topCenter,
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image:
-                                AssetImage("assets/images/bg-taskScreen.png"),
-                            fit: BoxFit.fill)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const TaskScreen()),
-                              );
-                            },
-                            icon: const Icon(Icons.list, color: Colors.white)),
-                        const Text(
-                          "Checklist",
-                          style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.white),
-                        ),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => TaskForm()),
-                              );
-                            },
-                            icon: const Icon(Icons.add, color: Colors.white))
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 50, right: 15, left: 18),
-                    // margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Task in progress',
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        TextButton(onPressed: () {}, child: Text("Sort by"))
-                      ],
-                    ),
-                  ),
+      backgroundColor: Color(0xFFF6F6F6),
+      // body: Stack(
+      //   children: <Widget>[
+      //     //AppBar Background
+      //     Container(
+      //         height: MediaQuery.of(context).size.height * 0.2,
+      //         decoration: const BoxDecoration(
+      //           image: DecorationImage(
+      //             image: AssetImage("assets/images/main-top3.png"),
+      //             fit: BoxFit.fill,
+      //           ),
+      //         )),
+      //     //TaskStatus
+      //     Container(
+      //       height: 200,
+      //       child: Card(
+      //           elevation: 20.0,
+      //           margin:
+      //               const EdgeInsets.only(left: 15.0, right: 15.0, top: 100.0),
+      //           child: ListView(
+      //               padding: const EdgeInsets.only(
+      //                   top: 20.0, left: 20.0, right: 18.0, bottom: 5.0),
+      //               children: <Widget>[
+      //                 FutureBuilder(
+      //                   future: _schedule,
+      //                   builder: (context, AsyncSnapshot<Schedule> snapshot) {
+      //                     var state = snapshot.connectionState;
+      //                     if (snapshot.hasData) {
+      //                       allTask = snapshot.data!.data.length;
 
-                  //pembatas
-                  FutureBuilder(
-                    future: _schedule,
-                    builder: (context, AsyncSnapshot<Schedule> snapshot) {
-                      var state = snapshot.connectionState;
-                      if (state != ConnectionState.done) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      } else {
-                        if (snapshot.hasData) {
-                          return ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (context, index) {
-                              var schedule = snapshot.data!.data[index];
-                              return InkWell(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, DetailTask.url,
-                                        arguments: schedule);
-                                  },
-                                  child: listItem(schedule));
-                            },
-                            itemCount: snapshot.data!.data.length,
+      //                       return Row(
+      //                         children: <Widget>[
+      //                           Expanded(
+      //                             child:
+      //                             Text("Ainul"),
+      //                           ),
+      //                           Expanded(
+      //                             child:
+      //                               Text("Ainul"),
+      //                           )
+      //                         ],
+      //                       );
+      //                     } else {
+      //                       return Text('');
+      //                     }
+      //                   },
+      //                 ),
+      //               ])),
+      //     ),
+      //   ],
+      // ),
+      body:SafeArea(
+        child: SingleChildScrollView(
+          child: Stack(
+        children: [
+          Column(
+            children: [
+              Container(
+                height: 140,
+                width: size.width,
+                padding: EdgeInsets.symmetric(vertical: 20),
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [
+                      Color(0xFFFC9DA1),
+                      Color(0xFFFE6A7E),
+                    ])
+                    // image: DecorationImage(
+                    //     image:
+                    //         AssetImage("assets/images/bg-taskScreen.png"),
+                    //     fit: BoxFit.fill
+                    //       )
+                    ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const TaskScreen()),
                           );
-                        } else if (snapshot.hasError) {
-                          return Center(
-                            child: Text(
-                              snapshot.error.toString(),
-                            ),
+                        },
+                        icon: const Icon(Icons.menu, color: Colors.white,)),
+                    const Text(  
+                      "Checklist",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.white,
+                          ),
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => TaskForm()),
                           );
-                        } else {
-                          return Text('');
-                        }
-                      }
-                    },
-                  ),
-                ],
+                        },
+                        icon: const Icon(Icons.add, color: Colors.white))
+                  ],
+                ),
               ),
+              Container(
+                margin: const EdgeInsets.only(top: 40, right: 20, left: 20),
+                // margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Task in progress',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500
+                        ),
+                    ),
+                    TextButton(onPressed: () {}, child: Text("Sort by",
+                    style: TextStyle(color: Colors.grey[600]),))
+                  ],
+                ),
+              ),
+
+              //pembatas
               FutureBuilder(
                 future: _schedule,
                 builder: (context, AsyncSnapshot<Schedule> snapshot) {
                   var state = snapshot.connectionState;
-                  if (snapshot.hasData) {
-                    allTask = snapshot.data!.data.length;
-
-                    return Positioned(
-                      top: 100,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 24),
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: IntrinsicHeight(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20.0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "coming soon",
-                                    ),
-                                    Text("All Tasks"),
-                                  ],
-                                ),
-                              ),
-                              const VerticalDivider(
-                                width: 20,
-                                thickness: 1,
-                                indent: 0,
-                                endIndent: 0,
-                                color: Colors.grey,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20.0),
-                                child: Column(
-                                  children: [
-                                    Text(allTask.toString()),
-                                    Text("Completed Tasks"),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                  if (state != ConnectionState.done) {
+                    return Center(
+                      child: CircularProgressIndicator(),
                     );
                   } else {
-                    return Text('');
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          var schedule = snapshot.data!.data[index];
+                          return InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, DetailTask.url,
+                                    arguments: schedule);
+                              },
+                              child: listItem(schedule));
+                        },
+                        itemCount: snapshot.data!.data.length,
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          snapshot.error.toString(),
+                        ),
+                      );
+                    } else {
+                      return Text('No Schedule');
+                    }
                   }
                 },
               ),
             ],
           ),
-        )));
+          FutureBuilder(
+            future: _schedule,
+            builder: (context, AsyncSnapshot<Schedule> snapshot) {
+              var state = snapshot.connectionState;
+              if (snapshot.hasData) {
+                allTask = snapshot.data!.data.length;
+
+                return Positioned(
+                  top: 80,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 24),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)),
+                    child: IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "coming soon",
+                                ),
+                                Text("All Tasks"),
+                              ],
+                            ),
+                          ),
+                          const VerticalDivider(
+                            width: 20,
+                            thickness: 1,
+                            indent: 4,
+                            endIndent: 4,
+                            color: Color(0xFFD9D9D9),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20.0),
+                            child: Column(
+                              children: [
+                                Text(allTask.toString()),
+                                Text("Completed Tasks"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return Text('');
+              }
+            },
+          ),
+        ],
+      ),
+        ),
+      ),
+    
+    );
   }
 
   Widget listItem(Schedules view) {
@@ -222,35 +280,52 @@ class _TaskScreenState extends State<TaskScreen> {
       color: Colors.white,
       child: SizedBox(
         height: 80,
-        width: 350,
+        width: 335,
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 20),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    child: Text(tanggal),
+                    child: Text(tanggal,
+                    style: TextStyle(
+                      color: Colors.grey[500],
+
+                    ),
+                    ),
                   ),
                   Container(
-                    child: Text(view.namaKegiatan),
+                    child: Text(view.namaKegiatan,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                    ),
+                    ),
                   ),
                 ],
               ),
               SizedBox(
-                width: 100,
+                width: 120,
               ),
               const VerticalDivider(
-                width: 10,
-                thickness: 1,
-                indent: 10,
-                endIndent: 10,
-                color: Colors.grey,
-              ),
+                  width: 10,
+                  thickness: 1,
+                  indent: 10,
+                  endIndent: 10,
+                  color: Color(0xFFD9D9D9)),
               Container(
-                child: Text(view.jam),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  view.jam,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFFE6A7E),
+                  ),
+                ),
               ),
             ],
           ),

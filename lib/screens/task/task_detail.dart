@@ -4,6 +4,8 @@ import 'package:wedding_planner/screens/task/task_edit_form.dart';
 import 'package:wedding_planner/model/scheduleModel.dart';
 import 'package:wedding_planner/screens/task/task_screen.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
+import 'package:wedding_planner/service/scheduleService.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class DetailTask extends StatelessWidget {
   static final url = "/detail-task";
@@ -155,6 +157,49 @@ class DetailTask extends StatelessWidget {
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),
               ),
+            ],
+          ),
+        ),
+        Container(
+          margin: const EdgeInsets.only(top: 10, right: 20),
+          child: Column(
+            children: <Widget>[
+              InkWell(
+                  child: Container(
+                    height: 45,
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.only(right: 16, left: 16, top: 20),
+                    child: Text(
+                      "Delete",
+                      style: GoogleFonts.poppins(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          Color(0xFFFE6A7E).withOpacity(0.65),
+                          Color(0xFFFE6A7E),
+                        ],
+                      ),
+                    ),
+                  ),
+                  onTap: () async {
+                    await ScheduleService()
+                        .deleteSchedule(schedule.id)
+                        .then((value) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return BaseScreen(index: 1);
+                      }));
+                    });
+                  }),
             ],
           ),
         ),

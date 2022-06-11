@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wedding_planner/model/teams.dart';
+import 'package:wedding_planner/model/teamsModel.dart';
 import 'package:wedding_planner/screens/teams/components/background.dart';
 import 'package:wedding_planner/screens/teams/create_teams.dart';
 

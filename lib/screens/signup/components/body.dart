@@ -115,10 +115,16 @@ class _BodyState extends State<Body> {
                             'email': _emailController.text,
                             'password': _passwordController.text,
                           };
-                          await regisService().register(body);
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(
-                                  "You have successfully create account")));
+                          await regisService().register(body).then((value) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return SignInScreen();
+                            }));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        'You have successfully create a account')));
+                          });
                         },
                       ),
                     ),

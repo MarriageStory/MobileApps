@@ -12,18 +12,21 @@ import 'package:wedding_planner/components/rounded_input_field_form.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
 //screen
 import 'package:wedding_planner/screens//task/task_screen.dart';
+import 'package:wedding_planner/screens/task/task_detail.dart';
 //service
 import 'package:wedding_planner/service/scheduleService.dart';
+//model
+import 'package:wedding_planner/model/scheduleModel.dart';
 
-class TaskForm extends StatefulWidget {
-  static final url = "/task-form";
-  const TaskForm({Key? key}) : super(key: key);
+class TaskEditForm extends StatefulWidget {
+  static final url = "/task-edit-form";
+  const TaskEditForm({Key? key}) : super(key: key);
 
   @override
-  State<TaskForm> createState() => _TaskFormState();
+  State<TaskEditForm> createState() => _TaskEditFormState();
 }
 
-class _TaskFormState extends State<TaskForm> {
+class _TaskEditFormState extends State<TaskEditForm> {
   //controller
   TextEditingController _nameClientController = TextEditingController();
   TextEditingController _nameTaskController = TextEditingController();
@@ -31,20 +34,16 @@ class _TaskFormState extends State<TaskForm> {
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
   TextEditingController _placeController = TextEditingController();
-  //pengecekan date & time
-  bool cekJam = false;
-  bool cekTgl = false;
+  //cek
+  bool inisialisasi = false;
   //date & time
   DateTime tanggal = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
-
-
 
   void showTime() {
     showTimePicker(context: context, initialTime: TimeOfDay.now())
         .then((value) {
       setState(() {
-        cekJam = true;
         _timeController.text = value!.format(context).toString();
       });
     });
@@ -56,24 +55,36 @@ class _TaskFormState extends State<TaskForm> {
   final TextStyle valueStyleBefore =
       GoogleFonts.poppins(fontSize: 14, color: Color(0xFF8d8d8d));
 
-  Future<Null> _selectDate(BuildContext context) async {
+  Future<Null> _selectDate(BuildContext context, DateTime date) async {
     // Initial DateTime FIinal Picked
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: tanggal,
+        initialDate: date,
         firstDate: DateTime(2015),
         lastDate: DateTime(2101));
 
-    if (picked != null && picked != tanggal)
+    if (picked != null)
       setState(() {
-        cekTgl = true;
         _dateController.text = picked.toString();
-        tanggal = picked;
       });
   }
 
   @override
   Widget build(BuildContext context) {
+    final Schedules schedule =
+        ModalRoute.of(context)!.settings.arguments as Schedules;
+
+    if (schedule != null && inisialisasi == false) {
+      _nameClientController.text = schedule.namaClient;
+      _nameTaskController.text = schedule.namaKegiatan;
+      _detailTaskController.text = schedule.detailKegiatan;
+      _placeController.text = schedule.tempat;
+      _timeController.text = schedule.jam;
+      _dateController.text = schedule.tanggal.toString();
+
+      inisialisasi = true;
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -103,7 +114,7 @@ class _TaskFormState extends State<TaskForm> {
                         width: 80,
                       ),
                       const Text(
-                        "Add Task",
+                        "Edit Task",
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
@@ -149,13 +160,10 @@ class _TaskFormState extends State<TaskForm> {
                   child: Column(children: [
                     dateTime(
                       // labelText: "Date",
-                      valueText: cekTgl != false
-                          ? DateFormat.yMd().format(tanggal)
-                          : "Date",
-                      valueStyle:
-                          cekTgl != false ? valueStyle : valueStyleBefore,
+                      valueText: DateFormat.yMd().format(schedule.tanggal),
+                      valueStyle: valueStyle,
                       onPressed: () {
-                        _selectDate(context);
+                        _selectDate(context, schedule.tanggal);
                       },
                     ),
                   ]),
@@ -166,10 +174,8 @@ class _TaskFormState extends State<TaskForm> {
                     dateTime(
                       // labelText: "Time",
                       // valueText: time.format(context),
-                      valueText:
-                          cekJam != false ? _timeController.text : "Time",
-                      valueStyle:
-                          cekJam != false ? valueStyle : valueStyleBefore,
+                      valueText: _timeController.text,
+                      valueStyle: valueStyle,
                       onPressed: () {
                         showTime();
                       },
@@ -218,7 +224,7 @@ class _TaskFormState extends State<TaskForm> {
                           };
 
                           await ScheduleService()
-                              .createSchedule(body)
+                              .updateSchedule(body, schedule.id)
                               .then((value) {
                             Navigator.push(
                               context,
@@ -228,7 +234,7 @@ class _TaskFormState extends State<TaskForm> {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text(
-                                        'You have successfully create a scedule')));
+                                        'You have successfully update a scedule')));
                           });
                         },
                       ),

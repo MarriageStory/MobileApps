@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 //navbar
 import 'package:wedding_planner/navbar/navbar.dart';
-import 'package:wedding_planner/screens/other/other_screen.dart';
 //sign up & sign in
 import 'package:wedding_planner/screens/signin/signin_screen.dart';
 import 'package:wedding_planner/screens/signup/signup_screen.dart';
@@ -12,12 +11,14 @@ import 'package:wedding_planner/screens/welcome/welcome_screen.dart';
 //task
 import 'package:wedding_planner/screens/task/task_screen.dart';
 import 'package:wedding_planner/screens/task/task_form.dart';
+import 'package:wedding_planner/screens/task/task_edit_form.dart';
 import 'package:wedding_planner/screens/task/task_detail.dart';
 //payment
 import 'package:wedding_planner/screens/homePage/homePage.dart';
 import 'package:wedding_planner/screens/payment/payment_detail.dart';
 import 'package:wedding_planner/screens/payment/payment_screen.dart';
-//teamss
+import 'package:wedding_planner/screens/payment/payment_add.dart';
+//teams
 import 'package:wedding_planner/screens/teams/teams_screen.dart';
 
 void main() {
@@ -44,12 +45,14 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashScreen(),
         '/welcome-screen': (context) => WelcomeScreen(),
         '/home-page': (context) => homePage(),
-        '/task-page':(context) => TaskScreen(),
         '/payment': (context) => PaymentPage(),
+        '/detail-payment': (context) => detailPayment(),
+        '/task-page': (context) => TaskScreen(),
+        '/task-form': (context) => TaskForm(),
+        '/task-edit-form': (context) => TaskEditForm(),
+        '/detail-task': (context) => DetailTask(),
         '/teams': (context) => TeamScreen(),
-        '/others': (context) => OtherScreen(),
-        '/base-screen': (context) => BaseScreen(),
-        '/detail-task':(context) => DetailTask(),
+        '/base-screen': (context) => BaseScreen(index: 0),
 
       },
       // home: BaseScreen(),

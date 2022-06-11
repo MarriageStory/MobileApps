@@ -45,7 +45,7 @@ class Schedules {
   DateTime tanggal;
   String jam;
   String tempat;
-  String? namaClient;
+  String namaClient;
   DateTime createdAt;
   DateTime updatedAt;
 

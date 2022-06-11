@@ -122,7 +122,9 @@ class _CreateTeamsState extends State<CreateTeams> {
                       await TeamsService().createTeams(body).then((value) {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return BaseScreen();
+                          return BaseScreen(
+                            index: 2,
+                          );
                         }));
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(

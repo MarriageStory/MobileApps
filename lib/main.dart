@@ -18,6 +18,8 @@ import 'package:wedding_planner/screens/homePage/homePage.dart';
 import 'package:wedding_planner/screens/payment/payment_detail.dart';
 import 'package:wedding_planner/screens/payment/payment_screen.dart';
 import 'package:wedding_planner/screens/payment/payment_add.dart';
+import 'package:wedding_planner/screens/payment/payment_edit.dart';
+import 'package:wedding_planner/screens/payment/payment_add_detail.dart';
 //teams
 import 'package:wedding_planner/screens/teams/teams_screen.dart';
 
@@ -42,11 +44,14 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
 
-        '/': (context) => SplashScreen(),
+        '/': (context) => TeamScreen(),
         '/welcome-screen': (context) => WelcomeScreen(),
         '/home-page': (context) => homePage(),
         '/payment': (context) => PaymentPage(),
         '/detail-payment': (context) => detailPayment(),
+        '/payment-add': (context) => AddPayment(),
+        '/payment-add-detail': (context) => AddDetailPayment(),
+        '/payment-edit': (context) => EditPayment(),
         '/task-page': (context) => TaskScreen(),
         '/task-form': (context) => TaskForm(),
         '/task-edit-form': (context) => TaskEditForm(),

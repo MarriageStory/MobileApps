@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-
 //pubspec
 import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,6 +36,10 @@ class _TaskFormState extends State<TaskForm> {
   //date & time
   DateTime tanggal = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
+  //style
+  final TextStyle valueStyle = GoogleFonts.poppins(
+    fontSize: 14,
+  );
 
 
 
@@ -49,12 +52,6 @@ class _TaskFormState extends State<TaskForm> {
       });
     });
   }
-
-  final TextStyle valueStyle = GoogleFonts.poppins(
-    fontSize: 14,
-  );
-  final TextStyle valueStyleBefore =
-      GoogleFonts.poppins(fontSize: 14, color: Color(0xFF8d8d8d));
 
   Future<Null> _selectDate(BuildContext context) async {
     // Initial DateTime FIinal Picked
@@ -115,45 +112,52 @@ class _TaskFormState extends State<TaskForm> {
                 Container(
                   margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
                   child: RoundedInputFieldForm(
+                    valueLabelStyle: valueStyle,
+                    labelText: "Client Name",
                     controller: _nameClientController,
-                    valueStyle: valueStyle,
+                    valueHintStyle: valueStyle,
                     hintText: "Client Name",
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
                   child: RoundedInputFieldForm(
+                    valueLabelStyle: valueStyle,
+                    labelText: "Task Name",
                     controller: _nameTaskController,
-                    valueStyle: valueStyle,
+                    valueHintStyle: valueStyle,
                     hintText: "Task Name",
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
                   child: RoundedInputFieldForm(
+                    valueLabelStyle: valueStyle,
+                    labelText: "Detail Task",
                     controller: _detailTaskController,
-                    valueStyle: valueStyle,
+                    valueHintStyle: valueStyle,
                     hintText: "Detail Task",
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
                   child: RoundedInputFieldForm(
+                    valueLabelStyle: valueStyle,
+                    labelText: "Place",
                     controller: _placeController,
-                    valueStyle: valueStyle,
+                    valueHintStyle: valueStyle,
                     hintText: "Place",
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 20, right: 16, left: 16),
+                  margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
                   child: Column(children: [
                     dateTime(
                       // labelText: "Date",
                       valueText: cekTgl != false
                           ? DateFormat.yMd().format(tanggal)
                           : "Date",
-                      valueStyle:
-                          cekTgl != false ? valueStyle : valueStyleBefore,
+                      valueStyle: valueStyle,
                       onPressed: () {
                         _selectDate(context);
                       },
@@ -161,15 +165,14 @@ class _TaskFormState extends State<TaskForm> {
                   ]),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 20, right: 16, left: 16),
+                  margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
                   child: Column(children: [
                     dateTime(
                       // labelText: "Time",
                       // valueText: time.format(context),
                       valueText:
                           cekJam != false ? _timeController.text : "Time",
-                      valueStyle:
-                          cekJam != false ? valueStyle : valueStyleBefore,
+                      valueStyle: valueStyle,
                       onPressed: () {
                         showTime();
                       },

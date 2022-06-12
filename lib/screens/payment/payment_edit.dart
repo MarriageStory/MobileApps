@@ -13,50 +13,59 @@ import 'package:wedding_planner/model/paymentModel.dart';
 import 'package:wedding_planner/service/paymentService.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
 
-class AddPayment extends StatefulWidget {
-  const AddPayment({Key? key}) : super(key: key);
+class EditPayment extends StatefulWidget {
+  static final url = "/payment-edit";
+  const EditPayment({Key? key}) : super(key: key);
 
   get hintText => null;
 
   @override
-  State<AddPayment> createState() => _AddPaymentState();
+  State<EditPayment> createState() => _EditPaymentState();
 }
 
-class _AddPaymentState extends State<AddPayment> {
+class _EditPaymentState extends State<EditPayment> {
   //controller
   TextEditingController _namePaymentController = TextEditingController();
   TextEditingController _amountPaymentController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   TextEditingController _statusPaymentController = TextEditingController();
-  //pengecekan date & time
-  bool cekJam = false;
+  //pengecekan date
   bool cekTgl = false;
-  //date & time
-  DateTime tanggal = DateTime.now();
-  TimeOfDay time = TimeOfDay.now();
   //style
   final TextStyle valueStyle = GoogleFonts.poppins(
     fontSize: 14,
   );
+  //cek inisialisasi
+  bool inisialisasi = false;
 
-  Future<Null> _selectDate(BuildContext context) async {
+  Future<Null> _selectDate(BuildContext context, DateTime date) async {
     // Initial DateTime FIinal Picked
     final DateTime? picked = await showDatePicker(
         context: context,
-        initialDate: tanggal,
+        initialDate: date,
         firstDate: DateTime(2015),
         lastDate: DateTime(2101));
 
-    if (picked != null && picked != tanggal)
+    if (picked != null)
       setState(() {
         cekTgl = true;
         _dateController.text = picked.toString();
-        tanggal = picked;
       });
   }
 
   @override
   Widget build(BuildContext context) {
+    final payments payment =
+        ModalRoute.of(context)!.settings.arguments as payments;
+
+    if (payment != null && inisialisasi == false) {
+      _namePaymentController.text = payment.namaClient;
+      _amountPaymentController.text = payment.tunaiKeseluruhan;
+      _dateController.text = payment.tanggal.toString();
+      _statusPaymentController.text = payment.keterangan;
+
+      inisialisasi = true;
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -75,7 +84,7 @@ class _AddPaymentState extends State<AddPayment> {
                   children: [
                     Icon(Icons.arrow_back),
                     Text(
-                      'Add Payment',
+                      'Edit Payment',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
@@ -126,11 +135,11 @@ class _AddPaymentState extends State<AddPayment> {
                         dateTime(
                           // labelText: "Date",
                           valueText: cekTgl != false
-                              ? DateFormat.yMd().format(tanggal)
+                              ? DateFormat.yMd().format(payment.tanggal)
                               : "Date",
                           valueStyle: valueStyle,
                           onPressed: () {
-                            _selectDate(context);
+                            _selectDate(context, payment.tanggal);
                           },
                         ),
                       ]),
@@ -150,7 +159,7 @@ class _AddPaymentState extends State<AddPayment> {
                       child: ToggleSwitch(
                         minWidth: 120.0,
                         minHeight: 40.0,
-                        initialLabelIndex: 1,
+                        initialLabelIndex: payment.keterangan == "done" ? 1 : 0,
                         activeFgColor: Colors.white,
                         activeBgColor: [Colors.pink.shade300],
                         inactiveBgColor: Colors.white,
@@ -215,7 +224,7 @@ class _AddPaymentState extends State<AddPayment> {
                               };
 
                               await PaymentService()
-                                  .createPayment(body)
+                                  .updatePayment(body, payment.id)
                                   .then((value) {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {
@@ -224,7 +233,7 @@ class _AddPaymentState extends State<AddPayment> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         content: Text(
-                                            'You have successfully create a scedule')));
+                                            'You have successfully update a payment')));
                               });
                             },
                           ),

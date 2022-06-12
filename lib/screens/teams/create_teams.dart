@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:wedding_planner/screens/teams/teams_screen.dart';
 import 'package:wedding_planner/service/scheduleService.dart';
-import 'package:wedding_planner/service/teams.dart';
+import 'package:wedding_planner/service/teamsService.dart';
 
 class CreateTeams extends StatefulWidget {
   const CreateTeams({Key? key}) : super(key: key);
@@ -116,14 +116,14 @@ class _CreateTeamsState extends State<CreateTeams> {
                     onTap: () async {
                       Map<String, dynamic> body = {
                         'leader': leaders.text,
-                        'staf': leaders.text,
+                        'staf': staff.text,
                       };
-
+                      
                       await TeamsService().createTeams(body).then((value) {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return BaseScreen(
-                            index: 2,
+                            index: 3,
                           );
                         }));
                         ScaffoldMessenger.of(context).showSnackBar(

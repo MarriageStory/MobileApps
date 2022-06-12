@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wedding_planner/model/teams.dart';
+import 'package:wedding_planner/model/teamsModel.dart';
 import 'package:wedding_planner/screens/teams/components/background.dart';
 import 'package:wedding_planner/screens/teams/create_teams.dart';
+import 'package:wedding_planner/service/teamsService.dart';
 
 class TeamScreen extends StatefulWidget {
   static const routeName = '/teams';
@@ -13,15 +14,30 @@ class TeamScreen extends StatefulWidget {
 }
 
 class _TeamScreenState extends State<TeamScreen> {
-  late Future<TeamsModel> team;
+  late Future<Team> _team;
+  //panjang data
+  int totalData = 0;
+  //anggota tim
+  int leader = 0;
+  int staff = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _team = TeamsService().getAllTeams();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Background(
-          child: Stack(
-            alignment: Alignment.center,
+          child: Column(
+            // alignment: Alignment.center,
             children: [
+              SizedBox(
+                height: 35,
+              ),
               Positioned(
                 top: 55,
                 left: 20,
@@ -62,8 +78,8 @@ class _TeamScreenState extends State<TeamScreen> {
                 ),
               ),
               FutureBuilder(
-                future: team,
-                builder: (context, AsyncSnapshot<TeamsModel> snapshot) {
+                future: _team,
+                builder: (context, AsyncSnapshot<Team> snapshot) {
                   var state = snapshot.connectionState;
                   if (state != ConnectionState.done) {
                     return Center(
@@ -76,8 +92,15 @@ class _TeamScreenState extends State<TeamScreen> {
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         itemBuilder: (context, index) {
-                          var _team = snapshot.data!.data[index];
-                          return InkWell(child: listItem(_team));
+                          var team = snapshot.data!.data[index];
+                          totalData++;
+                          leader += int.parse(team.leader);
+                          staff += int.parse(team.staf);
+                          if (snapshot.data!.data.length > totalData) {
+                            return SizedBox();
+                          } else {
+                            return InkWell(child: listItem(leader, staff));
+                          }
                         },
                         itemCount: snapshot.data!.data.length,
                       );
@@ -93,63 +116,6 @@ class _TeamScreenState extends State<TeamScreen> {
                   }
                 },
               ),
-              Positioned(
-                top: 150,
-                child: Column(
-                  children: [
-                    Container(
-                      height: 65,
-                      width: 325,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.grey,
-                              blurRadius: 0.1,
-                              offset: Offset(0, 0), // Shadow position
-                            ),
-                          ],
-                        ),
-                        child: Stack(
-                          children: [
-                            Positioned(
-                                top: 22,
-                                left: 30,
-                                child: Text(
-                                  "Project Leader",
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                )),
-                            Positioned(
-                              top: 22,
-                              right: 50,
-                              child: Image.asset(
-                                'assets/icons/people.png',
-                              ),
-                            ),
-                            Positioned(
-                                top: 22,
-                                right: 25,
-                                child: Text(
-                                  "hjbjbj",
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 16,
-                                    color: Color(0xFFFA5D76),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                )),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
@@ -158,7 +124,7 @@ class _TeamScreenState extends State<TeamScreen> {
     );
   }
 
-  Widget listItem(Teams view) {
+  Widget listItem(int leader, int staff) {
     return Column(
       children: [
         Container(
@@ -199,7 +165,7 @@ class _TeamScreenState extends State<TeamScreen> {
                     top: 22,
                     right: 25,
                     child: Text(
-                      view.leader,
+                      leader.toString(),
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         color: Color(0xFFFA5D76),
@@ -209,6 +175,9 @@ class _TeamScreenState extends State<TeamScreen> {
               ],
             ),
           ),
+        ),
+        SizedBox(
+          height: 15,
         ),
         Container(
           height: 65,
@@ -248,7 +217,7 @@ class _TeamScreenState extends State<TeamScreen> {
                     top: 22,
                     right: 25,
                     child: Text(
-                      view.staf,
+                      staff.toString(),
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         color: Color(0xFFFA5D76),

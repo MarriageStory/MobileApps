@@ -29,7 +29,7 @@ class _TeamScreenState extends State<TeamScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(  
       body: SingleChildScrollView(
         child: Background(
           child: Column(
@@ -148,7 +148,7 @@ class _TeamScreenState extends State<TeamScreen> {
                     top: 22,
                     left: 30,
                     child: Text(
-                      "Leader",
+                      "Leader Project",
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,

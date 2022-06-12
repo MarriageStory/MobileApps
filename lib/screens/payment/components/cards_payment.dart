@@ -49,14 +49,14 @@ class CardsPayment extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 25.0,
+                  height: 20.0,
                 ),
                 Text(
                   pay,
                   style: TextStyle(
-                    color: Colors.grey[800],
+                    color: Colors.grey[700],
                     fontSize: 18,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: FontWeight.w800,
                   ),
                 ),
               ],

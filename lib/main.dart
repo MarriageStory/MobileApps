@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
 
-        '/': (context) => TeamScreen(),
+        '/': (context) => SplashScreen(),
         '/welcome-screen': (context) => WelcomeScreen(),
         '/home-page': (context) => homePage(),
         '/payment': (context) => PaymentPage(),

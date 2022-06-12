@@ -43,6 +43,7 @@ class _PaymentPageState extends State<PaymentPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: SafeArea(
@@ -50,39 +51,46 @@ class _PaymentPageState extends State<PaymentPage> {
           const SizedBox(
             height: 15.0,
           ),
-
+  
           // AppBar
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
+          Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                SizedBox(
-                  width: 5.0,
+                Container(
+                  height: 20,
+                  width: size.width*0.3,
                 ),
-                Text(
-                  'Payment',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
+                Container(
+                  width: size.width*0.3,
+                  child: Text(
+                    'Payment',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AddPayment()),
-                      );
-                    },
-                    child: Icon(
-                      Icons.add,
-                      color: Colors.black,
-                    )),
+                Container(
+                  width: size.width*0.3,
+                  child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddPayment()),
+                        );
+                      },
+                      child: Icon(
+                        Icons.add,
+                        color: Colors.black,
+                      )),
+                ),
               ],
             ),
           ),
           SizedBox(
-            height: 30.0,
+            height: 15.0,
           ),
 
           //Cards
@@ -111,7 +119,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               children: [
                                 Container(
                                   width: 160,
-                                  height: 140,
+                                  height: 160,
                                   padding: EdgeInsets.all(30.0),
                                   decoration: BoxDecoration(
                                     color: Colors.pink[200],
@@ -150,7 +158,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               children: [
                                 Container(
                                   width: 160,
-                                  height: 140,
+                                  height: 160,
                                   padding: EdgeInsets.all(30.0),
                                   decoration: BoxDecoration(
                                     color: Colors.white70,
@@ -169,7 +177,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                         ),
                                       ),
                                       SizedBox(
-                                        height: 58.0,
+                                        height: 40.0,
                                       ),
                                       Text(
                                         allPayment.toString(),
@@ -198,7 +206,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         children: [
                           Container(
                             width: 160,
-                            height: 140,
+                            height: 160,
                             padding: EdgeInsets.all(30.0),
                             decoration: BoxDecoration(
                               color: Colors.pink[200],
@@ -236,7 +244,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         children: [
                           Container(
                             width: 160,
-                            height: 140,
+                            height: 160,
                             padding: EdgeInsets.all(30.0),
                             decoration: BoxDecoration(
                               color: Colors.white70,
@@ -254,7 +262,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 58.0,
+                                  height: 40.0,
                                 ),
                                 Text(
                                   allPayment.toString(),
@@ -278,7 +286,7 @@ class _PaymentPageState extends State<PaymentPage> {
             },
           ),
           SizedBox(
-            height: 10.0,
+            height: 5.0,
           ),
 
           Expanded(
@@ -296,13 +304,13 @@ class _PaymentPageState extends State<PaymentPage> {
                           style: TextStyle(
                             fontSize: 14.0,
                             fontWeight: FontWeight.w600,
-                            color: Colors.black,
+                            color: Colors.grey[600],
                           ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: 20.0,
+                      height: 12.0,
                     ),
 
                     // List view payment

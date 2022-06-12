@@ -48,32 +48,39 @@ class _PaymentPageState extends State<PaymentPage> {
       backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: ListView(children: <Widget>[
-          const SizedBox(
-            height: 15.0,
-          ),
-  
           // AppBar
           Container(
+            height: 140,
+            width: size.width,
+            padding: EdgeInsets.symmetric(vertical: 20),
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    colors: [
+                  Color(0xFFFC9DA1),
+                  Color(0xFFFE6A7E),
+                ])),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  height: 20,
-                  width: size.width*0.3,
+                  width: size.width * 0.3,
                 ),
                 Container(
-                  width: size.width*0.3,
+                  width: size.width * 0.3,
                   child: Text(
                     'Payment',
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                      color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 Container(
-                  width: size.width*0.3,
+                  width: size.width * 0.3,
                   child: TextButton(
                       onPressed: () {
                         Navigator.push(
@@ -83,7 +90,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       },
                       child: Icon(
                         Icons.add,
-                        color: Colors.black,
+                        color: Colors.white,
                       )),
                 ),
               ],
@@ -122,7 +129,13 @@ class _PaymentPageState extends State<PaymentPage> {
                                   height: 160,
                                   padding: EdgeInsets.all(30.0),
                                   decoration: BoxDecoration(
-                                    color: Colors.pink[200],
+                                    gradient: LinearGradient(
+                                        begin: Alignment.bottomRight,
+                                        end: Alignment.topLeft,
+                                        colors: [
+                                          Color(0xFFFC9DA1),
+                                          Color(0xFFFE6A7E),
+                                        ]),
                                     borderRadius: BorderRadius.circular(15),
                                   ),
                                   child: Column(
@@ -131,10 +144,11 @@ class _PaymentPageState extends State<PaymentPage> {
                                     children: [
                                       Text(
                                         'Payment Done',
+                                        overflow: TextOverflow.ellipsis,
                                         // ignore: prefer_const_constructors
                                         style: TextStyle(
                                           fontSize: 14,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w500,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -172,7 +186,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                         'All Payment',
                                         style: TextStyle(
                                           fontSize: 14,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight: FontWeight.w500,
                                           color: Colors.grey[700],
                                         ),
                                       ),

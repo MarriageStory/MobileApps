@@ -29,52 +29,49 @@ class _TeamScreenState extends State<TeamScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(  
+    return Scaffold(
       body: SingleChildScrollView(
-        child: Background(
-          child: Column(
+        child: Stack(children: [
+          Column(
             // alignment: Alignment.center,
             children: [
-              SizedBox(
-                height: 35,
-              ),
-              Positioned(
-                top: 55,
-                left: 20,
-                child: Row(
-                  children: [
-                    // Icon(
-                    //   Icons.menu,
-                    //   color: Colors.white,
-                    //   size: 35,
-                    // ),
-                    Image.asset(
-                      'assets/icons/menu.png',
-                    ),
-                    SizedBox(
-                      width: 107,
-                    ),
-                    Text(
-                      "Teams",
-                      style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
+              Container(
+                height: 140,
+                width: MediaQuery.of(context).size.width,
+                //padding: EdgeInsets.symmetric(vertical: 20),
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [
+                      Color(0xFFFC9DA1),
+                      Color(0xFFFE6A7E),
+                    ])),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(width: MediaQuery.of(context).size.width * 0.1),
+                      const Text(
+                        " Teams",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: 107,
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CreateTeams()),
-                          );
-                        },
-                        icon: const Icon(Icons.add, color: Colors.white))
-                  ],
+                      IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreateTeams()),
+                            );
+                          },
+                          icon: const Icon(Icons.add, color: Colors.white))
+                    ],
+                  ),
                 ),
               ),
               FutureBuilder(
@@ -118,7 +115,7 @@ class _TeamScreenState extends State<TeamScreen> {
               ),
             ],
           ),
-        ),
+        ]),
       ),
       bottomNavigationBar: BottomAppBar(),
     );

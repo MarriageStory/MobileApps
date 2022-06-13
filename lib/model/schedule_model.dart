@@ -1,24 +1,25 @@
 // To parse this JSON data, do
 //
-//     final schedule = scheduleFromJson(jsonString);
+//     final schedulesModel = schedulesModelFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-Schedule scheduleFromJson(String str) => Schedule.fromJson(json.decode(str));
+SchedulesModel schedulesModelFromJson(String str) =>
+    SchedulesModel.fromJson(json.decode(str));
 
-String scheduleToJson(Schedule data) => json.encode(data.toJson());
+String schedulesModelToJson(SchedulesModel data) => json.encode(data.toJson());
 
-class Schedule {
-  Schedule({
+class SchedulesModel {
+  SchedulesModel({
     required this.data,
   });
 
-  List<Schedules> data;
+  List<ScheduleModel> data;
 
-  factory Schedule.fromJson(Map<String, dynamic> json) => Schedule(
-        data: List<Schedules>.from(
-            json["data"].map((x) => Schedules.fromJson(x))),
+  factory SchedulesModel.fromJson(Map<String, dynamic> json) => SchedulesModel(
+        data: List<ScheduleModel>.from(
+            json["data"].map((x) => ScheduleModel.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -26,13 +27,12 @@ class Schedule {
       };
 }
 
-class Schedules {
-  Schedules({
+class ScheduleModel {
+  ScheduleModel({
     required this.id,
     required this.namaKegiatan,
     required this.detailKegiatan,
     required this.tanggal,
-    required this.jam,
     required this.tempat,
     required this.namaClient,
     required this.createdAt,
@@ -43,18 +43,16 @@ class Schedules {
   String namaKegiatan;
   String detailKegiatan;
   DateTime tanggal;
-  String jam;
   String tempat;
   String namaClient;
   DateTime createdAt;
   DateTime updatedAt;
 
-  factory Schedules.fromJson(Map<String, dynamic> json) => Schedules(
+  factory ScheduleModel.fromJson(Map<String, dynamic> json) => ScheduleModel(
         id: json["id"],
         namaKegiatan: json["nama_kegiatan"],
         detailKegiatan: json["detail_kegiatan"],
         tanggal: DateTime.parse(json["tanggal"]),
-        jam: json["jam"],
         tempat: json["tempat"],
         namaClient: json["nama_client"],
         createdAt: DateTime.parse(json["created_at"]),
@@ -65,9 +63,7 @@ class Schedules {
         "id": id,
         "nama_kegiatan": namaKegiatan,
         "detail_kegiatan": detailKegiatan,
-        "tanggal":
-            "${tanggal.year.toString().padLeft(4, '0')}-${tanggal.month.toString().padLeft(2, '0')}-${tanggal.day.toString().padLeft(2, '0')}",
-        "jam": jam,
+        "tanggal": tanggal.toIso8601String(),
         "tempat": tempat,
         "nama_client": namaClient,
         "created_at": createdAt.toIso8601String(),

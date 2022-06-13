@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:wedding_planner/model/schedule_model.dart';
 import 'package:wedding_planner/screens/task/task_form.dart';
 import 'package:wedding_planner/screens/task/task_detail.dart';
-import 'package:wedding_planner/model/scheduleModel.dart';
-import 'package:wedding_planner/service/scheduleService.dart';
 import 'package:intl/intl.dart';
+import 'package:wedding_planner/service/schedule_service.dart';
 
 class TaskScreen extends StatefulWidget {
   static const routeName = "/task-page";
@@ -15,7 +15,7 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  late Future<Schedule> _schedule;
+  late Future<SchedulesModel> _schedule;
   int id = 0;
   int allTask = 0;
   int totalData = 0;
@@ -23,7 +23,11 @@ class _TaskScreenState extends State<TaskScreen> {
   @override
   void initState() {
     super.initState();
-    _schedule = ScheduleService().getAllSchedule();
+    try {
+      _schedule = ScheduleService.getAllSchedules();
+    } catch (e) {
+      print(e);
+    }
   }
 
   void refreshData() {
@@ -42,56 +46,6 @@ class _TaskScreenState extends State<TaskScreen> {
 
     return Scaffold(
       backgroundColor: Color(0xFFF6F6F6),
-      // body: Stack(
-      //   children: <Widget>[
-      //     //AppBar Background
-      //     Container(
-      //         height: MediaQuery.of(context).size.height * 0.2,
-      //         decoration: const BoxDecoration(
-      //           image: DecorationImage(
-      //             image: AssetImage("assets/images/main-top3.png"),
-      //             fit: BoxFit.fill,
-      //           ),
-      //         )),
-      //     //TaskStatus
-      //     Container(
-      //       height: 200,
-      //       child: Card(
-      //           elevation: 20.0,
-      //           margin:
-      //               const EdgeInsets.only(left: 15.0, right: 15.0, top: 100.0),
-      //           child: ListView(
-      //               padding: const EdgeInsets.only(
-      //                   top: 20.0, left: 20.0, right: 18.0, bottom: 5.0),
-      //               children: <Widget>[
-      //                 FutureBuilder(
-      //                   future: _schedule,
-      //                   builder: (context, AsyncSnapshot<Schedule> snapshot) {
-      //                     var state = snapshot.connectionState;
-      //                     if (snapshot.hasData) {
-      //                       allTask = snapshot.data!.data.length;
-
-      //                       return Row(
-      //                         children: <Widget>[
-      //                           Expanded(
-      //                             child:
-      //                             Text("Ainul"),
-      //                           ),
-      //                           Expanded(
-      //                             child:
-      //                               Text("Ainul"),
-      //                           )
-      //                         ],
-      //                       );
-      //                     } else {
-      //                       return Text('');
-      //                     }
-      //                   },
-      //                 ),
-      //               ])),
-      //     ),
-      //   ],
-      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Stack(
@@ -109,13 +63,7 @@ class _TaskScreenState extends State<TaskScreen> {
                             colors: [
                           Color(0xFFFC9DA1),
                           Color(0xFFFE6A7E),
-                        ])
-                        // image: DecorationImage(
-                        //     image:
-                        //         AssetImage("assets/images/bg-taskScreen.png"),
-                        //     fit: BoxFit.fill
-                        //       )
-                        ),
+                        ])),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,7 +124,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   //pembatas
                   FutureBuilder(
                     future: _schedule,
-                    builder: (context, AsyncSnapshot<Schedule> snapshot) {
+                    builder: (context, AsyncSnapshot<SchedulesModel> snapshot) {
                       var state = snapshot.connectionState;
                       if (state != ConnectionState.done) {
                         return Center(
@@ -189,13 +137,13 @@ class _TaskScreenState extends State<TaskScreen> {
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
-                              var schedule = snapshot.data!.data[index];
+                              var schedule = snapshot.data?.data[index];
                               return InkWell(
                                   onTap: () {
                                     Navigator.pushNamed(context, DetailTask.url,
                                         arguments: schedule);
                                   },
-                                  child: listItem(schedule));
+                                  child: listItem(schedule!));
                             },
                             itemCount: snapshot.data!.data.length,
                           );
@@ -215,7 +163,7 @@ class _TaskScreenState extends State<TaskScreen> {
               ),
               FutureBuilder(
                 future: _schedule,
-                builder: (context, AsyncSnapshot<Schedule> snapshot) {
+                builder: (context, AsyncSnapshot<SchedulesModel> snapshot) {
                   var state = snapshot.connectionState;
                   if (snapshot.hasData) {
                     allTask = snapshot.data!.data.length;
@@ -280,7 +228,7 @@ class _TaskScreenState extends State<TaskScreen> {
     );
   }
 
-  Widget listItem(Schedules view) {
+  Widget listItem(ScheduleModel view) {
     String tanggal = DateFormat.yMd().format(view.tanggal);
 
     return Card(
@@ -327,7 +275,8 @@ class _TaskScreenState extends State<TaskScreen> {
               Container(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  view.jam,
+                  DateFormat.yMd().format(view.tanggal),
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,

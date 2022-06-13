@@ -11,8 +11,7 @@ import 'package:wedding_planner/components/rounded_input_field_form.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
 //screen
 import 'package:wedding_planner/screens//task/task_screen.dart';
-//service
-import 'package:wedding_planner/service/scheduleService.dart';
+import 'package:wedding_planner/service/schedule_service.dart';
 
 class TaskForm extends StatefulWidget {
   static final url = "/task-form";
@@ -28,7 +27,6 @@ class _TaskFormState extends State<TaskForm> {
   TextEditingController _nameTaskController = TextEditingController();
   TextEditingController _detailTaskController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
-  TextEditingController _timeController = TextEditingController();
   TextEditingController _placeController = TextEditingController();
   //pengecekan date & time
   bool cekJam = false;
@@ -41,17 +39,6 @@ class _TaskFormState extends State<TaskForm> {
     fontSize: 14,
   );
 
-
-
-  void showTime() {
-    showTimePicker(context: context, initialTime: TimeOfDay.now())
-        .then((value) {
-      setState(() {
-        cekJam = true;
-        _timeController.text = value!.format(context).toString();
-      });
-    });
-  }
 
   Future<Null> _selectDate(BuildContext context) async {
     // Initial DateTime FIinal Picked
@@ -165,21 +152,6 @@ class _TaskFormState extends State<TaskForm> {
                   ]),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
-                  child: Column(children: [
-                    dateTime(
-                      // labelText: "Time",
-                      // valueText: time.format(context),
-                      valueText:
-                          cekJam != false ? _timeController.text : "Time",
-                      valueStyle: valueStyle,
-                      onPressed: () {
-                        showTime();
-                      },
-                    ),
-                  ]),
-                ),
-                Container(
                   margin: const EdgeInsets.only(top: 10, right: 20),
                   child: Column(
                     children: <Widget>[
@@ -215,13 +187,11 @@ class _TaskFormState extends State<TaskForm> {
                             'nama_kegiatan': _nameTaskController.text,
                             'detail_kegiatan': _detailTaskController.text,
                             'tanggal': _dateController.text,
-                            'jam': _timeController.text,
                             'tempat': _placeController.text,
                             'nama_client': _nameClientController.text,
                           };
 
-                          await ScheduleService()
-                              .createSchedule(body)
+                          await ScheduleService.createNewSchedule(body)
                               .then((value) {
                             Navigator.push(
                               context,

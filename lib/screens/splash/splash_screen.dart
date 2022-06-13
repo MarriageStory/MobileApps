@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planner/screens/splash/components/body.dart';
 import 'package:wedding_planner/screens/welcome/welcome_screen.dart';
 
@@ -18,9 +19,20 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
       Duration(seconds: 2),
       () {
-        Navigator.pushReplacementNamed(context, "/welcome-screen");
+        checkToken();
       },
     );
+  }
+
+  Future<void> checkToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString("token");
+
+    if (token != null) {
+      Navigator.pushReplacementNamed(context, "/base-screen");
+    } else {
+      Navigator.pushReplacementNamed(context, "/welcome-screen");
+    }
   }
 
   Widget build(BuildContext context) {

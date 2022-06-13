@@ -9,9 +9,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:wedding_planner/components/dateTime.dart';
-import 'package:wedding_planner/model/paymentModel.dart';
-import 'package:wedding_planner/service/paymentService.dart';
+import 'package:wedding_planner/model/payment_model.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
+import 'package:wedding_planner/service/payment_service.dart';
 
 class EditPayment extends StatefulWidget {
   static final url = "/payment-edit";
@@ -55,12 +55,12 @@ class _EditPaymentState extends State<EditPayment> {
 
   @override
   Widget build(BuildContext context) {
-    final payments payment =
-        ModalRoute.of(context)!.settings.arguments as payments;
+    final PaymentModel payment =
+        ModalRoute.of(context)!.settings.arguments as PaymentModel;
 
     if (payment != null && inisialisasi == false) {
       _namePaymentController.text = payment.namaClient;
-      _amountPaymentController.text = payment.tunaiKeseluruhan;
+      _amountPaymentController.text = payment.tunaiKeseluruhan.toString();
       _dateController.text = payment.tanggal.toString();
       _statusPaymentController.text = payment.keterangan;
 
@@ -170,9 +170,13 @@ class _EditPaymentState extends State<EditPayment> {
                         labels: ['Pending', 'Done'],
                         onToggle: (index) {
                           if (index == 0) {
-                            _statusPaymentController.text = "pending";
+                            setState(() {
+                              _statusPaymentController.text = "pending";
+                            });
                           } else {
-                            _statusPaymentController.text = "done";
+                            setState(() {
+                              _statusPaymentController.text = "done";
+                            });
                           }
 
                           print('switched to: $index');
@@ -219,12 +223,12 @@ class _EditPaymentState extends State<EditPayment> {
                                 'tunai_keseluruhan':
                                     _amountPaymentController.text,
                                 'tanggal': _dateController.text,
-                                'terbayar': "0",
+                                'status': _statusPaymentController.text,
                                 'keterangan': _statusPaymentController.text,
                               };
 
-                              await PaymentService()
-                                  .updatePayment(body, payment.id)
+                              await PaymentService.updatePayment(
+                                      payment.id, body)
                                   .then((value) {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) {

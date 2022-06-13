@@ -8,15 +8,14 @@ import 'package:date_time_picker/date_time_picker.dart';
 //component
 import 'package:wedding_planner/components/dateTime.dart';
 import 'package:wedding_planner/components/rounded_input_field_form.dart';
+import 'package:wedding_planner/model/schedule_model.dart';
 //navbar
 import 'package:wedding_planner/navbar/navbar.dart';
 //screen
 import 'package:wedding_planner/screens//task/task_screen.dart';
 import 'package:wedding_planner/screens/task/task_detail.dart';
-//service
-import 'package:wedding_planner/service/scheduleService.dart';
 //model
-import 'package:wedding_planner/model/scheduleModel.dart';
+import 'package:wedding_planner/service/schedule_service.dart';
 
 class TaskEditForm extends StatefulWidget {
   static final url = "/task-edit-form";
@@ -32,23 +31,12 @@ class _TaskEditFormState extends State<TaskEditForm> {
   TextEditingController _nameTaskController = TextEditingController();
   TextEditingController _detailTaskController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
-  TextEditingController _timeController = TextEditingController();
   TextEditingController _placeController = TextEditingController();
   //cek
   bool inisialisasi = false;
   //date & time
   DateTime tanggal = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
-
-  void showTime() {
-    showTimePicker(context: context, initialTime: TimeOfDay.now())
-        .then((value) {
-      setState(() {
-        _timeController.text = value!.format(context).toString();
-      });
-    });
-  }
-
   final TextStyle valueStyle = GoogleFonts.poppins(
     fontSize: 14,
   );
@@ -71,15 +59,14 @@ class _TaskEditFormState extends State<TaskEditForm> {
 
   @override
   Widget build(BuildContext context) {
-    final Schedules schedule =
-        ModalRoute.of(context)!.settings.arguments as Schedules;
+    final schedule =
+        ModalRoute.of(context)!.settings.arguments as ScheduleModel;
 
     if (schedule != null && inisialisasi == false) {
       _nameClientController.text = schedule.namaClient;
       _nameTaskController.text = schedule.namaKegiatan;
       _detailTaskController.text = schedule.detailKegiatan;
       _placeController.text = schedule.tempat;
-      _timeController.text = schedule.jam;
       _dateController.text = schedule.tanggal.toString();
 
       inisialisasi = true;
@@ -177,20 +164,6 @@ class _TaskEditFormState extends State<TaskEditForm> {
                   ]),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 20, right: 16, left: 16),
-                  child: Column(children: [
-                    dateTime(
-                      // labelText: "Time",
-                      // valueText: time.format(context),
-                      valueText: _timeController.text,
-                      valueStyle: valueStyle,
-                      onPressed: () {
-                        showTime();
-                      },
-                    ),
-                  ]),
-                ),
-                Container(
                   margin: const EdgeInsets.only(top: 10, right: 20),
                   child: Column(
                     children: <Widget>[
@@ -226,13 +199,12 @@ class _TaskEditFormState extends State<TaskEditForm> {
                             'nama_kegiatan': _nameTaskController.text,
                             'detail_kegiatan': _detailTaskController.text,
                             'tanggal': _dateController.text,
-                            'jam': _timeController.text,
                             'tempat': _placeController.text,
                             'nama_client': _nameClientController.text,
                           };
 
-                          await ScheduleService()
-                              .updateSchedule(body, schedule.id)
+                          await ScheduleService.updateSchedule(
+                                  schedule.id, body)
                               .then((value) {
                             Navigator.push(
                               context,

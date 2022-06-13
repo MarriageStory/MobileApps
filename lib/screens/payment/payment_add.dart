@@ -2,16 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:toggle_switch/toggle_switch.dart';
-import 'package:wedding_planner/components/rounded_button.dart';
-import 'package:wedding_planner/components/text_field_container.dart';
 import 'package:wedding_planner/components/rounded_input_field_form.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:wedding_planner/components/dateTime.dart';
-import 'package:wedding_planner/model/paymentModel.dart';
-import 'package:wedding_planner/service/paymentService.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
+import 'package:wedding_planner/service/payment_service.dart';
 
 class AddPayment extends StatefulWidget {
   const AddPayment({Key? key}) : super(key: key);
@@ -73,7 +69,9 @@ class _AddPaymentState extends State<AddPayment> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.arrow_back),
+                    GestureDetector(
+                        child: Icon(Icons.arrow_back),
+                        onTap: () => Navigator.pop(context)),
                     Text(
                       'Add Payment',
                       style: TextStyle(
@@ -161,9 +159,13 @@ class _AddPaymentState extends State<AddPayment> {
                         labels: ['Pending', 'Done'],
                         onToggle: (index) {
                           if (index == 0) {
-                            _statusPaymentController.text = "pending";
+                            setState(() {
+                              _statusPaymentController.text = "pending";
+                            });
                           } else {
-                            _statusPaymentController.text = "done";
+                            setState(() {
+                              _statusPaymentController.text = "done";
+                            });
                           }
 
                           print('switched to: $index');
@@ -210,22 +212,29 @@ class _AddPaymentState extends State<AddPayment> {
                                 'tunai_keseluruhan':
                                     _amountPaymentController.text,
                                 'tanggal': _dateController.text,
-                                'terbayar': "0",
+                                'status': _statusPaymentController.text,
                                 'keterangan': _statusPaymentController.text,
                               };
 
-                              await PaymentService()
-                                  .createPayment(body)
-                                  .then((value) {
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context) {
-                                  return BaseScreen(index: 2);
-                                }));
+                              try {
+                                await PaymentService.createNewPayment(body)
+                                    .then((value) {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context) {
+                                    return BaseScreen(index: 2);
+                                  }));
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          backgroundColor: Colors.green,
+                                          content: Text(
+                                              'You have successfully create a scedule')));
+                                });
+                              } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                        content: Text(
-                                            'You have successfully create a scedule')));
-                              });
+                                        backgroundColor: Colors.red,
+                                        content: Text('Terjadi Kesalahan !')));
+                              }
                             },
                           ),
                         ],

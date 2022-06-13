@@ -46,56 +46,6 @@ class _TaskScreenState extends State<TaskScreen> {
 
     return Scaffold(
       backgroundColor: Color(0xFFF6F6F6),
-      // body: Stack(
-      //   children: <Widget>[
-      //     //AppBar Background
-      //     Container(
-      //         height: MediaQuery.of(context).size.height * 0.2,
-      //         decoration: const BoxDecoration(
-      //           image: DecorationImage(
-      //             image: AssetImage("assets/images/main-top3.png"),
-      //             fit: BoxFit.fill,
-      //           ),
-      //         )),
-      //     //TaskStatus
-      //     Container(
-      //       height: 200,
-      //       child: Card(
-      //           elevation: 20.0,
-      //           margin:
-      //               const EdgeInsets.only(left: 15.0, right: 15.0, top: 100.0),
-      //           child: ListView(
-      //               padding: const EdgeInsets.only(
-      //                   top: 20.0, left: 20.0, right: 18.0, bottom: 5.0),
-      //               children: <Widget>[
-      //                 FutureBuilder(
-      //                   future: _schedule,
-      //                   builder: (context, AsyncSnapshot<Schedule> snapshot) {
-      //                     var state = snapshot.connectionState;
-      //                     if (snapshot.hasData) {
-      //                       allTask = snapshot.data!.data.length;
-
-      //                       return Row(
-      //                         children: <Widget>[
-      //                           Expanded(
-      //                             child:
-      //                             Text("Ainul"),
-      //                           ),
-      //                           Expanded(
-      //                             child:
-      //                               Text("Ainul"),
-      //                           )
-      //                         ],
-      //                       );
-      //                     } else {
-      //                       return Text('');
-      //                     }
-      //                   },
-      //                 ),
-      //               ])),
-      //     ),
-      //   ],
-      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Stack(
@@ -113,13 +63,7 @@ class _TaskScreenState extends State<TaskScreen> {
                             colors: [
                           Color(0xFFFC9DA1),
                           Color(0xFFFE6A7E),
-                        ])
-                        // image: DecorationImage(
-                        //     image:
-                        //         AssetImage("assets/images/bg-taskScreen.png"),
-                        //     fit: BoxFit.fill
-                        //       )
-                        ),
+                        ])),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -328,17 +272,15 @@ class _TaskScreenState extends State<TaskScreen> {
                   indent: 10,
                   endIndent: 10,
                   color: Color(0xFFD9D9D9)),
-              Expanded(
-                child: Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    view.tanggal.toString(),
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFFE6A7E),
-                    ),
+              Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  DateFormat.yMd().format(view.tanggal),
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFFE6A7E),
                   ),
                 ),
               ),

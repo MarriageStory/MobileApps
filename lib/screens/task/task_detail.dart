@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:wedding_planner/model/schedule_model.dart';
 import 'package:wedding_planner/screens/task/task_edit_form.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
@@ -22,6 +23,7 @@ class DetailTask extends StatelessWidget {
           margin: const EdgeInsets.only(right: 16, left: 16),
           height: 70,
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               TextButton(
                   onPressed: () {
@@ -32,12 +34,10 @@ class DetailTask extends StatelessWidget {
                     );
                   },
                   child: Icon(Icons.arrow_back)),
-              SizedBox(width: 76),
               Text(
                 "Detail Task",
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
               ),
-              SizedBox(width: 70),
               IconButton(
                   onPressed: () {
                     Navigator.pushNamed(context, TaskEditForm.url,
@@ -88,15 +88,8 @@ class DetailTask extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 20),
                 child: Text(
-                  schedule.tanggal.toString(),
+                  DateFormat.yMd().format(schedule.tanggal),
                   style: TextStyle(fontSize: 35),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(right: 16, left: 16, top: 2),
-                child: Text(
-                  schedule.tanggal.toString(),
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),
               ),
               Container(

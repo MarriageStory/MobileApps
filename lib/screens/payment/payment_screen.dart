@@ -20,25 +20,11 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   late Future<PaymentsModel> _payments;
-  int id = 0;
-  int allPayment = 0;
-  int Paymentdone = 0;
-  int totalData = 0;
-  bool cek = false;
 
   @override
   void initState() {
     super.initState();
     _payments = PaymentService.getAllPayments();
-  }
-
-  void refreshData() {
-    id++;
-  }
-
-  FutureOr onGoBack(dynamic value) {
-    refreshData();
-    setState(() {});
   }
 
   @override
@@ -100,204 +86,81 @@ class _PaymentPageState extends State<PaymentPage> {
             height: 15.0,
           ),
 
-          //Cards
-          FutureBuilder(
-            future: _payments,
-            builder: (context, AsyncSnapshot<PaymentsModel> snapshot) {
-              var state = snapshot.connectionState;
-              if (snapshot.hasData) {
-                if (snapshot.data!.data.length > 0) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      var payment = snapshot.data!.data[index];
-                      allPayment++;
-                      totalData++;
-                      if (payment.keterangan == "done") {
-                        Paymentdone++;
-                      }
-                      if (totalData < snapshot.data!.data.length) {
-                        return SizedBox();
-                      } else {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Column(
-                              children: [
-                                Container(
-                                  width: 160,
-                                  height: 160,
-                                  padding: EdgeInsets.all(30.0),
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                        begin: Alignment.bottomRight,
-                                        end: Alignment.topLeft,
-                                        colors: [
-                                          Color(0xFFFC9DA1),
-                                          Color(0xFFFE6A7E),
-                                        ]),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Payment Done',
-                                        overflow: TextOverflow.ellipsis,
-                                        // ignore: prefer_const_constructors
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 40.0,
-                                      ),
-                                      Text(
-                                        Paymentdone.toString(),
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: [
-                                Container(
-                                  width: 160,
-                                  height: 160,
-                                  padding: EdgeInsets.all(30.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white70,
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'All Payment',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500,
-                                          color: Colors.grey[700],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 40.0,
-                                      ),
-                                      Text(
-                                        allPayment.toString(),
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        );
-                      }
-                    },
-                    itemCount: snapshot.data!.data.length,
-                  );
-                } else {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            width: 160,
-                            height: 160,
-                            padding: EdgeInsets.all(30.0),
-                            decoration: BoxDecoration(
-                              color: Colors.pink[200],
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Payment Done',
-                                  // ignore: prefer_const_constructors
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 40.0,
-                                ),
-                                Text(
-                                  Paymentdone.toString(),
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
+          Padding(
+            padding: const EdgeInsets.all(25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 160,
+                    padding: EdgeInsets.all(30.0),
+                    decoration: BoxDecoration(
+                      color: Colors.pink[200],
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Payment Done',
+                          // ignore: prefer_const_constructors
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                            width: 160,
-                            height: 160,
-                            padding: EdgeInsets.all(30.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white70,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'All Payment',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey[700],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 40.0,
-                                ),
-                                Text(
-                                  allPayment.toString(),
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
+                        ),
+                        Text(
+                          "1",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
-                        ],
-                      ),
-                    ],
-                  );
-                }
-              } else {
-                return Text('');
-              }
-            },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 15,
+                ),
+                Expanded(
+                  child: Container(
+                    height: 160,
+                    padding: EdgeInsets.all(30.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white70,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'All Payment',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                        Text(
+                          "0",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           SizedBox(
             height: 5.0,
@@ -379,7 +242,6 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   Widget listItem(PaymentModel view) {
-    cek = true;
     String tanggal = DateFormat.yMd().format(view.tanggal);
 
     return Column(

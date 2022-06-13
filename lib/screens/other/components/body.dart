@@ -1,9 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wedding_planner/model/user_model.dart';
 import 'package:wedding_planner/screens/other/components/background.dart';
+import 'package:wedding_planner/service/auth_service.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
+
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  UserModel user = UserModel(
+      id: 0,
+      name: "",
+      email: "",
+      emailVerifiedAt: DateTime.now(),
+      role: "",
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now());
+
+  @override
+  void initState() {
+    getUserProfile();
+    super.initState();
+  }
+
+  Future<void> getUserProfile() async {
+    try {
+      var data = await AuthService.authUserProfile();
+
+      setState(() {
+        user = data;
+      });
+    } catch (e) {
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, "/welcome-screen");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +49,7 @@ class Body extends StatelessWidget {
           alignment: Alignment.centerLeft,
           children: [
             Positioned(
-                top: 74,
+                top: MediaQuery.of(context).size.height * 0.07,
                 left: 34,
                 child: Row(
                   children: [
@@ -27,13 +63,13 @@ class Body extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text("Santi Amiludin",
+                        Text(user.name,
                             style: GoogleFonts.poppins(
                               fontSize: 16,
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                             )),
-                        Text("Wedding Organizer",
+                        Text(user.role,
                             style: GoogleFonts.poppins(
                               fontSize: 14,
                               color: Colors.white,
@@ -43,7 +79,7 @@ class Body extends StatelessWidget {
                   ],
                 )),
             Positioned(
-              top: 220,
+              top: MediaQuery.of(context).size.height * 0.25,
               left: 20,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,13 +108,6 @@ class Body extends StatelessWidget {
                             fontSize: 14,
                             color: Colors.grey,
                             fontWeight: FontWeight.w500,
-                          )),
-                      SizedBox(
-                        width: 160,
-                      ),
-                      Text("2",
-                          style: GoogleFonts.poppins(
-                            fontSize: 14,
                           )),
                     ],
                   ),

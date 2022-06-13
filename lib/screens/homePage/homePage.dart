@@ -3,7 +3,10 @@ import 'package:wedding_planner/model/schedule_model.dart';
 import 'package:wedding_planner/model/user_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wedding_planner/screens/homePage/widgets/box_card.dart';
+import 'package:wedding_planner/screens/task/task_detail.dart';
 import 'package:wedding_planner/service/auth_service.dart';
+import 'package:intl/src/intl/date_format.dart';
+import 'package:wedding_planner/service/schedule_service.dart';
 
 class homePage extends StatefulWidget {
   static const route = '/home-page';
@@ -14,6 +17,7 @@ class homePage extends StatefulWidget {
 }
 
 class _homePageState extends State<homePage> {
+  late Future<SchedulesModel> _schedule;
   UserModel user = UserModel(
       id: 0,
       name: "",
@@ -25,8 +29,14 @@ class _homePageState extends State<homePage> {
 
   @override
   void initState() {
-    getUserProfile();
     super.initState();
+    getUserProfile();
+
+    try {
+      _schedule = ScheduleService.getAllSchedules();
+    } catch (e) {
+      print(e);
+    }
   }
 
   Future<void> getUserProfile() async {
@@ -37,9 +47,7 @@ class _homePageState extends State<homePage> {
         user = data;
       });
     } catch (e) {
-      if (mounted) {
-        Navigator.pushReplacementNamed(context, "/welcome-screen");
-      }
+      Navigator.pushReplacementNamed(context, "/welcome-screen");
     }
   }
 
@@ -79,39 +87,43 @@ class _homePageState extends State<homePage> {
               SizedBox(
                 height: 15,
               ),
-              // FutureBuilder(
-              //   future: _schedul,
-              //   builder: (context, AsyncSnapshot<Schedule> snapshot) {
-              //     var state = snapshot.connectionState;
-              //     if (state != ConnectionState.done) {
-              //       return Center(
-              //         child: CircularProgressIndicator(),
-              //       );
-              //     } else {
-              //       if (snapshot.hasData) {
-              //         return ListView.builder(
-              //           physics: NeverScrollableScrollPhysics(),
-              //           shrinkWrap: true,
-              //           scrollDirection: Axis.vertical,
-              //           itemBuilder: (context, index) {
-              //             var schedule = snapshot.data!.data[index];
-              //             return InkWell(child: listItem(schedule));
-              //           },
-              //           itemCount: snapshot.data!.data.length,
-              //         );
-              //       } else if (snapshot.hasError) {
-              //         return Center(
-              //           child: Text(
-              //             snapshot.error.toString(),
-              //           ),
-              //         );
-              //       } else {
-              //         return Text('No Schedule');
-              //       }
-              //     }
-              //   },
-              // ),
-
+              FutureBuilder(
+                future: _schedule,
+                builder: (context, AsyncSnapshot<SchedulesModel> snapshot) {
+                  var state = snapshot.connectionState;
+                  if (state != ConnectionState.done) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          var schedule = snapshot.data?.data.first;
+                          return InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, DetailTask.url,
+                                    arguments: schedule);
+                              },
+                              child: listItem(schedule!));
+                        },
+                        itemCount: snapshot.data!.data.length,
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          snapshot.error.toString(),
+                        ),
+                      );
+                    } else {
+                      return Text('No Schedule');
+                    }
+                  }
+                },
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -122,65 +134,42 @@ class _homePageState extends State<homePage> {
                     fontSize: 14,
                     color: Color(0xFF2F2F2F).withOpacity(0.7)),
               ),
-              Container(
-                margin: EdgeInsets.only(top: 5),
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
-                width: double.infinity,
-                height: 130,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "20.00",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w600),
-                            ),
-                            Text(
-                              "Thursday, 23 April 2022",
-                              style: TextStyle(
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
+              FutureBuilder(
+                future: _schedule,
+                builder: (context, AsyncSnapshot<SchedulesModel> snapshot) {
+                  var state = snapshot.connectionState;
+                  if (state != ConnectionState.done) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          var schedule_2 = snapshot.data?.data.first;
+                          return InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, DetailTask.url,
+                                    arguments: schedule_2);
+                              },
+                              child: listItem2(schedule_2!));
+                        },
+                        itemCount: snapshot.data!.data.length,
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          snapshot.error.toString(),
                         ),
-                        Text(
-                          "Meeting dengan MUA",
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w300),
-                        )
-                      ],
-                    ),
-                    Container(
-                      width: 45,
-                      height: 45,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
-                            colors: [
-                              Color(0xFFFE6A7E).withOpacity(0.65),
-                              Color(0xFFFE6A7E),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: Icon(
-                        Icons.navigate_next,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
+                      );
+                    } else {
+                      return Text('No Schedule');
+                    }
+                  }
+                },
               ),
               SizedBox(
                 height: 15,
@@ -259,7 +248,68 @@ class _homePageState extends State<homePage> {
     );
   }
 
-  Widget listItem(SchedulesModel view) {
+  Widget listItem2(ScheduleModel view) {
+    String tanggal = DateFormat.yMd().format(view.tanggal);
+    return Container(
+      margin: EdgeInsets.only(top: 5),
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+      width: double.infinity,
+      height: 130,
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(15)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "20.00",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    DateFormat.yMd().format(view.tanggal),
+                    style: TextStyle(
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                view.namaKegiatan,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+              )
+            ],
+          ),
+          Container(
+            width: 45,
+            height: 45,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Color(0xFFFE6A7E).withOpacity(0.65),
+                    Color(0xFFFE6A7E),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(15)),
+            child: Icon(
+              Icons.navigate_next,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget listItem(ScheduleModel view) {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16),
@@ -277,7 +327,7 @@ class _homePageState extends State<homePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Groom & Bride",
+                view.namaClient,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -286,18 +336,13 @@ class _homePageState extends State<homePage> {
               Row(
                 children: [
                   Text(
-                    "Wedding date",
+                    "Wedding Party",
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.w300),
                   ),
                   SizedBox(
                     width: 8,
                   ),
-                  Text(
-                    "7 April 2023",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w600),
-                  )
                 ],
               )
             ],

@@ -48,6 +48,7 @@ class _detailPaymentState extends State<detailPayment> {
                 Container(
                   height: 70,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TextButton(
                           onPressed: () {
@@ -58,13 +59,11 @@ class _detailPaymentState extends State<detailPayment> {
                             );
                           },
                           child: Icon(Icons.arrow_back)),
-                      SizedBox(width: 50),
                       Text(
                         "Detail Payment",
                         style: TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 18),
                       ),
-                      SizedBox(width: 50),
                       IconButton(
                           onPressed: () {
                             Navigator.pushNamed(context, "/payment-edit",
@@ -255,11 +254,11 @@ class _detailPaymentState extends State<detailPayment> {
                   height: 15,
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       child: Text("Transactions"),
                     ),
-                    SizedBox(width: 165),
                     TextButton(
                         onPressed: () {
                           Navigator.pushNamed(context, "/payment-add-detail",

@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:wedding_planner/components/already_have_an_account_check.dart';
 import 'package:wedding_planner/components/rounded_button.dart';
-import 'package:wedding_planner/components/rounded_input_field.dart';
-import 'package:wedding_planner/components/rounded_password_field.dart';
 import 'package:wedding_planner/components/text_field_container.dart';
-import 'package:wedding_planner/model/regisAuth.dart';
 import 'package:wedding_planner/screens/signin/signin_screen.dart';
 import 'package:wedding_planner/screens/signup/components/background.dart';
-import 'package:wedding_planner/service/regisService.dart';
+import 'package:wedding_planner/service/auth_service.dart';
 
 class Body extends StatefulWidget {
   Body({Key? key}) : super(key: key);
@@ -115,16 +112,23 @@ class _BodyState extends State<Body> {
                             'email': _emailController.text,
                             'password': _passwordController.text,
                           };
-                          await regisService().register(body).then((value) {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return SignInScreen();
-                            }));
+
+                          try {
+                            await AuthService.authRegister(body).then((value) {
+                              if (value == true) {
+                                Navigator.pushReplacementNamed(
+                                    context, "/login");
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            'You have successfully create a account')));
+                              }
+                            });
+                          } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
-                                    content: Text(
-                                        'You have successfully create a account')));
-                          });
+                                    content: Text('Terdapat Kesalahan !')));
+                          }
                         },
                       ),
                     ),

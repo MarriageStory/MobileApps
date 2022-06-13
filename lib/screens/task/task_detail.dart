@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:wedding_planner/screens/homePage/homePage.dart';
+import 'package:wedding_planner/model/schedule_model.dart';
 import 'package:wedding_planner/screens/task/task_edit_form.dart';
-import 'package:wedding_planner/model/scheduleModel.dart';
-import 'package:wedding_planner/screens/task/task_screen.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
-import 'package:wedding_planner/service/scheduleService.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:wedding_planner/service/schedule_service.dart';
 
 class DetailTask extends StatelessWidget {
   static final url = "/detail-task";
@@ -13,8 +11,8 @@ class DetailTask extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Schedules schedule =
-        ModalRoute.of(context)!.settings.arguments as Schedules;
+    final schedule =
+        ModalRoute.of(context)!.settings.arguments as ScheduleModel;
 
     return Scaffold(
       body: Column(children: <Widget>[
@@ -90,7 +88,7 @@ class DetailTask extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 20),
                 child: Text(
-                  schedule.jam,
+                  schedule.tanggal.toString(),
                   style: TextStyle(fontSize: 35),
                 ),
               ),
@@ -191,8 +189,7 @@ class DetailTask extends StatelessWidget {
                     ),
                   ),
                   onTap: () async {
-                    await ScheduleService()
-                        .deleteSchedule(schedule.id)
+                    await ScheduleService.deleteSchedule(schedule.id)
                         .then((value) {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {

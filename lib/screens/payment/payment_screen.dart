@@ -2,11 +2,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:wedding_planner/model/payment_model.dart';
+import 'package:wedding_planner/service/payment_service.dart';
 import 'components/cards_payment.dart';
 import 'package:wedding_planner/screens/payment/payment_detail.dart';
 import 'package:wedding_planner/components/formatAngka.dart';
-import 'package:wedding_planner/model/paymentModel.dart';
-import 'package:wedding_planner/service/paymentService.dart';
 import 'package:wedding_planner/screens/payment/payment_add.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -19,7 +19,7 @@ class PaymentPage extends StatefulWidget {
 }
 
 class _PaymentPageState extends State<PaymentPage> {
-  late Future<Payment> _payments;
+  late Future<PaymentsModel> _payments;
   int id = 0;
   int allPayment = 0;
   int Paymentdone = 0;
@@ -29,7 +29,7 @@ class _PaymentPageState extends State<PaymentPage> {
   @override
   void initState() {
     super.initState();
-    _payments = PaymentService().getAllPayment();
+    _payments = PaymentService.getAllPayments();
   }
 
   void refreshData() {
@@ -103,7 +103,7 @@ class _PaymentPageState extends State<PaymentPage> {
           //Cards
           FutureBuilder(
             future: _payments,
-            builder: (context, AsyncSnapshot<Payment> snapshot) {
+            builder: (context, AsyncSnapshot<PaymentsModel> snapshot) {
               var state = snapshot.connectionState;
               if (snapshot.hasData) {
                 if (snapshot.data!.data.length > 0) {
@@ -330,7 +330,8 @@ class _PaymentPageState extends State<PaymentPage> {
                     // List view payment
                     FutureBuilder(
                       future: _payments,
-                      builder: (context, AsyncSnapshot<Payment> snapshot) {
+                      builder:
+                          (context, AsyncSnapshot<PaymentsModel> snapshot) {
                         var state = snapshot.connectionState;
                         if (state != ConnectionState.done) {
                           return Center(
@@ -377,7 +378,7 @@ class _PaymentPageState extends State<PaymentPage> {
     );
   }
 
-  Widget listItem(payments view) {
+  Widget listItem(PaymentModel view) {
     cek = true;
     String tanggal = DateFormat.yMd().format(view.tanggal);
 
@@ -386,7 +387,8 @@ class _PaymentPageState extends State<PaymentPage> {
         CardsPayment(
           name: view.namaClient,
           date: tanggal,
-          pay: formatAngka.convertToIdr(int.parse(view.tunaiKeseluruhan), 2),
+          pay: formatAngka.convertToIdr(
+              int.parse(view.tunaiKeseluruhan.toString()), 2),
           color:
               view.keterangan != "done" ? Colors.amber[600] : Colors.green[600],
           status: view.keterangan != "done" ? 'Pending' : 'Done',

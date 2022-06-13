@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:wedding_planner/model/schedule_model.dart';
 import 'package:wedding_planner/screens/task/task_form.dart';
 import 'package:wedding_planner/screens/task/task_detail.dart';
-import 'package:wedding_planner/model/scheduleModel.dart';
-import 'package:wedding_planner/service/scheduleService.dart';
 import 'package:intl/intl.dart';
+import 'package:wedding_planner/service/schedule_service.dart';
 
 class TaskScreen extends StatefulWidget {
   static const routeName = "/task-page";
@@ -15,7 +15,7 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  late Future<Schedule> _schedule;
+  late Future<SchedulesModel> _schedule;
   int id = 0;
   int allTask = 0;
   int totalData = 0;
@@ -23,7 +23,11 @@ class _TaskScreenState extends State<TaskScreen> {
   @override
   void initState() {
     super.initState();
-    _schedule = ScheduleService().getAllSchedule();
+    try {
+      _schedule = ScheduleService.getAllSchedules();
+    } catch (e) {
+      print(e);
+    }
   }
 
   void refreshData() {
@@ -176,7 +180,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   //pembatas
                   FutureBuilder(
                     future: _schedule,
-                    builder: (context, AsyncSnapshot<Schedule> snapshot) {
+                    builder: (context, AsyncSnapshot<SchedulesModel> snapshot) {
                       var state = snapshot.connectionState;
                       if (state != ConnectionState.done) {
                         return Center(
@@ -189,13 +193,13 @@ class _TaskScreenState extends State<TaskScreen> {
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
-                              var schedule = snapshot.data!.data[index];
+                              var schedule = snapshot.data?.data[index];
                               return InkWell(
                                   onTap: () {
                                     Navigator.pushNamed(context, DetailTask.url,
                                         arguments: schedule);
                                   },
-                                  child: listItem(schedule));
+                                  child: listItem(schedule!));
                             },
                             itemCount: snapshot.data!.data.length,
                           );
@@ -215,7 +219,7 @@ class _TaskScreenState extends State<TaskScreen> {
               ),
               FutureBuilder(
                 future: _schedule,
-                builder: (context, AsyncSnapshot<Schedule> snapshot) {
+                builder: (context, AsyncSnapshot<SchedulesModel> snapshot) {
                   var state = snapshot.connectionState;
                   if (snapshot.hasData) {
                     allTask = snapshot.data!.data.length;
@@ -280,7 +284,7 @@ class _TaskScreenState extends State<TaskScreen> {
     );
   }
 
-  Widget listItem(Schedules view) {
+  Widget listItem(ScheduleModel view) {
     String tanggal = DateFormat.yMd().format(view.tanggal);
 
     return Card(
@@ -324,14 +328,17 @@ class _TaskScreenState extends State<TaskScreen> {
                   indent: 10,
                   endIndent: 10,
                   color: Color(0xFFD9D9D9)),
-              Container(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  view.jam,
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFFFE6A7E),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    view.tanggal.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFFE6A7E),
+                    ),
                   ),
                 ),
               ),

@@ -1,18 +1,13 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:toggle_switch/toggle_switch.dart';
-import 'package:wedding_planner/components/rounded_button.dart';
-import 'package:wedding_planner/components/text_field_container.dart';
 import 'package:wedding_planner/components/rounded_input_field_form.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:wedding_planner/components/dateTime.dart';
-import 'package:wedding_planner/model/paymentModel.dart';
-import 'package:wedding_planner/service/paymentService.dart';
-import 'package:wedding_planner/service/paymentDetailService.dart';
+import 'package:wedding_planner/model/payment_model.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
+import 'package:wedding_planner/service/payment_detail_service.dart';
 
 class AddDetailPayment extends StatefulWidget {
   static final url = "/payment-add-detail";
@@ -82,15 +77,15 @@ class _AddDetailPaymentState extends State<AddDetailPayment> {
 
   @override
   Widget build(BuildContext context) {
-    final payments payment =
-        ModalRoute.of(context)!.settings.arguments as payments;
+    final PaymentModel payment =
+        ModalRoute.of(context)!.settings.arguments as PaymentModel;
 
     if (payment != null && inisialisasi == false) {
       _namePaymentController.text = payment.namaClient;
-      _amountPaymentController.text = payment.tunaiKeseluruhan;
+      _amountPaymentController.text = payment.tunaiKeseluruhan.toString();
       _dateController.text = payment.tanggal.toString();
-      _terbayarController.text = payment.terbayar;
-      _statusPaymentController.text = payment.keterangan;
+      _statusPaymentController.text = payment.status;
+      _statusPaymentController.text = payment.status;
 
       inisialisasi = true;
     }
@@ -112,11 +107,7 @@ class _AddDetailPaymentState extends State<AddDetailPayment> {
                     children: [
                       IconButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BaseScreen(index: 1)),
-                            );
+                            Navigator.pop(context);
                           },
                           icon: const Icon(Icons.arrow_back,
                               color: Colors.black)),
@@ -179,21 +170,6 @@ class _AddDetailPaymentState extends State<AddDetailPayment> {
                   ]),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
-                  child: Column(children: [
-                    dateTime(
-                      // labelText: "Time",
-                      // valueText: time.format(context),
-                      valueText:
-                          cekTime != false ? _timeController.text : "Time",
-                      valueStyle: valueStyle,
-                      onPressed: () {
-                        showTime();
-                      },
-                    ),
-                  ]),
-                ),
-                Container(
                   margin: const EdgeInsets.only(top: 10, right: 20),
                   child: Column(
                     children: <Widget>[
@@ -205,7 +181,7 @@ class _AddDetailPaymentState extends State<AddDetailPayment> {
                           margin: const EdgeInsets.only(
                               right: 16, left: 16, top: 20),
                           child: Text(
-                            "save",
+                            "Save",
                             style: GoogleFonts.poppins(
                               fontSize: 16,
                               color: Colors.white,
@@ -226,44 +202,63 @@ class _AddDetailPaymentState extends State<AddDetailPayment> {
                         ),
                         onTap: () async {
                           //data detail payment
-                          Map<String, dynamic> body = {
-                            'payment_for': _paymentForController.text,
-                            'bayar': _bayarController.text,
-                            'tanggal': _dateController.text,
-                            'detail': _detailController.text,
-                            'id_payment': payment.id.toString(),
-                            'jam': _timeController.text,
+                          var data = <String, dynamic>{
+                            "nama_payment": _paymentForController.text,
+                            "bayar": int.parse(_bayarController.text),
+                            "tanggal": _dateController.text,
+                            "detail": _detailController.text,
                           };
-                          await PaymentDetailService()
-                              .createPaymentDetail(body);
 
-                          total = int.parse(_terbayarController.text) +
-                              int.parse(_bayarController.text);
-                          if (total ==
-                              int.parse(_amountPaymentController.text)) {
-                            _statusPaymentController.text = "done";
+                          try {
+                            await PaymentDetailService.createNewPaymentDetail(
+                                    payment.id, data)
+                                .then((response) {
+                              if (response == true) {
+                                Navigator.pushReplacementNamed(
+                                    context, "/base-screen");
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        backgroundColor: Colors.green,
+                                        content: Text(
+                                            'You have successfully create a detail payment')));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        backgroundColor: Colors.red,
+                                        content: Text('Terdapat Kesalahan !')));
+                              }
+                            });
+                          } catch (e) {
+                            print(e);
                           }
 
-                          Map<String, dynamic> body1 = {
-                            'nama_client': _namePaymentController.text,
-                            'tunai_keseluruhan': _amountPaymentController.text,
-                            'tanggal': _dateController.text,
-                            'terbayar': total.toString(),
-                            'keterangan': _statusPaymentController.text,
-                          };
+                          // total = int.parse(_terbayarController.text) +
+                          //     int.parse(_bayarController.text);
+                          // if (total ==
+                          //     int.parse(_amountPaymentController.text)) {
+                          //   _statusPaymentController.text = "done";
+                          // }
 
-                          await PaymentService()
-                              .updatePayment(body1, payment.id)
-                              .then((value) {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return BaseScreen(index: 2);
-                            }));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        'You have successfully update a payment')));
-                          });
+                          // Map<String, dynamic> body1 = {
+                          //   'nama_client': _namePaymentController.text,
+                          //   'tunai_keseluruhan': _amountPaymentController.text,
+                          //   'tanggal': _dateController.text,
+                          //   'terbayar': total.toString(),
+                          //   'keterangan': _statusPaymentController.text,
+                          // };
+
+                          // await PaymentService
+                          //     .updatePayment(body1, payment.id)
+                          //     .then((value) {
+                          //   Navigator.push(context,
+                          //       MaterialPageRoute(builder: (context) {
+                          //     return BaseScreen(index: 2);
+                          //   }));
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //       const SnackBar(
+                          //           content: Text(
+                          //               'You have successfully update a payment')));
+                          // });
                         },
                       ),
                     ],

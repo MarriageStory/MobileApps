@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:wedding_planner/model/payment_model.dart';
 import 'package:wedding_planner/screens/payment/payment_screen.dart';
-import 'package:wedding_planner/model/paymentDetailModel.dart';
-import 'package:wedding_planner/model/paymentModel.dart';
-import 'package:wedding_planner/service/paymentDetailService.dart';
 import 'package:wedding_planner/components/formatAngka.dart';
 import 'package:intl/intl.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
@@ -13,7 +11,7 @@ import 'package:wedding_planner/screens/payment/payment_screen.dart';
 import 'package:wedding_planner/screens/payment/payment_edit.dart';
 import 'package:wedding_planner/screens/payment/payment_add_detail.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:wedding_planner/service/paymentService.dart';
+import 'package:wedding_planner/service/payment_service.dart';
 
 class detailPayment extends StatefulWidget {
   static final url = "/detail-payment";
@@ -24,7 +22,6 @@ class detailPayment extends StatefulWidget {
 }
 
 class _detailPaymentState extends State<detailPayment> {
-  late Future<PaymentDetail> _payments;
   int id = 0;
   int totalBayar = 0;
   int unpaid = 0;
@@ -32,27 +29,13 @@ class _detailPaymentState extends State<detailPayment> {
   bool cek = false;
 
   @override
-  void initState() {
-    super.initState();
-    _payments = PaymentDetailService().getAllPaymentDetail();
-  }
-
-  void refreshData() {
-    id++;
-  }
-
-  FutureOr onGoBack(dynamic value) {
-    refreshData();
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final payments payment =
-        ModalRoute.of(context)!.settings.arguments as payments;
+    final PaymentModel payment =
+        ModalRoute.of(context)!.settings.arguments as PaymentModel;
 
     String tanggalPayment = DateFormat.yMd().format(payment.tanggal);
-    unpaid = int.parse(payment.tunaiKeseluruhan);
+
+    print(payment.paymentDetails.length);
 
     return Scaffold(
       body: SafeArea(
@@ -84,7 +67,7 @@ class _detailPaymentState extends State<detailPayment> {
                       SizedBox(width: 50),
                       IconButton(
                           onPressed: () {
-                            Navigator.pushNamed(context, EditPayment.url,
+                            Navigator.pushNamed(context, "/payment-edit",
                                 arguments: payment);
                           },
                           icon: Icon(Icons.edit))
@@ -142,7 +125,9 @@ class _detailPaymentState extends State<detailPayment> {
                               ),
                               Text(
                                 formatAngka.convertToIdr(
-                                    int.parse(payment.tunaiKeseluruhan), 2),
+                                    int.parse(
+                                        payment.tunaiKeseluruhan.toString()),
+                                    2),
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
@@ -156,129 +141,115 @@ class _detailPaymentState extends State<detailPayment> {
                   ),
                 ),
                 SizedBox(height: 25),
-                FutureBuilder(
-                  future: _payments,
-                  builder: (context, AsyncSnapshot<PaymentDetail> snapshot) {
-                    var state = snapshot.connectionState;
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          var payment_detail = snapshot.data!.data[index];
-                          if (payment_detail.idPayment == payment.id) {
-                            totalBayar += int.parse(payment_detail.bayar);
-                            unpaid -= int.parse(payment_detail.bayar);
-                            totalData++;
-                          }
-                          if (totalData < snapshot.data!.data.length) {
-                            return SizedBox();
-                          } else {
-                            return Row(
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 45,
-                                      height: 45,
-                                      decoration: BoxDecoration(
-                                          // gradient: LinearGradient(
-                                          //   begin: Alignment.topRight,
-                                          //   end: Alignment.bottomLeft,
-                                          //   colors: [
-                                          //     Color(0xFF8CDA8A).withOpacity(0.65),
-                                          //     Color(0xFFFFFFFF),
-                                          //   ],
-                                          // ),
-                                          color: Color(0xFF8CDA8A)
-                                              .withOpacity(0.65),
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      child: Icon(
-                                        Icons.add,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        "Already Paid",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 15),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        formatAngka.convertToIdr(totalBayar, 2),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w300,
-                                            fontSize: 15),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(width: 20),
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 45,
-                                      height: 45,
-                                      decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topRight,
-                                            end: Alignment.bottomLeft,
-                                            colors: [
-                                              Color(0xFFFE6A7E)
-                                                  .withOpacity(0.65),
-                                              Color(0xFFFE6A7E),
-                                            ],
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      child: Icon(
-                                        Icons.navigate_next,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(width: 10),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      child: Text(
-                                        "Unpaid",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 15),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        formatAngka.convertToIdr(unpaid, 2),
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w300,
-                                            fontSize: 15),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            );
-                          }
-                        },
-                        itemCount: snapshot.data!.data.length,
-                      );
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    var payment_detail = payment.paymentDetails[index];
+                    // if (payment_detail.idPayment == payment.id) {
+                    //   totalBayar += int.parse(payment_detail.bayar);
+                    //   unpaid -= int.parse(payment_detail.bayar);
+                    //   totalData++;
+                    // }
+                    if (totalData < payment.paymentDetails.length) {
+                      return SizedBox();
                     } else {
-                      return Text('');
+                      return Row(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: 45,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                    // gradient: LinearGradient(
+                                    //   begin: Alignment.topRight,
+                                    //   end: Alignment.bottomLeft,
+                                    //   colors: [
+                                    //     Color(0xFF8CDA8A).withOpacity(0.65),
+                                    //     Color(0xFFFFFFFF),
+                                    //   ],
+                                    // ),
+                                    color: Color(0xFF8CDA8A).withOpacity(0.65),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(
+                                  "Already Paid",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15),
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  formatAngka.convertToIdr(totalBayar, 2),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 15),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(width: 20),
+                          Row(
+                            children: [
+                              Container(
+                                width: 45,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topRight,
+                                      end: Alignment.bottomLeft,
+                                      colors: [
+                                        Color(0xFFFE6A7E).withOpacity(0.65),
+                                        Color(0xFFFE6A7E),
+                                      ],
+                                    ),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Icon(
+                                  Icons.navigate_next,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: 10),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                child: Text(
+                                  "Unpaid",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 15),
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  formatAngka.convertToIdr(unpaid, 2),
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 15),
+                                ),
+                              )
+                            ],
+                          ),
+                        ],
+                      );
                     }
                   },
+                  itemCount: payment.paymentDetails.length,
                 ),
                 SizedBox(
                   height: 15,
@@ -289,51 +260,32 @@ class _detailPaymentState extends State<detailPayment> {
                       child: Text("Transactions"),
                     ),
                     SizedBox(width: 165),
-                        TextButton(
-                            onPressed: () {
-                          Navigator.pushNamed(context, AddDetailPayment.url,
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, "/payment-add-detail",
                               arguments: payment);
-                            },
+                        },
                         child: Icon(Icons.add)),
                   ],
                 ),
-                FutureBuilder(
-                  future: _payments,
-                  builder: (context, AsyncSnapshot<PaymentDetail> snapshot) {
-                    var state = snapshot.connectionState;
-                    if (state != ConnectionState.done) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (context, index) {
-                            var payment_detail = snapshot.data!.data[index];
+                payment.paymentDetails.length != 0
+                    ? ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          var payment_detail = payment.paymentDetails[index];
 
-                            return SizedBox(
-                              child: payment_detail.idPayment == payment.id
-                                      ? listItem(payment_detail)
-                                      : SizedBox(),
-                            );
-                          },
-                          itemCount: snapshot.data!.data.length,
-                        );
-                      } else if (snapshot.hasError) {
-                        return Center(
-                          child: Text(
-                            snapshot.error.toString(),
-                          ),
-                        );
-                      } else {
-                        return Text('');
-                      }
-                    }
-                  },
-                ),
+                          return listItem(payment_detail);
+                        },
+                        itemCount: payment.paymentDetails.length,
+                      )
+                    : Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        child: const Center(
+                          child: Text("Detail Pembayaran Masih Kosong"),
+                        ),
+                      ),
                 Container(
                   margin: const EdgeInsets.only(top: 10, right: 20),
                   child: Column(
@@ -366,8 +318,7 @@ class _detailPaymentState extends State<detailPayment> {
                             ),
                           ),
                           onTap: () async {
-                            await PaymentService()
-                                .deletePayment(payment.id)
+                            await PaymentService.deletePayment(payment.id)
                                 .then((value) {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
@@ -386,7 +337,7 @@ class _detailPaymentState extends State<detailPayment> {
     );
   }
 
-  Widget listItem(PaymentDetails paymentDetail) {
+  Widget listItem(PaymentDetailModel paymentDetail) {
     String tanggal = DateFormat.yMd().format(paymentDetail.tanggal);
     cek = true;
 
@@ -396,15 +347,15 @@ class _detailPaymentState extends State<detailPayment> {
           child: ListTile(
             leading: FlutterLogo(),
             title: Text(
-              "Paid for " + paymentDetail.paymentFor,
+              "Paid for " + paymentDetail.namaPayment,
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 14,
                   fontWeight: FontWeight.w500),
             ),
             subtitle: Text(tanggal),
-            trailing: Text(
-                formatAngka.convertToIdr(int.parse(paymentDetail.bayar), 2)),
+            trailing: Text(formatAngka.convertToIdr(
+                int.parse(paymentDetail.bayar.toString()), 2)),
           ),
         ),
       ],

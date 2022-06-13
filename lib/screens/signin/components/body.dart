@@ -1,16 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planner/components/already_have_an_account_check.dart';
 import 'package:wedding_planner/components/rounded_button.dart';
-import 'package:wedding_planner/components/rounded_input_field.dart';
-import 'package:wedding_planner/components/rounded_password_field.dart';
 import 'package:wedding_planner/components/text_field_container.dart';
-import 'package:wedding_planner/model/loginAuth.dart';
 import 'package:wedding_planner/screens/signin/components/background.dart';
 import 'package:wedding_planner/screens/signup/signup_screen.dart';
-import 'package:wedding_planner/service/loginService.dart';
+import 'package:wedding_planner/service/auth_service.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -123,19 +118,27 @@ class _BodyState extends State<Body> {
                           };
 
                           try {
-                            loginService().logins(data).then((response) {
-                              if (response.token != "") {
+                            AuthService.authLogin(data).then((response) {
+                              if (response.accessToken != "") {
                                 Navigator.pushNamedAndRemoveUntil(
                                   context,
                                   "/base-screen",
                                   (route) => false,
                                 );
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text("Berhasil Login")));
                               } else {
-                                print("Gagal login");
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text("Password Salah")));
                               }
                             });
                           } catch (e) {
-                            print(e);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("Terdapat Kesalahan")));
                           }
                         },
                         color: Color(0xFFFA5D76),

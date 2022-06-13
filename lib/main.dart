@@ -43,22 +43,23 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-
-        '/': (context) => SplashScreen(),
+        '/': (context) => const SplashScreen(),
         '/welcome-screen': (context) => WelcomeScreen(),
         '/home-page': (context) => homePage(),
-        '/payment': (context) => PaymentPage(),
-        '/detail-payment': (context) => detailPayment(),
-        '/payment-add': (context) => AddPayment(),
+        // '/payment': (context) => PaymentPage(),
+        '/detail-payment': (context) => const detailPayment(),
+        // '/payment-add': (context) => AddPayment(),
         '/payment-add-detail': (context) => AddDetailPayment(),
         '/payment-edit': (context) => EditPayment(),
         '/task-page': (context) => TaskScreen(),
         '/task-form': (context) => TaskForm(),
         '/task-edit-form': (context) => TaskEditForm(),
         '/detail-task': (context) => DetailTask(),
-        '/teams': (context) => TeamScreen(),
-        '/base-screen': (context) => BaseScreen(index: 0),
-
+        // '/teams': (context) => TeamScreen(),
+        '/base-screen': (context) => BaseScreen(
+              index: 0,
+            ),
+        '/login': (context) => const SignInScreen(),
       },
       // home: BaseScreen(),
     );

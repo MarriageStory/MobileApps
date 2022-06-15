@@ -47,7 +47,7 @@ class _homePageState extends State<homePage> {
         user = data;
       });
     } catch (e) {
-      Navigator.pushReplacementNamed(context, "/welcome-screen");
+      Navigator.pushReplacementNamed(context, "/base-screen");
     }
   }
 
@@ -71,7 +71,7 @@ class _homePageState extends State<homePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hallo",
+                        "Hallo, ",
                         style: TextStyle(fontSize: 14),
                       ),
                       Text(
@@ -81,7 +81,7 @@ class _homePageState extends State<homePage> {
                       )
                     ],
                   ),
-                  SvgPicture.asset("assets/icons/notification.svg")
+                  // SvgPicture.asset("assets/icons/notification.svg")
                 ],
               ),
               SizedBox(
@@ -282,7 +282,7 @@ class _homePageState extends State<homePage> {
               ),
               Text(
                 view.namaKegiatan,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w300),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
               )
             ],
           ),
@@ -313,7 +313,7 @@ class _homePageState extends State<homePage> {
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(16),
-      height: 115,
+      height: 100,
       decoration: BoxDecoration(
         image: DecorationImage(
             image: AssetImage("assets/images/bg.png"), fit: BoxFit.cover),
@@ -347,21 +347,21 @@ class _homePageState extends State<homePage> {
               )
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset("assets/icons/people.svg"),
-              SizedBox(
-                width: 8,
-              ),
-              Text(
-                "7",
-                style:
-                    TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-              )
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.end,
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   children: [
+          //     SvgPicture.asset("assets/icons/people.svg"),
+          //     SizedBox(
+          //       width: 8,
+          //     ),
+          //     Text(
+          //       "7",
+          //       style:
+          //           TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          //     )
+          //   ],
+          // ),
         ],
       ),
     );

@@ -30,6 +30,7 @@ class _detailPaymentState extends State<detailPayment> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     final PaymentModel payment =
         ModalRoute.of(context)!.settings.arguments as PaymentModel;
 
@@ -41,105 +42,137 @@ class _detailPaymentState extends State<detailPayment> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
+                SizedBox(
+                  // color: Colors.blue,
                   height: 70,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      TextButton(
-                          onPressed: () {
+                      Container(
+                        color: Colors.blue,
+                        child: GestureDetector(
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => BaseScreen(index: 2)),
                             );
                           },
-                          child: Icon(Icons.arrow_back)),
-                      Text(
+                          child: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
+                      const Text(
                         "Detail Payment",
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 18),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.black87),
                       ),
-                      IconButton(
-                          onPressed: () {
+                      GestureDetector(
+                          onTap: () {
                             Navigator.pushNamed(context, "/payment-edit",
                                 arguments: payment);
                           },
-                          icon: Icon(Icons.edit))
+                          child: const Icon(
+                            Icons.edit,
+                            color: Colors.black87,
+                          )),
                     ],
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(16),
-                  height: 115,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/images/bg.png"),
-                        fit: BoxFit.cover),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                payment.namaClient,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              SizedBox(width: 120),
-                              Text(
-                                payment.keterangan,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ],
-                          ),
+                
+                //card payment status
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(
+                          top: 15, bottom: 15, left: 25, right: 25),
+                      height: 130,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          gradient: const LinearGradient(
+                              begin: Alignment.bottomLeft,
+                              end: Alignment.topRight,
+                              colors: [
+                                Color(0xFFFC9DA1),
+                                Color(0xFFFE6A7E),
+                              ]),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.2),
+                              spreadRadius: 3,
+                              blurRadius: 3,
+                              offset: Offset(0, 0),
+                            ),
+                          ]),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
                           SizedBox(
-                            height: 12,
+                            height: 100,
+                            width: size.width * 0.5,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  payment.namaClient,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                Text(
+                                  tanggalPayment,
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                Text(
+                                  formatAngka.convertToIdr(
+                                      int.parse(
+                                          payment.tunaiKeseluruhan.toString()),
+                                      2),
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                tanggalPayment,
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w300),
-                              ),
-                              Text(
-                                formatAngka.convertToIdr(
-                                    int.parse(
-                                        payment.tunaiKeseluruhan.toString()),
-                                    2),
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600),
-                              )
-                            ],
-                          )
+                          Container(
+                            alignment: Alignment.topRight,
+                            width: size.width * 0.2,
+                            height: 100,
+                            child: Text(
+                              payment.keterangan.toUpperCase(),
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                          ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 25),
+
                 ListView.builder(
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
@@ -160,14 +193,14 @@ class _detailPaymentState extends State<detailPayment> {
                                 width: 45,
                                 height: 45,
                                 decoration: BoxDecoration(
-                                    // gradient: LinearGradient(
-                                    //   begin: Alignment.topRight,
-                                    //   end: Alignment.bottomLeft,
-                                    //   colors: [
-                                    //     Color(0xFF8CDA8A).withOpacity(0.65),
-                                    //     Color(0xFFFFFFFF),
-                                    //   ],
-                                    // ),
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topRight,
+                                      end: Alignment.bottomLeft,
+                                      colors: [
+                                        Color(0xFF8CDA8A).withOpacity(0.65),
+                                        Color(0xFFFFFFFF),
+                                      ],
+                                    ),
                                     color: Color(0xFF8CDA8A).withOpacity(0.65),
                                     borderRadius: BorderRadius.circular(15)),
                                 child: Icon(

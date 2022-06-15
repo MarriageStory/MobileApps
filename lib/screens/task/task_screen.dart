@@ -53,9 +53,7 @@ class _TaskScreenState extends State<TaskScreen> {
               Column(
                 children: [
                   Container(
-                    height: 140,
-                    width: size.width,
-                    padding: EdgeInsets.symmetric(vertical: 20),
+                    height: 130,
                     decoration: const BoxDecoration(
                         gradient: LinearGradient(
                             begin: Alignment.bottomLeft,
@@ -64,44 +62,51 @@ class _TaskScreenState extends State<TaskScreen> {
                           Color(0xFFFC9DA1),
                           Color(0xFFFE6A7E),
                         ])),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const TaskScreen()),
-                              );
-                            },
-                            icon: const Icon(
-                              Icons.menu,
-                              color: Colors.white,
-                            )),
-                        const Text(
-                          "Checklist",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        const SizedBox(
+                          height: 20,
                         ),
-                        IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => TaskForm()),
-                              );
-                            },
-                            icon: const Icon(Icons.add, color: Colors.white))
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: size.width * 0.3,
+                              color: Colors.transparent,
+                            ),
+                            SizedBox(
+                              width: size.width * 0.3,
+                              child: const Text(
+                                'Checklist',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: size.width * 0.3,
+                              child: IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => TaskForm()),
+                                    );
+                                  },
+                                  icon: Icon(Icons.add, color: Colors.white)),
+                            )
+                          ],
+                        ),
                       ],
                     ),
                   ),
                   Container(
-                    margin: const EdgeInsets.only(top: 40, right: 20, left: 20),
+                    margin: const EdgeInsets.only(top: 50, right: 30, left: 30),
                     // margin: const EdgeInsets.symmetric(vertical: 50, horizontal: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,7 +114,7 @@ class _TaskScreenState extends State<TaskScreen> {
                         const Text(
                           'Task in progress',
                           style: TextStyle(
-                              color: Colors.grey, fontWeight: FontWeight.w500),
+                              color: Colors.grey, fontWeight: FontWeight.w600),
                         ),
                         TextButton(
                             onPressed: () {},
@@ -169,51 +174,84 @@ class _TaskScreenState extends State<TaskScreen> {
                     allTask = snapshot.data!.data.length;
 
                     return Positioned(
-                      top: 80,
+                      top: 90,
                       left: 0,
                       right: 0,
-                      child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 24),
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: IntrinsicHeight(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20.0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      "coming soon",
+                      child: Column(
+                        children: [
+                          Container(
+                            width: size.width * 0.90,
+                            padding: const EdgeInsets.only(bottom: 20, top: 20),
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(15),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    spreadRadius: 3,
+                                    blurRadius: 5,
+                                    offset: Offset(0, 0),
+                                  ),
+                                ]),
+                            child: IntrinsicHeight(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  SizedBox(
+                                    width: size.width * 0.3,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          allTask.toString(),
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        Text(
+                                          "All Tasks",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.grey.shade500),
+                                        ),
+                                      ],
                                     ),
-                                    Text("All Tasks"),
-                                  ],
-                                ),
+                                  ),
+                                  const VerticalDivider(
+                                    width: 20,
+                                    thickness: 1,
+                                    indent: 4,
+                                    endIndent: 4,
+                                    color: Color(0xFFD9D9D9),
+                                  ),
+                                  SizedBox(
+                                    width: size.width * 0.3,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          allTask.toString(),
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        Text(
+                                          "Completed Tasks",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              color: Colors.grey.shade500),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const VerticalDivider(
-                                width: 20,
-                                thickness: 1,
-                                indent: 4,
-                                endIndent: 4,
-                                color: Color(0xFFD9D9D9),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20.0),
-                                child: Column(
-                                  children: [
-                                    Text(allTask.toString()),
-                                    Text("Completed Tasks"),
-                                  ],
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     );
                   } else {
@@ -229,56 +267,68 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 
   Widget listItem(ScheduleModel view) {
+    Size size = MediaQuery.of(context).size;
     String tanggal = DateFormat.yMd().format(view.tanggal);
 
-    return Card(
-      color: Colors.white,
-      child: SizedBox(
-        height: 80,
-        width: 335,
-        child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 20),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Container(
+          width: size.width * 0.90,
+          height: 80,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.2),
+                  spreadRadius: 3,
+                  blurRadius: 5,
+                  offset: Offset(0, 0),
+                ),
+              ]),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    child: Text(
+              Container(
+                width: size.width * 0.6,
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
                       tanggal,
                       style: TextStyle(
                         color: Colors.grey[500],
                       ),
                     ),
-                  ),
-                  Container(
-                    child: Text(
+                    Text(
                       view.namaKegiatan,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              SizedBox(
-                width: 120,
-              ),
-              const VerticalDivider(
-                  width: 10,
-                  thickness: 1,
-                  indent: 10,
-                  endIndent: 10,
-                  color: Color(0xFFD9D9D9)),
               Container(
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.center,
+                height: 80,
+                width: size.width * 0.3,
+                decoration: BoxDecoration(
+                  border: Border(
+                    left: BorderSide(
+                      width: 1,
+                      color: Color(0xFFFE6A7E).withOpacity(0.3),
+                    ),
+                  ),
+                ),
                 child: Text(
                   DateFormat.yMd().format(view.tanggal),
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 18,
+                  style: const TextStyle(
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFE6A7E),
                   ),
@@ -287,7 +337,7 @@ class _TaskScreenState extends State<TaskScreen> {
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 }

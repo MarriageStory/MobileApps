@@ -33,6 +33,8 @@ class ScheduleService {
       "tanggal": data["tanggal"],
       "tempat": data["tempat"],
       "nama_client": data["nama_client"],
+      "jam": data["jam"],
+      "status": data["status"],
     };
 
     var response = await http.post(Uri.parse(baseURLAPI + "schedules"),
@@ -59,6 +61,8 @@ class ScheduleService {
       "tanggal": data["tanggal"],
       "tempat": data["tempat"],
       "nama_client": data["nama_client"],
+      "jam": data["jam"],
+      "status": data["status"],
     };
 
     var response = await http.put(

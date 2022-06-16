@@ -28,6 +28,7 @@ class _TaskFormState extends State<TaskForm> {
   TextEditingController _detailTaskController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   TextEditingController _placeController = TextEditingController();
+  TextEditingController _timeController = TextEditingController();
   //pengecekan date & time
   bool cekJam = false;
   bool cekTgl = false;
@@ -39,6 +40,15 @@ class _TaskFormState extends State<TaskForm> {
     fontSize: 14,
   );
 
+  void showTime() {
+    showTimePicker(context: context, initialTime: TimeOfDay.now())
+        .then((value) {
+      setState(() {
+        cekJam = true;
+        _timeController.text = value!.format(context).toString();
+      });
+    });
+  }
 
   Future<Null> _selectDate(BuildContext context) async {
     // Initial DateTime FIinal Picked
@@ -152,6 +162,20 @@ class _TaskFormState extends State<TaskForm> {
                   ]),
                 ),
                 Container(
+                  margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
+                  child: Column(children: [
+                    dateTime(
+                      // labelText: "Date",
+                      valueText:
+                          cekJam != false ? _timeController.text : "Time",
+                      valueStyle: valueStyle,
+                      onPressed: () {
+                        showTime();
+                      },
+                    ),
+                  ]),
+                ),
+                Container(
                   margin: const EdgeInsets.only(top: 10, right: 20),
                   child: Column(
                     children: <Widget>[
@@ -189,6 +213,8 @@ class _TaskFormState extends State<TaskForm> {
                             'tanggal': _dateController.text,
                             'tempat': _placeController.text,
                             'nama_client': _nameClientController.text,
+                            'jam': _timeController.text,
+                            'status': "pending",
                           };
 
                           await ScheduleService.createNewSchedule(body)

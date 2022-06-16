@@ -33,7 +33,7 @@ class PaymentModel {
     required this.tunaiKeseluruhan,
     required this.tanggal,
     required this.status,
-    required this.keterangan,
+    required this.terbayar,
     required this.createdAt,
     required this.updatedAt,
     required this.paymentDetails,
@@ -44,7 +44,7 @@ class PaymentModel {
   int tunaiKeseluruhan;
   DateTime tanggal;
   String status;
-  String keterangan;
+  String terbayar;
   DateTime createdAt;
   DateTime updatedAt;
   List<PaymentDetailModel> paymentDetails;
@@ -55,7 +55,7 @@ class PaymentModel {
         tunaiKeseluruhan: json["tunai_keseluruhan"],
         tanggal: DateTime.parse(json["tanggal"]),
         status: json["status"],
-        keterangan: json["keterangan"],
+        terbayar: json["terbayar"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         paymentDetails: List<PaymentDetailModel>.from(
@@ -69,7 +69,7 @@ class PaymentModel {
         "tanggal":
             "${tanggal.year.toString().padLeft(4, '0')}-${tanggal.month.toString().padLeft(2, '0')}-${tanggal.day.toString().padLeft(2, '0')}",
         "status": status,
-        "keterangan": keterangan,
+        "terbayar": terbayar,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "payment_details":

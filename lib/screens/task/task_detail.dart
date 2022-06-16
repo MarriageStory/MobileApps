@@ -86,6 +86,13 @@ class DetailTask extends StatelessWidget {
                 ),
               ),
               Container(
+                margin: const EdgeInsets.only(right: 16, left: 16, top: 30),
+                child: Text(
+                  schedule.jam,
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                ),
+              ),
+              Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 20),
                 child: Text(
                   DateFormat.yMd().format(schedule.tanggal),
@@ -153,7 +160,7 @@ class DetailTask extends StatelessWidget {
         ),
         Container(
           margin: const EdgeInsets.only(top: 10, right: 20),
-          child: Column(
+          child: Row(
             children: <Widget>[
               InkWell(
                   child: Container(
@@ -190,6 +197,57 @@ class DetailTask extends StatelessWidget {
                       }));
                     });
                   }),
+
+              // InkWell(
+              //     child: Container(
+              //       height: 45,
+              //       padding: EdgeInsets.symmetric(vertical: 10),
+              //       // width: MediaQuery.of(context).size.width,
+              //       width: 80,
+              //       margin: const EdgeInsets.only(right: 16, left: 16, top: 20),
+              //       child: Text(
+              //         "Done",
+              //         style: GoogleFonts.poppins(
+              //           fontSize: 16,
+              //           color: Colors.white,
+              //         ),
+              //         textAlign: TextAlign.center,
+              //       ),
+              //       decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(25),
+              //         gradient: LinearGradient(
+              //           begin: Alignment.topRight,
+              //           end: Alignment.bottomLeft,
+              //           colors: [
+              //             Color(0xFFFE6A7E).withOpacity(0.65),
+              //             Color(0xFFFE6A7E),
+              //           ],
+              //         ),
+              //       ),
+              //     ),
+              //     onTap: () async {
+              //       Map<String, dynamic> body = {
+              //         'nama_kegiatan': schedule.namaKegiatan,
+              //         'detail_kegiatan': schedule.detailKegiatan,
+              //         'tanggal': schedule.tanggal.toString(),
+              //         'tempat': schedule.tempat,
+              //         'nama_client': schedule.namaClient,
+              //         'jam': schedule.jam,
+              //         'status': "done",
+              //       };
+
+              //       await ScheduleService.updateSchedule(schedule.id, body)
+              //           .then((value) {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (context) => BaseScreen(index: 1)),
+              //         );
+              //         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              //             content:
+              //                 Text('You have successfully update a scedule')));
+              //       });
+              //     }),
             ],
           ),
         ),

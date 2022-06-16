@@ -62,7 +62,7 @@ class _EditPaymentState extends State<EditPayment> {
       _namePaymentController.text = payment.namaClient;
       _amountPaymentController.text = payment.tunaiKeseluruhan.toString();
       _dateController.text = payment.tanggal.toString();
-      _statusPaymentController.text = payment.keterangan;
+      _statusPaymentController.text = payment.status;
 
       inisialisasi = true;
     }
@@ -134,9 +134,7 @@ class _EditPaymentState extends State<EditPayment> {
                       child: Column(children: [
                         dateTime(
                           // labelText: "Date",
-                          valueText: cekTgl != false
-                              ? DateFormat.yMd().format(payment.tanggal)
-                              : "Date",
+                          valueText: DateFormat.yMd().format(payment.tanggal),
                           valueStyle: valueStyle,
                           onPressed: () {
                             _selectDate(context, payment.tanggal);
@@ -159,7 +157,7 @@ class _EditPaymentState extends State<EditPayment> {
                       child: ToggleSwitch(
                         minWidth: 120.0,
                         minHeight: 40.0,
-                        initialLabelIndex: payment.keterangan == "done" ? 1 : 0,
+                        initialLabelIndex: payment.status == "done" ? 1 : 0,
                         activeFgColor: Colors.white,
                         activeBgColor: [Colors.pink.shade300],
                         inactiveBgColor: Colors.white,
@@ -218,13 +216,18 @@ class _EditPaymentState extends State<EditPayment> {
                               ),
                             ),
                             onTap: () async {
+                              if (int.parse(_amountPaymentController.text) >
+                                  int.parse(payment.terbayar)) {
+                                _statusPaymentController.text = "pending";
+                              }
+
                               Map<String, dynamic> body = {
                                 'nama_client': _namePaymentController.text,
                                 'tunai_keseluruhan':
                                     _amountPaymentController.text,
                                 'tanggal': _dateController.text,
                                 'status': _statusPaymentController.text,
-                                'keterangan': _statusPaymentController.text,
+                                'terbayar': payment.terbayar,
                               };
 
                               await PaymentService.updatePayment(

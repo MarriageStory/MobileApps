@@ -8,6 +8,7 @@ import 'package:wedding_planner/components/dateTime.dart';
 import 'package:wedding_planner/model/payment_model.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:wedding_planner/service/payment_detail_service.dart';
+import 'package:wedding_planner/service/payment_service.dart';
 
 class AddDetailPayment extends StatefulWidget {
   static final url = "/payment-add-detail";
@@ -85,7 +86,7 @@ class _AddDetailPaymentState extends State<AddDetailPayment> {
       _amountPaymentController.text = payment.tunaiKeseluruhan.toString();
       _dateController.text = payment.tanggal.toString();
       _statusPaymentController.text = payment.status;
-      _statusPaymentController.text = payment.status;
+      _terbayarController.text = payment.terbayar;
 
       inisialisasi = true;
     }
@@ -211,11 +212,33 @@ class _AddDetailPaymentState extends State<AddDetailPayment> {
 
                           try {
                             await PaymentDetailService.createNewPaymentDetail(
-                                    payment.id, data)
-                                .then((response) {
+                                payment.id, data);
+                          } catch (e) {
+                            print(e);
+                          }
+
+                          total = int.parse(_terbayarController.text) +
+                              int.parse(_bayarController.text);
+                          if (total ==
+                              int.parse(_amountPaymentController.text)) {
+                            _statusPaymentController.text = "done";
+                          }
+
+                          Map<String, dynamic> body1 = {
+                            'nama_client': payment.namaClient,
+                            'tunai_keseluruhan': payment.tunaiKeseluruhan,
+                            'tanggal': payment.tanggal.toString(),
+                            'status': _statusPaymentController.text,
+                            'terbayar': total.toString(),
+                          };
+
+                          await PaymentService.updatePayment(payment.id, body1)
+                              .then((response) {
                               if (response == true) {
-                                Navigator.pushReplacementNamed(
-                                    context, "/base-screen");
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return BaseScreen(index: 2);
+                              }));
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                         backgroundColor: Colors.green,
@@ -227,38 +250,8 @@ class _AddDetailPaymentState extends State<AddDetailPayment> {
                                         backgroundColor: Colors.red,
                                         content: Text('Terdapat Kesalahan !')));
                               }
-                            });
-                          } catch (e) {
-                            print(e);
-                          }
+                          });
 
-                          // total = int.parse(_terbayarController.text) +
-                          //     int.parse(_bayarController.text);
-                          // if (total ==
-                          //     int.parse(_amountPaymentController.text)) {
-                          //   _statusPaymentController.text = "done";
-                          // }
-
-                          // Map<String, dynamic> body1 = {
-                          //   'nama_client': _namePaymentController.text,
-                          //   'tunai_keseluruhan': _amountPaymentController.text,
-                          //   'tanggal': _dateController.text,
-                          //   'terbayar': total.toString(),
-                          //   'keterangan': _statusPaymentController.text,
-                          // };
-
-                          // await PaymentService
-                          //     .updatePayment(body1, payment.id)
-                          //     .then((value) {
-                          //   Navigator.push(context,
-                          //       MaterialPageRoute(builder: (context) {
-                          //     return BaseScreen(index: 2);
-                          //   }));
-                          //   ScaffoldMessenger.of(context).showSnackBar(
-                          //       const SnackBar(
-                          //           content: Text(
-                          //               'You have successfully update a payment')));
-                          // });
                         },
                       ),
                     ],

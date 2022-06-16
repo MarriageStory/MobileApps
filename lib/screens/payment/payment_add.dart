@@ -148,7 +148,7 @@ class _AddPaymentState extends State<AddPayment> {
                       child: ToggleSwitch(
                         minWidth: 120.0,
                         minHeight: 40.0,
-                        initialLabelIndex: 1,
+                        initialLabelIndex: 0,
                         activeFgColor: Colors.white,
                         activeBgColor: [Colors.pink.shade300],
                         inactiveBgColor: Colors.white,
@@ -159,13 +159,9 @@ class _AddPaymentState extends State<AddPayment> {
                         labels: ['Pending', 'Done'],
                         onToggle: (index) {
                           if (index == 0) {
-                            setState(() {
-                              _statusPaymentController.text = "pending";
-                            });
+                            _statusPaymentController.text = "pending";
                           } else {
-                            setState(() {
-                              _statusPaymentController.text = "done";
-                            });
+                            _statusPaymentController.text = "done";
                           }
 
                           print('switched to: $index');
@@ -213,7 +209,7 @@ class _AddPaymentState extends State<AddPayment> {
                                     _amountPaymentController.text,
                                 'tanggal': _dateController.text,
                                 'status': _statusPaymentController.text,
-                                'keterangan': _statusPaymentController.text,
+                                'terbayar': "0",
                               };
 
                               try {

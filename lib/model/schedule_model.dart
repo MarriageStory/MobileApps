@@ -35,6 +35,8 @@ class ScheduleModel {
     required this.tanggal,
     required this.tempat,
     required this.namaClient,
+    required this.jam,
+    required this.status,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -45,6 +47,8 @@ class ScheduleModel {
   DateTime tanggal;
   String tempat;
   String namaClient;
+  String jam;
+  String status;
   DateTime createdAt;
   DateTime updatedAt;
 
@@ -55,6 +59,8 @@ class ScheduleModel {
         tanggal: DateTime.parse(json["tanggal"]),
         tempat: json["tempat"],
         namaClient: json["nama_client"],
+        jam: json["jam"],
+        status: json["status"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
       );
@@ -66,6 +72,8 @@ class ScheduleModel {
         "tanggal": tanggal.toIso8601String(),
         "tempat": tempat,
         "nama_client": namaClient,
+        "jam": jam,
+        "status": status,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
       };

@@ -18,6 +18,7 @@ class _TaskScreenState extends State<TaskScreen> {
   late Future<SchedulesModel> _schedule;
   int id = 0;
   int allTask = 0;
+  int taskDone = 0;
   int totalData = 0;
 
   @override
@@ -142,7 +143,10 @@ class _TaskScreenState extends State<TaskScreen> {
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
-                              var schedule = snapshot.data?.data[index];
+                              var schedule = snapshot.data!.data[index];
+                              if (schedule.status == "done") {
+                                taskDone++;
+                              }
                               return InkWell(
                                   onTap: () {
                                     Navigator.pushNamed(context, DetailTask.url,
@@ -233,7 +237,7 @@ class _TaskScreenState extends State<TaskScreen> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          allTask.toString(),
+                                          "coming soon",
                                           style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.w600),

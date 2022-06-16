@@ -12,6 +12,7 @@ import 'package:wedding_planner/screens/payment/payment_edit.dart';
 import 'package:wedding_planner/screens/payment/payment_add_detail.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:wedding_planner/service/payment_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class detailPayment extends StatefulWidget {
   static final url = "/detail-payment";
@@ -27,6 +28,14 @@ class _detailPaymentState extends State<detailPayment> {
   int unpaid = 0;
   int totalData = 0;
   bool cek = false;
+
+  launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +169,7 @@ class _detailPaymentState extends State<detailPayment> {
                             width: size.width * 0.2,
                             height: 100,
                             child: Text(
-                              payment.keterangan.toUpperCase(),
+                              payment.status.toUpperCase(),
                               style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
@@ -320,13 +329,14 @@ class _detailPaymentState extends State<detailPayment> {
                       ),
                 Container(
                   margin: const EdgeInsets.only(top: 10, right: 20),
-                  child: Column(
+                  child: Row(
                     children: <Widget>[
                       InkWell(
                           child: Container(
                             height: 45,
                             padding: EdgeInsets.symmetric(vertical: 10),
-                            width: MediaQuery.of(context).size.width,
+                            // width: MediaQuery.of(context).size.width,
+                            width: 150,
                             margin: const EdgeInsets.only(
                                 right: 16, left: 16, top: 20),
                             child: Text(
@@ -357,6 +367,39 @@ class _detailPaymentState extends State<detailPayment> {
                                 return BaseScreen(index: 2);
                               }));
                             });
+                          }),
+                      InkWell(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            // width: MediaQuery.of(context).size.width,
+                            width: 150,
+                            margin: const EdgeInsets.only(
+                                right: 16, left: 16, top: 20),
+                            child: Text(
+                              "payment receipt",
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              gradient: LinearGradient(
+                                begin: Alignment.topRight,
+                                end: Alignment.bottomLeft,
+                                colors: [
+                                  Color(0xFFFE6A7E).withOpacity(0.65),
+                                  Color(0xFFFE6A7E),
+                                ],
+                              ),
+                            ),
+                          ),
+                          onTap: () async {
+                            const url =
+                                'https://drive.google.com/drive/folders/1x8Xm3ZZsXvXXshcj3p47pBiNMb0Eqme1?usp=sharing';
+                            launchURL(url);
                           }),
                     ],
                   ),

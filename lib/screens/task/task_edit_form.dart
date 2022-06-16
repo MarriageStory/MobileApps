@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 //pubspec
@@ -32,6 +33,7 @@ class _TaskEditFormState extends State<TaskEditForm> {
   TextEditingController _detailTaskController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   TextEditingController _placeController = TextEditingController();
+  TextEditingController _timeController = TextEditingController();
   //cek
   bool inisialisasi = false;
   //date & time
@@ -42,6 +44,15 @@ class _TaskEditFormState extends State<TaskEditForm> {
   );
   final TextStyle valueStyleBefore =
       GoogleFonts.poppins(fontSize: 14, color: Color(0xFF8d8d8d));
+
+  void showTime() {
+    showTimePicker(context: context, initialTime: TimeOfDay.now())
+        .then((value) {
+      setState(() {
+        _timeController.text = value!.format(context).toString();
+      });
+    });
+  }
 
   Future<Null> _selectDate(BuildContext context, DateTime date) async {
     // Initial DateTime FIinal Picked
@@ -68,6 +79,7 @@ class _TaskEditFormState extends State<TaskEditForm> {
       _detailTaskController.text = schedule.detailKegiatan;
       _placeController.text = schedule.tempat;
       _dateController.text = schedule.tanggal.toString();
+      _timeController.text = schedule.jam;
 
       inisialisasi = true;
     }
@@ -164,6 +176,19 @@ class _TaskEditFormState extends State<TaskEditForm> {
                   ]),
                 ),
                 Container(
+                  margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
+                  child: Column(children: [
+                    dateTime(
+                      // labelText: "Date",
+                      valueText: _timeController.text,
+                      valueStyle: valueStyle,
+                      onPressed: () {
+                        showTime();
+                      },
+                    ),
+                  ]),
+                ),
+                Container(
                   margin: const EdgeInsets.only(top: 10, right: 20),
                   child: Column(
                     children: <Widget>[
@@ -201,6 +226,8 @@ class _TaskEditFormState extends State<TaskEditForm> {
                             'tanggal': _dateController.text,
                             'tempat': _placeController.text,
                             'nama_client': _nameClientController.text,
+                            'jam': _timeController.text,
+                            'status': schedule.status,
                           };
 
                           await ScheduleService.updateSchedule(

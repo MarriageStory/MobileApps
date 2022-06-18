@@ -29,8 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final token = prefs.getString("token");
 
     if (token != null) {
-      // Navigator.pushReplacementNamed(context, "/base-screen");
-      Navigator.pushReplacementNamed(context, "/welcome-screen");
+      Navigator.pushReplacementNamed(context, "/base-screen");
     } else {
       Navigator.pushReplacementNamed(context, "/welcome-screen");
     }

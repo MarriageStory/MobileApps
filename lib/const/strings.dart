@@ -1,2 +1,2 @@
-// final String baseURLAPI = 'https://intense-refuge-90569.herokuapp.com/api/';
-final String baseURLAPI = 'http://192.168.1.2:8000/api/';
+final String baseURLAPI = 'https://floating-dusk-51726.herokuapp.com/api/';
+// final String baseURLAPI = 'http://0.0.0.0:8000/api/';

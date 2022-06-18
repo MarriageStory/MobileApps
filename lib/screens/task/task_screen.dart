@@ -143,8 +143,8 @@ class _TaskScreenState extends State<TaskScreen> {
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemBuilder: (context, index) {
-                              var schedule = snapshot.data!.data[index];
-                              if (schedule.status == "done") {
+                              var schedule = snapshot.data?.data[index];
+                              if (schedule!.status == "done") {
                                 taskDone++;
                               }
                               return InkWell(

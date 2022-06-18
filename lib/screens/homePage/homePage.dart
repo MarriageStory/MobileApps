@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wedding_planner/model/payment_model.dart';
 import 'package:wedding_planner/model/schedule_model.dart';
 import 'package:wedding_planner/model/user_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,6 +7,7 @@ import 'package:wedding_planner/screens/homePage/widgets/box_card.dart';
 import 'package:wedding_planner/screens/task/task_detail.dart';
 import 'package:wedding_planner/service/auth_service.dart';
 import 'package:intl/src/intl/date_format.dart';
+import 'package:wedding_planner/service/payment_service.dart';
 import 'package:wedding_planner/service/schedule_service.dart';
 
 class homePage extends StatefulWidget {
@@ -18,6 +20,9 @@ class homePage extends StatefulWidget {
 
 class _homePageState extends State<homePage> {
   late Future<SchedulesModel> _schedule;
+  late Future<PaymentsModel> _payments;
+  int allPayment = 0;
+  int paymentDone = 0;
   UserModel user = UserModel(
       id: 0,
       name: "",
@@ -26,11 +31,13 @@ class _homePageState extends State<homePage> {
       role: "",
       createdAt: DateTime.now(),
       updatedAt: DateTime.now());
+  int allTask = 0;
 
   @override
   void initState() {
     super.initState();
     getUserProfile();
+    _payments = PaymentService.getAllPayments();
 
     try {
       _schedule = ScheduleService.getAllSchedules();
@@ -110,7 +117,7 @@ class _homePageState extends State<homePage> {
                               },
                               child: listItem(schedule!));
                         },
-                        itemCount: snapshot.data!.data.length,
+                        itemCount: 1,
                       );
                     } else if (snapshot.hasError) {
                       return Center(
@@ -157,7 +164,7 @@ class _homePageState extends State<homePage> {
                               },
                               child: listItem2(schedule_2!));
                         },
-                        itemCount: snapshot.data!.data.length,
+                        itemCount: 1,
                       );
                     } else if (snapshot.hasError) {
                       return Center(
@@ -184,51 +191,101 @@ class _homePageState extends State<homePage> {
               SizedBox(
                 height: 5,
               ),
-              Row(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: BoxCard(
-                      nameTask: "All Tasks",
-                      totalTask: 12,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: BoxCard(
-                      nameTask: "Completed Task",
-                      totalTask: 2,
-                    ),
-                  ),
-                ],
-              ),
+              FutureBuilder(
+                  future: _schedule,
+                  builder: (context, AsyncSnapshot<SchedulesModel> snapshot) {
+                    var state = snapshot.connectionState;
+                    if (snapshot.hasData) {
+                      allTask = snapshot.data!.data.length;
+
+                      return Row(
+                        children: [
+                          Flexible(
+                            flex: 1,
+                            child: BoxCard(
+                              nameTask: "All Tasks",
+                              totalTask: allTask,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Flexible(
+                            flex: 1,
+                            child: BoxCard(
+                              nameTask: "Completed Task(coming soon)",
+                              totalTask: 0,
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Text("data");
+                    }
+                  }),
               SizedBox(
                 height: 8,
               ),
-              Row(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: BoxCard(
-                      nameTask: "Payment Pending",
-                      totalTask: 3,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: BoxCard(
-                      nameTask: "Payment\nCompleted",
-                      totalTask: 1,
-                    ),
-                  ),
-                ],
-              ),
+              FutureBuilder(
+                future: _payments,
+                builder: (context, AsyncSnapshot<PaymentsModel> snapshot) {
+                  var state = snapshot.connectionState;
+                  if (state != ConnectionState.done) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (context, index) {
+                          var payment = snapshot.data!.data[index];
+                          allPayment++;
+                          if (payment.status == "done") {
+                            paymentDone++;
+                          }
+
+                          if (allPayment == snapshot.data!.data.length) {
+                            return Row(
+                              children: [
+                                Flexible(
+                                  flex: 1,
+                                  child: BoxCard(
+                                    nameTask: "Payment Pending",
+                                    totalTask: allPayment,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Flexible(
+                                  flex: 1,
+                                  child: BoxCard(
+                                    nameTask: "Payment\nCompleted",
+                                    totalTask: paymentDone,
+                                  ),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return SizedBox();
+                          }
+                        },
+                        itemCount: snapshot.data!.data.length,
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          snapshot.error.toString(),
+                        ),
+                      );
+                    } else {
+                      return SizedBox();
+                    }
+                  }
+                },
+              )
             ],
           ),
         )),
@@ -269,7 +326,7 @@ class _homePageState extends State<homePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "20.00",
+                    view.jam,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   ),
                   Text(

@@ -33,7 +33,7 @@ class AuthService {
       'password': data['password'],
     };
 
-    var response = await http.post(Uri.parse(baseURLAPI + "login"),
+    var response =  await http.post(Uri.parse(baseURLAPI + "login"),
         body: jsonEncode(<String, dynamic>{
           'email': data["email"],
           'password': data["password"],

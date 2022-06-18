@@ -97,7 +97,7 @@ class _detailPaymentState extends State<detailPayment> {
                     ],
                   ),
                 ),
-                
+
                 //card payment status
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,

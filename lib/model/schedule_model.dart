@@ -48,7 +48,7 @@ class ScheduleModel {
   String tempat;
   String namaClient;
   String jam;
-  String status;
+  String? status;
   DateTime createdAt;
   DateTime updatedAt;
 

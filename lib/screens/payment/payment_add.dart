@@ -151,7 +151,7 @@ class _AddPaymentState extends State<AddPayment> {
                         minHeight: 40.0,
                         initialLabelIndex: 0,
                         activeFgColor: Colors.white,
-                        activeBgColor: [Colors.pink.shade300],
+                        activeBgColor: [Color(0xFFFE6A7E)],
                         inactiveBgColor: Colors.white,
                         inactiveFgColor: Colors.black,
                         borderWidth: 1,

@@ -236,11 +236,12 @@ class _TaskScreenState extends State<TaskScreen> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Text(
+                                        const Text(
                                           "coming soon",
-                                          style: const TextStyle(
+                                          style: TextStyle(
                                               fontSize: 16,
-                                              fontWeight: FontWeight.w600),
+                                              fontWeight: FontWeight.w600,
+                                              color: Color(0xFFFE6A7E)),
                                         ),
                                         Text(
                                           "Completed Tasks",
@@ -324,8 +325,8 @@ class _TaskScreenState extends State<TaskScreen> {
                 decoration: BoxDecoration(
                   border: Border(
                     left: BorderSide(
-                      width: 1,
-                      color: Color(0xFFFE6A7E).withOpacity(0.3),
+                      width: 0.5,
+                      color: Colors.grey.shade300,
                     ),
                   ),
                 ),
@@ -333,7 +334,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   view.jam,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFFFE6A7E),
                   ),

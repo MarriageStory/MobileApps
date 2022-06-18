@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planner/model/user_model.dart';
 import 'package:wedding_planner/screens/other/components/background.dart';
+import 'package:wedding_planner/screens/signin/signin_screen.dart';
 import 'package:wedding_planner/service/auth_service.dart';
 
 class Body extends StatefulWidget {
@@ -129,6 +131,39 @@ class _BodyState extends State<Body> {
                             fontSize: 14,
                             color: Colors.grey,
                             fontWeight: FontWeight.w500,
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: Color(0xFFfcabaa),
+                        size: 32,
+                      ),
+                      SizedBox(
+                        width: 22,
+                      ),
+                      TextButton(
+                          onPressed: () async {
+                            final prefs = await SharedPreferences.getInstance();
+                            prefs.remove("token");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SignInScreen()),
+                            );
+                          },
+                          child: Text(
+                            "Logoout",
+                            style: GoogleFonts.poppins(
+                              fontSize: 14,
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w500,
+                            ),
                           )),
                     ],
                   ),

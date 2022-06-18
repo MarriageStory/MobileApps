@@ -242,8 +242,12 @@ class _homePageState extends State<homePage> {
                         itemBuilder: (context, index) {
                           var payment = snapshot.data!.data[index];
                           allPayment++;
-                          if (payment.status == "done") {
+                          if (payment.status == "done" &&
+                              allPayment <= snapshot.data!.data.length) {
                             paymentDone++;
+                          }
+                          if (allPayment > snapshot.data!.data.length) {
+                            allPayment--;
                           }
 
                           if (allPayment == snapshot.data!.data.length) {

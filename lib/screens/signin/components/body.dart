@@ -18,6 +18,21 @@ class _BodyState extends State<Body> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
+  final textFieldFocusNode = FocusNode();
+  bool _obscured = true;
+
+  void _toggleObscured() {
+    setState(
+      () {
+        _obscured = !_obscured;
+        if (textFieldFocusNode.hasPrimaryFocus)
+          return; // If focus is on text field, dont unfocus
+        textFieldFocusNode.canRequestFocus =
+            false; // Prevents focus if tap on eye
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -32,6 +47,7 @@ class _BodyState extends State<Body> {
                 top: size.height * 0.12,
                 left: size.width * 0.1,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Welcome Back ,",
@@ -59,35 +75,67 @@ class _BodyState extends State<Body> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // RoundedInputField(
-                    //   icon: Icons.person,
-                    //   hintText: "Username",
-                    //   onChanged: (value) {},
-                    // ),
                     TextFieldContainer(
                       child: TextFormField(
                         decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              Icons.person,
-                              color: Color(0xFFFA5D76),
-                            ),
-                            labelText: 'Email'),
+                          icon: Icon(
+                            Icons.email,
+                            color: Color(0xFFF14266),
+                          ),
+                          hintText: "Email",
+                          hintStyle: const TextStyle(
+                            color: Color(0xFF2F2F2F),
+                            fontWeight: FontWeight.w300,
+                            fontSize: 14,
+                            letterSpacing: -0.2,
+                            height: 2,
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        style: const TextStyle(
+                          color: Color(0xFF2F2F2F),
+                          fontWeight: FontWeight.w300,
+                          fontSize: 14,
+                          letterSpacing: -0.2,
+                        ),
                         controller: _emailController,
                       ),
                     ),
-                    // RoundedPasswordField(
-                    //   onChanged: (value) {},
-                    // ),
                     TextFieldContainer(
                       child: TextFormField(
+                        keyboardType: TextInputType.visiblePassword,
+                        obscureText: _obscured,
+                        focusNode: textFieldFocusNode,
                         decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: Icon(
-                              Icons.lock,
-                              color: Color(0xFFFA5D76),
+                          hintText: "Password",
+                          hintStyle: const TextStyle(
+                            color: Color(0xFF2F2F2F),
+                            fontWeight: FontWeight.w300,
+                            fontSize: 14,
+                            letterSpacing: -0.2,
+                            height: 2,
+                          ),
+                          icon: const Icon(
+                            Icons.lock,
+                            color: Color(0xFFF14266),
+                          ),
+                          suffixIcon: GestureDetector(
+                            onTap: _toggleObscured,
+                            child: Icon(
+                              _obscured
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: const Color(0xFFF14266),
                             ),
-                            labelText: 'Password'),
+                          ),
+                          border: InputBorder.none,
+                        ),
+                        style: const TextStyle(
+                          color: Color(0xFF2F2F2F),
+                          fontWeight: FontWeight.w300,
+                          fontSize: 14,
+                          letterSpacing: -0.2,
+                        ),
                         controller: _passwordController,
                       ),
                     ),

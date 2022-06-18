@@ -53,6 +53,7 @@ class _AddPaymentState extends State<AddPayment> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -60,12 +61,12 @@ class _AddPaymentState extends State<AddPayment> {
           child: Column(
             children: [
               const SizedBox(
-                height: 15.0,
+                height: 36.0,
               ),
 
               //AppBar
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -75,7 +76,7 @@ class _AddPaymentState extends State<AddPayment> {
                     Text(
                       'Add Payment',
                       style: TextStyle(
-                        fontSize: 22,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -144,9 +145,9 @@ class _AddPaymentState extends State<AddPayment> {
                         child: Text("Status")),
                     Container(
                       margin:
-                          const EdgeInsets.only(top: 15, right: 16, left: 16),
+                          const EdgeInsets.only(top: 8, right: 16, left: 16),
                       child: ToggleSwitch(
-                        minWidth: 120.0,
+                        minWidth: 150,
                         minHeight: 40.0,
                         initialLabelIndex: 0,
                         activeFgColor: Colors.white,
@@ -169,72 +170,70 @@ class _AddPaymentState extends State<AddPayment> {
                       ),
                     ),
                     SizedBox(
-                      height: 50.0,
+                      height: 40.0,
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10, right: 20),
-                      child: Column(
-                        children: <Widget>[
-                          InkWell(
-                            child: Container(
-                              height: 45,
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              width: MediaQuery.of(context).size.width,
-                              margin: const EdgeInsets.only(
-                                  right: 16, left: 16, top: 20),
-                              child: Text(
-                                "save",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                ),
-                                textAlign: TextAlign.center,
+                    Column(
+                      children: <Widget>[
+                        InkWell(
+                          child: Container(
+                            height: 45,
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            width: MediaQuery.of(context).size.width,
+                            margin: const EdgeInsets.only(
+                                right: 16, left: 16, top: 20),
+                            child: Text(
+                              "Save",
+                              style: GoogleFonts.poppins(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
+                                color: Colors.white,
                               ),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                gradient: LinearGradient(
-                                  begin: Alignment.topRight,
-                                  end: Alignment.bottomLeft,
-                                  colors: [
-                                    Color(0xFFFE6A7E).withOpacity(0.65),
-                                    Color(0xFFFE6A7E),
-                                  ],
-                                ),
+                              textAlign: TextAlign.center,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              gradient: LinearGradient(
+                                begin: Alignment.topRight,
+                                end: Alignment.bottomLeft,
+                                colors: [
+                                  Color(0xFFFE6A7E).withOpacity(0.65),
+                                  Color(0xFFFE6A7E),
+                                ],
                               ),
                             ),
-                            onTap: () async {
-                              Map<String, dynamic> body = {
-                                'nama_client': _namePaymentController.text,
-                                'tunai_keseluruhan':
-                                    _amountPaymentController.text,
-                                'tanggal': _dateController.text,
-                                'status': _statusPaymentController.text,
-                                'terbayar': "0",
-                              };
+                          ),
+                          onTap: () async {
+                            Map<String, dynamic> body = {
+                              'nama_client': _namePaymentController.text,
+                              'tunai_keseluruhan':
+                                  _amountPaymentController.text,
+                              'tanggal': _dateController.text,
+                              'status': _statusPaymentController.text,
+                              'terbayar': "0",
+                            };
 
-                              try {
-                                await PaymentService.createNewPayment(body)
-                                    .then((value) {
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context) {
-                                    return BaseScreen(index: 2);
-                                  }));
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          backgroundColor: Colors.green,
-                                          content: Text(
-                                              'You have successfully create a scedule')));
-                                });
-                              } catch (e) {
+                            try {
+                              await PaymentService.createNewPayment(body)
+                                  .then((value) {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return BaseScreen(index: 2);
+                                }));
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                        backgroundColor: Colors.red,
-                                        content: Text('Terjadi Kesalahan !')));
-                              }
-                            },
-                          ),
-                        ],
-                      ),
+                                        backgroundColor: Colors.green,
+                                        content: Text(
+                                            'You have successfully create a scedule')));
+                              });
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      backgroundColor: Colors.red,
+                                      content: Text('Terjadi Kesalahan !')));
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),

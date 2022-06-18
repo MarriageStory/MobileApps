@@ -66,7 +66,7 @@ class _homePageState extends State<homePage> {
       body: SafeArea(
         child: SingleChildScrollView(
             child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 36),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -92,7 +92,7 @@ class _homePageState extends State<homePage> {
                 ],
               ),
               SizedBox(
-                height: 15,
+                height: 16,
               ),
               FutureBuilder(
                 future: _schedule,
@@ -179,7 +179,7 @@ class _homePageState extends State<homePage> {
                 },
               ),
               SizedBox(
-                height: 15,
+                height: 24,
               ),
               Text(
                 "All Results",
@@ -189,7 +189,7 @@ class _homePageState extends State<homePage> {
                     color: Color(0xFF2F2F2F).withOpacity(0.7)),
               ),
               SizedBox(
-                height: 5,
+                height: 4,
               ),
               FutureBuilder(
                   future: _schedule,
@@ -213,18 +213,18 @@ class _homePageState extends State<homePage> {
                           Flexible(
                             flex: 1,
                             child: BoxCard(
-                              nameTask: "Completed Task(coming soon)",
+                              nameTask: "Completed Task\n(coming soon)",
                               totalTask: 0,
                             ),
                           ),
                         ],
                       );
                     } else {
-                      return Text("data");
+                      return Text("");
                     }
                   }),
               SizedBox(
-                height: 8,
+                height: 9,
               ),
               FutureBuilder(
                 future: _payments,
@@ -308,10 +308,10 @@ class _homePageState extends State<homePage> {
   Widget listItem2(ScheduleModel view) {
     String tanggal = DateFormat.yMd().format(view.tanggal);
     return Container(
-      margin: EdgeInsets.only(top: 5),
+      margin: EdgeInsets.only(top: 4),
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 25),
       width: double.infinity,
-      height: 130,
+      height: 121,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(15)),
       child: Row(
@@ -327,7 +327,7 @@ class _homePageState extends State<homePage> {
                 children: [
                   Text(
                     view.jam,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                   ),
                   Text(
                     DateFormat.yMd().format(view.tanggal),

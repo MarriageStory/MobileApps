@@ -98,6 +98,7 @@ class _TaskEditFormState extends State<TaskEditForm> {
                   padding: EdgeInsets.symmetric(vertical: 20),
                   color: Colors.white,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
                           onPressed: () {
@@ -109,15 +110,16 @@ class _TaskEditFormState extends State<TaskEditForm> {
                           },
                           icon: const Icon(Icons.arrow_back,
                               color: Colors.black)),
-                      SizedBox(
-                        width: 80,
-                      ),
+                      
                       const Text(
                         "Edit Task",
                         style: TextStyle(
                             fontWeight: FontWeight.w600,
                             fontSize: 18,
                             color: Colors.black),
+                      ),
+                      SizedBox(
+                        width: 40,
                       ),
                     ],
                   ),

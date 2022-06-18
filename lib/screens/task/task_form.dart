@@ -82,6 +82,7 @@ class _TaskFormState extends State<TaskForm> {
                   padding: EdgeInsets.symmetric(vertical: 20),
                   color: Colors.white,
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       IconButton(
                           onPressed: () {
@@ -93,16 +94,16 @@ class _TaskFormState extends State<TaskForm> {
                           },
                           icon: const Icon(Icons.arrow_back,
                               color: Colors.black)),
-                      SizedBox(
-                        width: 80,
-                      ),
                       const Text(
                         "Add Task",
                         style: TextStyle(
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w700,
                             fontSize: 18,
-                            color: Colors.black),
+                            color: Colors.black87),
                       ),
+                      const SizedBox(
+                        width: 40,
+                      )
                     ],
                   ),
                 ),

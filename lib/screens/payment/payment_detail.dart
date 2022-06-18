@@ -62,20 +62,17 @@ class _detailPaymentState extends State<detailPayment> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        color: Colors.blue,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BaseScreen(index: 2)),
-                            );
-                          },
-                          child: const Icon(
-                            Icons.arrow_back,
-                            color: Colors.black87,
-                          ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BaseScreen(index: 2)),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.black87,
                         ),
                       ),
                       const Text(
@@ -105,7 +102,7 @@ class _detailPaymentState extends State<detailPayment> {
                   children: [
                     Container(
                       padding: const EdgeInsets.only(
-                          top: 15, bottom: 15, left: 25, right: 25),
+                          top: 18, bottom: 18, left: 25, right: 25),
                       height: 130,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
@@ -132,14 +129,14 @@ class _detailPaymentState extends State<detailPayment> {
                             width: size.width * 0.5,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   payment.namaClient,
                                   style: const TextStyle(
                                       color: Colors.white,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w700),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
                                 ),
                                 const SizedBox(
                                   height: 16,
@@ -172,7 +169,7 @@ class _detailPaymentState extends State<detailPayment> {
                               payment.status.toUpperCase(),
                               style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.w700),
                             ),
                           ),
@@ -322,23 +319,22 @@ class _detailPaymentState extends State<detailPayment> {
                         itemCount: payment.paymentDetails.length,
                       )
                     : Container(
-                        margin: const EdgeInsets.only(top: 20),
+                        margin: const EdgeInsets.only(top: 14),
                         child: const Center(
                           child: Text("Detail Pembayaran Masih Kosong"),
                         ),
                       ),
                 Container(
-                  margin: const EdgeInsets.only(top: 10, right: 20),
+                  margin: const EdgeInsets.only(top: 28),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       InkWell(
                           child: Container(
                             height: 45,
                             padding: EdgeInsets.symmetric(vertical: 10),
                             // width: MediaQuery.of(context).size.width,
-                            width: 150,
-                            margin: const EdgeInsets.only(
-                                right: 16, left: 16, top: 20),
+                            width: size.width * 0.43,
                             child: Text(
                               "Delete",
                               style: GoogleFonts.poppins(
@@ -373,11 +369,9 @@ class _detailPaymentState extends State<detailPayment> {
                             height: 45,
                             padding: EdgeInsets.symmetric(vertical: 10),
                             // width: MediaQuery.of(context).size.width,
-                            width: 150,
-                            margin: const EdgeInsets.only(
-                                right: 16, left: 16, top: 20),
+                            width: size.width*0.43,
                             child: Text(
-                              "payment receipt",
+                              "Payment Receipt",
                               style: GoogleFonts.poppins(
                                 fontSize: 16,
                                 color: Colors.white,

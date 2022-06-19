@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:wedding_planner/model/payment_model.dart';
 import 'package:wedding_planner/model/schedule_model.dart';
 import 'package:wedding_planner/model/user_model.dart';
@@ -55,6 +56,15 @@ class _homePageState extends State<homePage> {
       });
     } catch (e) {
       Navigator.pushReplacementNamed(context, "/base-screen");
+    }
+  }
+
+  _launchURLApp() async {
+    var url = Uri.parse("https://www.youtube.com/");
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
@@ -295,7 +305,7 @@ class _homePageState extends State<homePage> {
         )),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: _launchURLApp,
         label: const Text(
           "Help",
           style: TextStyle(color: Color(0xFFFF5596)),

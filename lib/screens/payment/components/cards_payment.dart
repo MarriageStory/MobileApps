@@ -41,7 +41,7 @@ class CardsPayment extends StatelessWidget {
               children: [
                 Container(
                   width: size.width * 0.6,
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.all(16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,12 +81,11 @@ class CardsPayment extends StatelessWidget {
                   height: 115,
                   width: size.width * 0.3,
                   decoration: BoxDecoration(
-                    color: color,
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(15),
-                      bottomRight: Radius.circular(15) ,
-                    )
-                  ),
+                      color: color,
+                      borderRadius: const BorderRadius.only(
+                        topRight: Radius.circular(15),
+                        bottomRight: Radius.circular(15),
+                      )),
                   child: Text(
                     status,
                     style: const TextStyle(

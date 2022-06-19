@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Wedding Planner',
+      title: 'Marriage Story',
       theme: ThemeData(
         fontFamily: 'Poppins',
         primaryColor: Color(0xFFFA5D76),

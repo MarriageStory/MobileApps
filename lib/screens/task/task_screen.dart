@@ -274,7 +274,6 @@ class _TaskScreenState extends State<TaskScreen> {
   Widget listItem(ScheduleModel view) {
     Size size = MediaQuery.of(context).size;
     String tanggal = DateFormat.yMd().format(view.tanggal);
-    
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -298,7 +297,7 @@ class _TaskScreenState extends State<TaskScreen> {
             children: [
               Container(
                 width: size.width * 0.6,
-                padding: EdgeInsets.all(20),
+                padding: EdgeInsets.all(16),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,

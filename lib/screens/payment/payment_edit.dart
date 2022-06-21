@@ -39,6 +39,7 @@ class _EditPaymentState extends State<EditPayment> {
   );
   //cek inisialisasi
   bool inisialisasi = false;
+  bool status = false;
 
   Future<Null> _selectDate(BuildContext context, DateTime date) async {
     // Initial DateTime FIinal Picked
@@ -187,7 +188,6 @@ class _EditPaymentState extends State<EditPayment> {
                     //   ),
                     // ),
 
-
                     //Status
                     Container(
                         alignment: Alignment.centerLeft,
@@ -214,13 +214,13 @@ class _EditPaymentState extends State<EditPayment> {
                             _statusPaymentController.text = "pending";
                           } else {
                             _statusPaymentController.text = "done";
+                            status = true;
                           }
 
                           print('switched to: $index');
                         },
                       ),
                     ),
-
 
                     SizedBox(
                       height: 50.0,
@@ -257,10 +257,14 @@ class _EditPaymentState extends State<EditPayment> {
                               ),
                             ),
                             onTap: () async {
-                              // if (int.parse(_amountPaymentController.text) >
-                              //     int.parse(payment.terbayar)) {
-                              //   _statusPaymentController.text = "pending";
-                              // }
+                              if (int.parse(_amountPaymentController.text) >
+                                  int.parse(payment.terbayar)) {
+                                _statusPaymentController.text = "pending";
+                              }
+
+                              if (status) {
+                                _statusPaymentController.text = "done";
+                              }
 
                               Map<String, dynamic> body = {
                                 'nama_client': _namePaymentController.text,

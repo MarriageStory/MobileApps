@@ -31,6 +31,8 @@ class _EditPaymentState extends State<EditPayment> {
   TextEditingController _statusPaymentController = TextEditingController();
   //pengecekan date
   bool cekTgl = false;
+  //tanggal
+  DateTime tanggal = DateTime.now();
   //style
   final TextStyle valueStyle = GoogleFonts.poppins(
     fontSize: 14,
@@ -49,6 +51,7 @@ class _EditPaymentState extends State<EditPayment> {
     if (picked != null)
       setState(() {
         cekTgl = true;
+        tanggal = picked;
         _dateController.text = picked.toString();
       });
   }
@@ -63,6 +66,7 @@ class _EditPaymentState extends State<EditPayment> {
       _amountPaymentController.text = payment.tunaiKeseluruhan.toString();
       _dateController.text = payment.tanggal.toString();
       _statusPaymentController.text = payment.status;
+      tanggal = payment.tanggal;
 
       inisialisasi = true;
     }
@@ -134,7 +138,7 @@ class _EditPaymentState extends State<EditPayment> {
                       child: Column(children: [
                         dateTime(
                           // labelText: "Date",
-                          valueText: DateFormat.yMd().format(payment.tanggal),
+                          valueText: DateFormat.yMd().format(tanggal),
                           valueStyle: valueStyle,
                           onPressed: () {
                             _selectDate(context, payment.tanggal);
@@ -146,20 +150,59 @@ class _EditPaymentState extends State<EditPayment> {
                       height: 15,
                     ),
                     //Status
+                    // Container(
+                    //     alignment: Alignment.centerLeft,
+                    //     margin:
+                    //         const EdgeInsets.only(top: 30, right: 16, left: 16),
+                    //     child: Text("Status")),
+                    // Container(
+                    //   margin:
+                    //       const EdgeInsets.only(top: 15, right: 16, left: 16),
+                    //   child: ToggleSwitch(
+                    //     minWidth: 120.0,
+                    //     minHeight: 40.0,
+                    //     initialLabelIndex: 0,
+                    //     // payment.status == "done" ? 1 : 0,
+                    //     activeFgColor: Colors.white,
+                    //     activeBgColor: [Colors.pink.shade300],
+                    //     inactiveBgColor: Colors.white,
+                    //     inactiveFgColor: Colors.black,
+                    //     borderWidth: 1,
+                    //     borderColor: [Color.fromARGB(165, 241, 66, 101)],
+                    //     totalSwitches: 2,
+                    //     labels: ['Pending', 'Done'],
+                    //     onToggle: (index) {
+                    //       if (index == 0) {
+                    //         setState(() {
+                    //           _statusPaymentController.text = "pending";
+                    //         });
+                    //       } else {
+                    //         setState(() {
+                    //           _statusPaymentController.text = "done";
+                    //         });
+                    //       }
+
+                    //       print('switched to: $index');
+                    //     },
+                    //   ),
+                    // ),
+
+
+                    //Status
                     Container(
                         alignment: Alignment.centerLeft,
                         margin:
-                            const EdgeInsets.only(top: 30, right: 16, left: 16),
+                            const EdgeInsets.only(top: 15, right: 16, left: 16),
                         child: Text("Status")),
                     Container(
                       margin:
-                          const EdgeInsets.only(top: 15, right: 16, left: 16),
+                          const EdgeInsets.only(top: 8, right: 16, left: 16),
                       child: ToggleSwitch(
-                        minWidth: 120.0,
+                        minWidth: 150,
                         minHeight: 40.0,
                         initialLabelIndex: payment.status == "done" ? 1 : 0,
                         activeFgColor: Colors.white,
-                        activeBgColor: [Colors.pink.shade300],
+                        activeBgColor: [Color(0xFFFE6A7E)],
                         inactiveBgColor: Colors.white,
                         inactiveFgColor: Colors.black,
                         borderWidth: 1,
@@ -168,19 +211,17 @@ class _EditPaymentState extends State<EditPayment> {
                         labels: ['Pending', 'Done'],
                         onToggle: (index) {
                           if (index == 0) {
-                            setState(() {
-                              _statusPaymentController.text = "pending";
-                            });
+                            _statusPaymentController.text = "pending";
                           } else {
-                            setState(() {
-                              _statusPaymentController.text = "done";
-                            });
+                            _statusPaymentController.text = "done";
                           }
 
                           print('switched to: $index');
                         },
                       ),
                     ),
+
+
                     SizedBox(
                       height: 50.0,
                     ),
@@ -216,10 +257,10 @@ class _EditPaymentState extends State<EditPayment> {
                               ),
                             ),
                             onTap: () async {
-                              if (int.parse(_amountPaymentController.text) >
-                                  int.parse(payment.terbayar)) {
-                                _statusPaymentController.text = "pending";
-                              }
+                              // if (int.parse(_amountPaymentController.text) >
+                              //     int.parse(payment.terbayar)) {
+                              //   _statusPaymentController.text = "pending";
+                              // }
 
                               Map<String, dynamic> body = {
                                 'nama_client': _namePaymentController.text,

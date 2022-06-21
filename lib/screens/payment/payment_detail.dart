@@ -42,6 +42,7 @@ class _detailPaymentState extends State<detailPayment> {
     Size size = MediaQuery.of(context).size;
     final PaymentModel payment =
         ModalRoute.of(context)!.settings.arguments as PaymentModel;
+    unpaid = payment.tunaiKeseluruhan;
 
     String tanggalPayment = DateFormat.yMd().format(payment.tanggal);
 
@@ -183,11 +184,11 @@ class _detailPaymentState extends State<detailPayment> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     var payment_detail = payment.paymentDetails[index];
-                    // if (payment_detail.idPayment == payment.id) {
-                    //   totalBayar += int.parse(payment_detail.bayar);
-                    //   unpaid -= int.parse(payment_detail.bayar);
-                    //   totalData++;
-                    // }
+                    if (payment_detail.paymentId == payment.id) {
+                      totalBayar += payment_detail.bayar;
+                      unpaid -= payment_detail.bayar;
+                      totalData++;
+                    }
                     if (totalData < payment.paymentDetails.length) {
                       return SizedBox();
                     } else {
@@ -369,7 +370,7 @@ class _detailPaymentState extends State<detailPayment> {
                             height: 45,
                             padding: EdgeInsets.symmetric(vertical: 10),
                             // width: MediaQuery.of(context).size.width,
-                            width: size.width*0.43,
+                            width: size.width * 0.43,
                             child: Text(
                               "Payment Receipt",
                               style: GoogleFonts.poppins(

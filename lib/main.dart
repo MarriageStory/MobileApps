@@ -5,7 +5,7 @@ import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:wedding_planner/screens/signin/signin_screen.dart';
 import 'package:wedding_planner/screens/signup/signup_screen.dart';
 //splash
-import 'package:wedding_planner/screens/splash/splash_screen.dart';
+import 'package:wedding_planner/screens/splash/splashScreen.dart';
 //welcome
 import 'package:wedding_planner/screens/welcome/welcome_screen.dart';
 //task

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planner/screens/splash/components/body.dart';
-import 'package:wedding_planner/screens/welcome/welcome_screen.dart';
+import 'package:wedding_planner/screens/welcome/welcomeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

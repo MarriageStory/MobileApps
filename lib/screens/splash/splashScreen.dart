@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding_planner/screens/splash/components/body.dart';
-import 'package:wedding_planner/screens/welcome/welcomeScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -29,9 +28,9 @@ class _SplashScreenState extends State<SplashScreen> {
     final token = prefs.getString("token");
 
     if (token != null) {
-      Navigator.pushReplacementNamed(context, "/welcome-screen");
+      Navigator.pushReplacementNamed(context, "/welcomeScreen");
     } else {
-      Navigator.pushReplacementNamed(context, "/welcome-screen");
+      Navigator.pushReplacementNamed(context, "/welcomeScreen");
     }
   }
 

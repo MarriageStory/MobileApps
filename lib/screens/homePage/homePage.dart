@@ -60,7 +60,7 @@ class _homePageState extends State<homePage> {
   }
 
   _launchURLApp() async {
-    var url = Uri.parse("https://www.youtube.com/");
+    var url = Uri.parse("https://www.youtube.com");
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {

@@ -1,14 +1,16 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:wedding_planner/screens/homePage/homePage.dart';
 
-class pageDetail extends StatefulWidget {
-  const pageDetail({Key? key}) : super(key: key);
+class PageDetail extends StatefulWidget {
+  const PageDetail({Key? key}) : super(key: key);
 
   @override
-  State<pageDetail> createState() => _pageDetailState();
+  State<PageDetail> createState() => _PageDetailState();
 }
 
-class _pageDetailState extends State<pageDetail> {
+class _PageDetailState extends State<PageDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +26,7 @@ class _pageDetailState extends State<pageDetail> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const homePage()),
+                      MaterialPageRoute(builder: (context) => const HomePage()),
                     );
                   },
                   child: Icon(Icons.arrow_back)),
@@ -38,7 +40,7 @@ class _pageDetailState extends State<pageDetail> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const homePage()),
+                      MaterialPageRoute(builder: (context) => const HomePage()),
                     );
                   },
                   icon: Icon(Icons.list))

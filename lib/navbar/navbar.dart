@@ -9,7 +9,6 @@ import 'package:wedding_planner/screens/task/task_screen.dart';
 import 'package:wedding_planner/screens/payment/payment_screen.dart';
 import 'package:wedding_planner/screens/other/other_screen.dart';
 
-
 class BaseScreen extends StatefulWidget {
   int index;
   BaseScreen({Key? key, required this.index}) : super(key: key);
@@ -26,7 +25,7 @@ class _BaseScreenState extends State<BaseScreen> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static const List<Widget> _widgetOptions = <Widget>[
-    homePage(),
+    HomePage(),
     TaskScreen(),
     PaymentPage(),
     OtherScreen(),

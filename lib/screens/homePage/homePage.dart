@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wedding_planner/model/payment_model.dart';
@@ -11,15 +13,15 @@ import 'package:intl/src/intl/date_format.dart';
 import 'package:wedding_planner/service/payment_service.dart';
 import 'package:wedding_planner/service/schedule_service.dart';
 
-class homePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   static const route = '/home-page';
-  const homePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<homePage> createState() => _homePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _homePageState extends State<homePage> {
+class _HomePageState extends State<HomePage> {
   late Future<SchedulesModel> _schedule;
   late Future<PaymentsModel> _payments;
   int allPayment = 0;

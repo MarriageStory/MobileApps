@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => SplashScreen(),
         // '/': (context) => const TaskForm(),
         '/welcome-screen': (context) => WelcomeScreen(),
-        '/home-page': (context) => homePage(),
+        '/home-page': (context) => HomePage(),
         // '/payment': (context) => PaymentPage(),
         '/detail-payment': (context) => const detailPayment(),
         // '/payment-add': (context) => AddPayment(),

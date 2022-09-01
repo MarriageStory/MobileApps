@@ -13,7 +13,7 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Background(
-      child: Container(
+      child: SizedBox(
         height: size.height,
         width: size.width,
         child: Stack(

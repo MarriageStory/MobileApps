@@ -5,7 +5,7 @@ import 'package:toggle_switch/toggle_switch.dart';
 import 'package:wedding_planner/components/rounded_input_field_form.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:wedding_planner/components/dateTime.dart';
+import 'package:wedding_planner/components/date_time.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:wedding_planner/service/payment_service.dart';
 
@@ -122,7 +122,7 @@ class _AddPaymentState extends State<AddPayment> {
                       margin:
                           const EdgeInsets.only(top: 35, right: 16, left: 16),
                       child: Column(children: [
-                        dateTime(
+                        DateOfTime(
                           // labelText: "Date",
                           valueText: cekTgl != false
                               ? DateFormat.yMd().format(tanggal)

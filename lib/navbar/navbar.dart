@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:wedding_planner/const/component_navbar.dart';
-import 'package:wedding_planner/screens/homePage/homePage.dart';
+import 'package:wedding_planner/screens/home_page/home_page.dart';
 import 'package:wedding_planner/screens/task/task_screen.dart';
 import 'package:wedding_planner/screens/payment/payment_screen.dart';
 import 'package:wedding_planner/screens/other/other_screen.dart';
-
 
 class BaseScreen extends StatefulWidget {
   int index;
@@ -26,7 +25,7 @@ class _BaseScreenState extends State<BaseScreen> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static const List<Widget> _widgetOptions = <Widget>[
-    homePage(),
+    HomePage(),
     TaskScreen(),
     PaymentPage(),
     OtherScreen(),
@@ -75,7 +74,7 @@ class _BaseScreenState extends State<BaseScreen> {
         height: 60,
         width: MediaQuery.of(context).size.width / 4,
         decoration: index == _selectedIndex
-            ? BoxDecoration(
+            ? const BoxDecoration(
                 border: Border(
                     bottom: BorderSide(
                   width: 3.5,
@@ -85,7 +84,7 @@ class _BaseScreenState extends State<BaseScreen> {
             : const BoxDecoration(),
         child: Icon(
           icon,
-          color: index == _selectedIndex ? Color(0xFFFF5596) : Colors.grey[400],
+          color: index == _selectedIndex ? const Color(0xFFFF5596) : Colors.grey[400],
           size: 18,
         ),
       ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:wedding_planner/components/rounded_input_field_form.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:wedding_planner/components/dateTime.dart';
+import 'package:wedding_planner/components/date_time.dart';
 import 'package:wedding_planner/model/payment_model.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:wedding_planner/service/payment_detail_service.dart';
@@ -158,7 +158,7 @@ class _AddDetailPaymentState extends State<AddDetailPayment> {
                 Container(
                   margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
                   child: Column(children: [
-                    dateTime(
+                    DateOfTime(
                       // labelText: "Date",
                       valueText: cekDate != false
                           ? DateFormat.yMd().format(tanggal)

@@ -1,25 +1,27 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wedding_planner/model/payment_model.dart';
 import 'package:wedding_planner/model/schedule_model.dart';
 import 'package:wedding_planner/model/user_model.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:wedding_planner/screens/homePage/widgets/box_card.dart';
+import 'package:wedding_planner/screens/home_page/widgets/box_card.dart';
 import 'package:wedding_planner/screens/task/task_detail.dart';
 import 'package:wedding_planner/service/auth_service.dart';
 import 'package:intl/src/intl/date_format.dart';
 import 'package:wedding_planner/service/payment_service.dart';
 import 'package:wedding_planner/service/schedule_service.dart';
 
-class homePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   static const route = '/home-page';
-  const homePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<homePage> createState() => _homePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _homePageState extends State<homePage> {
+class _HomePageState extends State<HomePage> {
   late Future<SchedulesModel> _schedule;
   late Future<PaymentsModel> _payments;
   int allPayment = 0;
@@ -60,7 +62,7 @@ class _homePageState extends State<homePage> {
   }
 
   _launchURLApp() async {
-    var url = Uri.parse("https://www.youtube.com/");
+    var url = Uri.parse("https://www.youtube.com");
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
@@ -87,13 +89,13 @@ class _homePageState extends State<homePage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Hallo, ",
                         style: TextStyle(fontSize: 14),
                       ),
                       Text(
                         user.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w600),
                       )
                     ],
@@ -101,7 +103,7 @@ class _homePageState extends State<homePage> {
                   // SvgPicture.asset("assets/icons/notification.svg")
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 16,
               ),
               FutureBuilder(
@@ -109,7 +111,7 @@ class _homePageState extends State<homePage> {
                 builder: (context, AsyncSnapshot<SchedulesModel> snapshot) {
                   var state = snapshot.connectionState;
                   if (state != ConnectionState.done) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   } else {
@@ -136,12 +138,12 @@ class _homePageState extends State<homePage> {
                         ),
                       );
                     } else {
-                      return Text('No Schedule');
+                      return const Text('No Schedule');
                     }
                   }
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Text(
@@ -156,7 +158,7 @@ class _homePageState extends State<homePage> {
                 builder: (context, AsyncSnapshot<SchedulesModel> snapshot) {
                   var state = snapshot.connectionState;
                   if (state != ConnectionState.done) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   } else {
@@ -183,12 +185,12 @@ class _homePageState extends State<homePage> {
                         ),
                       );
                     } else {
-                      return Text('No Schedule');
+                      return const Text('No Schedule');
                     }
                   }
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               Text(
@@ -198,7 +200,7 @@ class _homePageState extends State<homePage> {
                     fontSize: 14,
                     color: Color(0xFF2F2F2F).withOpacity(0.7)),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 4,
               ),
               FutureBuilder(
@@ -217,10 +219,10 @@ class _homePageState extends State<homePage> {
                               totalTask: allTask,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
-                          Flexible(
+                          const Flexible(
                             flex: 1,
                             child: BoxCard(
                               nameTask: "Completed Task\n(coming soon)",
@@ -233,7 +235,7 @@ class _homePageState extends State<homePage> {
                       return Text("");
                     }
                   }),
-              SizedBox(
+              const SizedBox(
                 height: 9,
               ),
               FutureBuilder(
@@ -370,7 +372,7 @@ class _homePageState extends State<homePage> {
                   ],
                 ),
                 borderRadius: BorderRadius.circular(15)),
-            child: Icon(
+            child: const Icon(
               Icons.navigate_next,
               color: Colors.white,
             ),
@@ -386,7 +388,7 @@ class _homePageState extends State<homePage> {
       padding: EdgeInsets.all(16),
       height: 100,
       decoration: BoxDecoration(
-        image: DecorationImage(
+        image: const DecorationImage(
             image: AssetImage("assets/images/bg.png"), fit: BoxFit.cover),
         borderRadius: BorderRadius.circular(15),
       ),
@@ -399,13 +401,13 @@ class _homePageState extends State<homePage> {
             children: [
               Text(
                 view.namaClient,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                     fontWeight: FontWeight.w600),
               ),
               Row(
-                children: [
+                children: const [
                   Text(
                     "Wedding Party",
                     style: TextStyle(

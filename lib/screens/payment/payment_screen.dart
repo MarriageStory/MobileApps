@@ -6,7 +6,7 @@ import 'package:wedding_planner/model/payment_model.dart';
 import 'package:wedding_planner/service/payment_service.dart';
 import 'components/cards_payment.dart';
 import 'package:wedding_planner/screens/payment/payment_detail.dart';
-import 'package:wedding_planner/components/formatAngka.dart';
+import 'package:wedding_planner/components/format_angka.dart';
 import 'package:wedding_planner/screens/payment/payment_add.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -248,7 +248,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                   return InkWell(
                                     onTap: () {
                                       Navigator.pushNamed(
-                                          context, detailPayment.url,
+                                          context, DetailPayment.url,
                                           arguments: payment);
                                     },
                                     child: listItem(payment),
@@ -472,7 +472,7 @@ class _PaymentPageState extends State<PaymentPage> {
         CardsPayment(
           name: view.namaClient,
           date: tanggal,
-          pay: formatAngka.convertToIdr(
+          pay: FormatAngka.convertToIdr(
               int.parse(view.tunaiKeseluruhan.toString()), 2),
           color: view.status != "done" ? Colors.amber[600] : Colors.green[600],
           status: view.status != "done" ? 'Pending' : 'Done',

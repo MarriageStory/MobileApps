@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 //component
-import 'package:wedding_planner/components/dateTime.dart';
+import 'package:wedding_planner/components/date_time.dart';
 import 'package:wedding_planner/components/rounded_input_field_form.dart';
 //navbar
 import 'package:wedding_planner/navbar/navbar.dart';
@@ -150,7 +150,7 @@ class _TaskFormState extends State<TaskForm> {
                 Container(
                   margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
                   child: Column(children: [
-                    dateTime(
+                    DateOfTime(
                       // labelText: "Date",
                       valueText: cekTgl != false
                           ? DateFormat.yMd().format(tanggal)
@@ -165,7 +165,7 @@ class _TaskFormState extends State<TaskForm> {
                 Container(
                   margin: const EdgeInsets.only(top: 30, right: 16, left: 16),
                   child: Column(children: [
-                    dateTime(
+                    DateOfTime(
                       // labelText: "Date",
                       valueText:
                           cekJam != false ? _timeController.text : "Time",

@@ -16,14 +16,14 @@ class BoxCard extends StatelessWidget {
       width: double.infinity,
       height: 120,
       decoration: BoxDecoration(
-        color: Color(0xFFF6F6F6),
+        color: const Color(0xFFF6F6F6),
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 0,
             blurRadius: 2,
-            offset: Offset(0, 0), // changes position of shadow
+            offset: const Offset(0, 0), // changes position of shadow
           ),
         ],
       ),
@@ -34,7 +34,7 @@ class BoxCard extends StatelessWidget {
           Text(
             totalTask.toString(),
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
           ),
           Text(
             nameTask,
@@ -42,7 +42,7 @@ class BoxCard extends StatelessWidget {
             style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF2F2F2F).withOpacity(0.4)),
+                color: const Color(0xFF2F2F2F).withOpacity(0.4)),
           )
         ],
       ),

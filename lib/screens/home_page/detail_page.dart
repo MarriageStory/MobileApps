@@ -1,14 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:wedding_planner/screens/homePage/homePage.dart';
+// ignore_for_file: prefer_const_constructors
 
-class pageDetail extends StatefulWidget {
-  const pageDetail({Key? key}) : super(key: key);
+import 'package:flutter/material.dart';
+import 'package:wedding_planner/screens/home_page/home_page.dart';
+
+class PageDetail extends StatefulWidget {
+  const PageDetail({Key? key}) : super(key: key);
 
   @override
-  State<pageDetail> createState() => _pageDetailState();
+  State<PageDetail> createState() => _PageDetailState();
 }
 
-class _pageDetailState extends State<pageDetail> {
+class _PageDetailState extends State<PageDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,24 +26,24 @@ class _pageDetailState extends State<pageDetail> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const homePage()),
+                      MaterialPageRoute(builder: (context) => const HomePage()),
                     );
                   },
-                  child: Icon(Icons.arrow_back)),
-              SizedBox(width: 76),
-              Text(
+                  child: const Icon(Icons.arrow_back)),
+              const SizedBox(width: 76),
+              const Text(
                 "Detail Task",
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
               ),
-              SizedBox(width: 70),
+              const SizedBox(width: 70),
               IconButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const homePage()),
+                      MaterialPageRoute(builder: (context) => const HomePage()),
                     );
                   },
-                  icon: Icon(Icons.list))
+                  icon: const Icon(Icons.list))
             ],
           ),
         ),
@@ -66,7 +68,7 @@ class _pageDetailState extends State<pageDetail> {
                 padding: EdgeInsets.symmetric(vertical: 10),
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 20),
-                child: Text(
+                child: const Text(
                   "jadbajdbjabds",
                   style: TextStyle(color: Colors.black),
                   textAlign: TextAlign.center,
@@ -85,70 +87,70 @@ class _pageDetailState extends State<pageDetail> {
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 20),
-                child: Text(
+                child: const Text(
                   "20:00",
                   style: TextStyle(fontSize: 35),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 2),
-                child: Text(
+                child: const Text(
                   "Thursday, 23 April 2022",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 30),
-                child: Text(
+                child: const Text(
                   "Task:",
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 2),
-                child: Text(
+                child: const Text(
                   "Melakukan meeting MUA",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 30),
-                child: Text(
+                child: const Text(
                   "Place:",
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 2),
-                child: Text(
+                child: const Text(
                   "Kantor Alvia, Jalan Raya sambung - Kecamatan Diwek Kab Jombang - Jawa Timur",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 30),
-                child: Text(
+                child: const Text(
                   "Detail:",
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 2),
-                child: Text(
+                child: const Text(
                   "Kedua mempelai diharapkan hadir untuk bertemu dengan pihak WO",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 30),
-                child: Text(
+                child: const Text(
                   "Map:",
                   style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(right: 16, left: 16, top: 2),
-                child: Text(
+                child: const Text(
                   "Map not found",
                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),

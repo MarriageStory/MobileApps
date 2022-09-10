@@ -17,7 +17,7 @@ class RoundedInputField extends StatefulWidget {
 }
 
 class _RoundedInputFieldState extends State<RoundedInputField> {
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return TextFieldContainer(
@@ -26,7 +26,7 @@ class _RoundedInputFieldState extends State<RoundedInputField> {
         decoration: InputDecoration(
           icon: Icon(
             widget.icon,
-            color: Color(0xFFF14266),
+            color: const Color(0xFFF14266),
           ),
           hintText: widget.hintText,
           hintStyle: const TextStyle(

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wedding_planner/model/payment_model.dart';
@@ -60,7 +62,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _launchURLApp() async {
-    var url = Uri.parse("https://www.youtube.com/");
+    var url = Uri.parse("https://www.youtube.com");
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {

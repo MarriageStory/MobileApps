@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class dateTime extends StatelessWidget {
+class DateOfTime extends StatelessWidget {
   // final String labelText;
   final String valueText;
   final TextStyle valueStyle;
   final VoidCallback onPressed;
   // final Widget child;
 
-  const dateTime({
+  const DateOfTime({
     Key? key,
     // required this.labelText,
     required this.valueText,
@@ -23,7 +23,7 @@ class dateTime extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: InputDecorator(
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Color(0xFFfcabaa), width: 2),
           ),

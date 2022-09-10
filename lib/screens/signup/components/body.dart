@@ -210,7 +210,7 @@ class _BodyState extends State<Body> {
                 left: 0,
                 right: 0,
                 child: AlreadyHaveAnAccountCheck(
-                  signin: false,
+                  signIn: false,
                   press: () {
                     Navigator.push(
                       context,

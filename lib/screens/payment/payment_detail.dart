@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:wedding_planner/model/payment_model.dart';
 import 'package:wedding_planner/screens/payment/payment_screen.dart';
-import 'package:wedding_planner/components/formatAngka.dart';
+import 'package:wedding_planner/components/format_angka.dart';
 import 'package:intl/intl.dart';
 import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -14,15 +14,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:wedding_planner/service/payment_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class detailPayment extends StatefulWidget {
+class DetailPayment extends StatefulWidget {
   static final url = "/detail-payment";
-  const detailPayment({Key? key}) : super(key: key);
+  const DetailPayment({Key? key}) : super(key: key);
 
   @override
-  State<detailPayment> createState() => _detailPaymentState();
+  State<DetailPayment> createState() => _DetailPaymentState();
 }
 
-class _detailPaymentState extends State<detailPayment> {
+class _DetailPaymentState extends State<DetailPayment> {
   int id = 0;
   int totalBayar = 0;
   int unpaid = 0;
@@ -150,7 +150,7 @@ class _detailPaymentState extends State<detailPayment> {
                                       fontWeight: FontWeight.w400),
                                 ),
                                 Text(
-                                  formatAngka.convertToIdr(
+                                  FormatAngka.convertToIdr(
                                       int.parse(
                                           payment.tunaiKeseluruhan.toString()),
                                       2),
@@ -231,7 +231,7 @@ class _detailPaymentState extends State<detailPayment> {
                               ),
                               Container(
                                 child: Text(
-                                  formatAngka.convertToIdr(totalBayar, 2),
+                                  FormatAngka.convertToIdr(totalBayar, 2),
                                   style: TextStyle(
                                       fontWeight: FontWeight.w300,
                                       fontSize: 15),
@@ -276,7 +276,7 @@ class _detailPaymentState extends State<detailPayment> {
                               ),
                               Container(
                                 child: Text(
-                                  formatAngka.convertToIdr(unpaid, 2),
+                                  FormatAngka.convertToIdr(unpaid, 2),
                                   style: TextStyle(
                                       fontWeight: FontWeight.w300,
                                       fontSize: 15),
@@ -424,7 +424,7 @@ class _detailPaymentState extends State<detailPayment> {
                   fontWeight: FontWeight.w500),
             ),
             subtitle: Text(tanggal),
-            trailing: Text(formatAngka.convertToIdr(
+            trailing: Text(FormatAngka.convertToIdr(
                 int.parse(paymentDetail.bayar.toString()), 2)),
           ),
         ),

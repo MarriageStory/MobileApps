@@ -5,16 +5,16 @@ import 'package:wedding_planner/navbar/navbar.dart';
 import 'package:wedding_planner/screens/signin/signin_screen.dart';
 import 'package:wedding_planner/screens/signup/signup_screen.dart';
 //splash
-import 'package:wedding_planner/screens/splash/splashScreen.dart';
+import 'package:wedding_planner/screens/splash/splash_screen.dart';
 //welcome
-import 'package:wedding_planner/screens/welcome/welcomeScreen.dart';
+import 'package:wedding_planner/screens/welcome/welcome_screen.dart';
 //task
 import 'package:wedding_planner/screens/task/task_screen.dart';
 import 'package:wedding_planner/screens/task/task_form.dart';
 import 'package:wedding_planner/screens/task/task_edit_form.dart';
 import 'package:wedding_planner/screens/task/task_detail.dart';
 //payment
-import 'package:wedding_planner/screens/homePage/homePage.dart';
+import 'package:wedding_planner/screens/home_page/home_page.dart';
 import 'package:wedding_planner/screens/payment/payment_detail.dart';
 import 'package:wedding_planner/screens/payment/payment_screen.dart';
 import 'package:wedding_planner/screens/payment/payment_add.dart';
@@ -38,24 +38,24 @@ class MyApp extends StatelessWidget {
       title: 'Marriage Story',
       theme: ThemeData(
         fontFamily: 'Poppins',
-        primaryColor: Color(0xFFFA5D76),
-        scaffoldBackgroundColor: Color(0xFFF6F6F6),
+        primaryColor: const Color(0xFFFA5D76),
+        scaffoldBackgroundColor: const Color(0xFFF6F6F6),
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => SplashScreen(),
+        '/': (context) => const SplashScreen(),
         // '/': (context) => const TaskForm(),
-        '/welcomeScreen': (context) => WelcomeScreen(),
-        '/home-page': (context) => homePage(),
+        '/welcome-screen': (context) => const WelcomeScreen(),
+        '/home-page': (context) => const HomePage(),
         // '/payment': (context) => PaymentPage(),
-        '/detail-payment': (context) => const detailPayment(),
+        '/detail-payment': (context) => const DetailPayment(),
         // '/payment-add': (context) => AddPayment(),
-        '/payment-add-detail': (context) => AddDetailPayment(),
-        '/payment-edit': (context) => EditPayment(),
-        '/task-page': (context) => TaskScreen(),
-        '/task-form': (context) => TaskForm(),
-        '/task-edit-form': (context) => TaskEditForm(),
-        '/detail-task': (context) => DetailTask(),
+        '/payment-add-detail': (context) => const AddDetailPayment(),
+        '/payment-edit': (context) => const EditPayment(),
+        '/task-page': (context) => const TaskScreen(),
+        '/task-form': (context) => const TaskForm(),
+        '/task-edit-form': (context) => const TaskEditForm(),
+        '/detail-task': (context) => const DetailTask(),
         // '/teams': (context) => TeamScreen(),
         '/base-screen': (context) => BaseScreen(
               index: 0,

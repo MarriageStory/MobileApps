@@ -7,7 +7,7 @@ class RoundedInputFieldForm extends StatelessWidget {
   final TextStyle valueHintStyle;
   final TextStyle valueLabelStyle;
   final TextEditingController controller;
-  RoundedInputFieldForm({
+  const RoundedInputFieldForm({
     Key? key,
     required this.labelText,
     required this.hintText,
@@ -23,16 +23,16 @@ class RoundedInputFieldForm extends StatelessWidget {
         //   child:
         TextField(
       decoration: InputDecoration(
-        enabledBorder: UnderlineInputBorder(
+        enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Color(0xFFfcabaa), width: 2),
         ),
-        focusedBorder: UnderlineInputBorder(
+        focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Color(0xFFfcabaa), width: 2),
         ),
         hintText: hintText,
         hintStyle: valueHintStyle,
         labelText: labelText,
-        labelStyle: TextStyle(color: Colors.black),
+        labelStyle: const TextStyle(color: Colors.black),
       ),
       controller: controller,
     );
